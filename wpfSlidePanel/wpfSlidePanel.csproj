@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net7.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Images\closed-drive.png" />
+    <None Remove="Images\closed-folder.png" />
+    <None Remove="Images\file.png" />
+    <None Remove="Images\opened-drive.png" />
+    <None Remove="Images\opened-folder.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\wpfControls\wpfControls.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\closed-drive.png" />
+    <Resource Include="Images\closed-folder.png" />
+    <Resource Include="Images\file.png" />
+    <Resource Include="Images\opened-drive.png" />
+    <Resource Include="Images\opened-folder.png" />
+  </ItemGroup>
+
+</Project>
