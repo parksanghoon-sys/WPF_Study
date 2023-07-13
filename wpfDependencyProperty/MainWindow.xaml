@@ -6,7 +6,11 @@
         xmlns:local="clr-namespace:wpfDependencyProperty"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
 
+    <Grid>
+        <local:CalculateControl Value1="{Binding Value1}"
+                                Value2="{Binding Value2}"
+                                Operator="{Binding Operator}"
+                                DegignMode="Dark"/>
     </Grid>
 </Window>

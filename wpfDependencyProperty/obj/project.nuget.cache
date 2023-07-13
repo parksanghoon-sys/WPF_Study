@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "VA2piHO0XAFhrILlxSu1e0brnOCAslod+7IuO4v3Uu/PjR4T3y3CCBORb8A6HV9QbUHb+0zWnEVyBHwhrwKNXA==",
+  "dgSpecHash": "bNBxyscBdeNDHQr3itSjLU9CVzcABrvHrbmlSortGp5M4uYm+BX4ZZbgDO02XU8SqM833GCSLDJFuWI+2DgCxA==",
   "success": true,
   "projectFilePath": "E:\\Project\\03.WPF_Study\\wpfDependencyProperty\\wpfDependencyProperty.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\User\\.nuget\\packages\\communitytoolkit.mvvm\\8.2.1\\communitytoolkit.mvvm.8.2.1.nupkg.sha512"
+  ],
   "logs": []
 }
