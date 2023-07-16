@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace wpfDINavigation.Commands
@@ -13,18 +9,15 @@ namespace wpfDINavigation.Commands
     /// <typeparam name="T"></typeparam>
     public class RelayCommand<T> : ICommand
     {
-        private readonly Action<T> _excute;
-        private readonly Predicate<T> _canExcuate;
+        private readonly Action<T>? _excute;
+        private readonly Predicate<T>? _canExcuate;
 
-        public RelayCommand(Action<T> excute,Predicate<T> canExcute = null)            
+        public RelayCommand(Action<T>? excute,Predicate<T>? canExcute = null)            
         {
             _excute = excute;
             _canExcuate = canExcute;
         }
-        public RelayCommand(Action<T> excute)
-        {
-            
-        }
+
         public event EventHandler? CanExecuteChanged
         {
             add { CommandManager.RequerySuggested += value; }
@@ -33,12 +26,12 @@ namespace wpfDINavigation.Commands
 
         public bool CanExecute(object? parameter)
         {
-            return _canExcuate?.Invoke((T)parameter) ?? true;
+            return _canExcuate?.Invoke((T)parameter!) ?? true;
         }
 
         public void Execute(object? parameter)
         {
-            _excute?.Invoke((T)parameter);
+            _excute?.Invoke((T)parameter!);
         }
     }
 }
