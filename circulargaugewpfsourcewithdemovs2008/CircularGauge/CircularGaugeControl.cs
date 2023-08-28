@@ -955,9 +955,9 @@ namespace CircularGauge
             if (pointer != null)
             {
                 double db1 = 0;
-                Double oldcurr_realworldunit = 0;
-                Double newcurr_realworldunit = 0;
-                Double realworldunit = (ScaleSweepAngle / (MaxValue - MinValue));
+                double oldcurr_realworldunit = 0;
+                double newcurr_realworldunit = 0;
+                double realworldunit = (ScaleSweepAngle / (MaxValue - MinValue));
                 //Resetting the old value to min value the very first time.
                 if (oldValue == 0 && !isInitialValueSet)
                 {
@@ -987,7 +987,7 @@ namespace CircularGauge
                 }
 
                 Double oldcurrentvalueAngle = (ScaleStartAngle + oldcurr_realworldunit);
-                Double newcurrentvalueAngle = (ScaleStartAngle + newcurr_realworldunit);
+                double newcurrentvalueAngle = (ScaleStartAngle + newcurr_realworldunit);
 
                 //Animate the pointer from the old value to the new value
                 AnimatePointer(oldcurrentvalueAngle, newcurrentvalueAngle);
@@ -1112,15 +1112,13 @@ namespace CircularGauge
             //Set Zindex of pointer and pointer cap to a really high number so that it stays on top of the 
             //scale and the range indicator
             Canvas.SetZIndex(pointer, 100000);
-            Canvas.SetZIndex(pointerCap, 100001);
+            //Canvas.SetZIndex(pointerCap, 100001);
 
             if (ResetPointerOnStartUp)
             {
                 //Reset Pointer
                 MovePointer(ScaleStartAngle);
             }
-
-
 
         }
 
@@ -1129,19 +1127,19 @@ namespace CircularGauge
         private void DrawScale()
         {
             //Calculate one major tick angle 
-            Double majorTickUnitAngle = ScaleSweepAngle / MajorDivisionsCount;
+            double majorTickUnitAngle = ScaleSweepAngle / MajorDivisionsCount;
 
             //Obtaining One minor tick angle 
-            Double minorTickUnitAngle = ScaleSweepAngle / MinorDivisionsCount;
+            double minorTickUnitAngle = ScaleSweepAngle / MinorDivisionsCount;
 
             //Obtaining One major ticks value
-            Double majorTicksUnitValue = (MaxValue - MinValue) / MajorDivisionsCount;
+            double majorTicksUnitValue = (MaxValue - MinValue) / MajorDivisionsCount;
             majorTicksUnitValue = Math.Round(majorTicksUnitValue, ScaleValuePrecision);
 
-            Double minvalue = MinValue; ;
+            double minvalue = MinValue; ;
 
             // Drawing Major scale ticks
-            for (Double i = ScaleStartAngle; i <= (ScaleStartAngle + ScaleSweepAngle); i = i + majorTickUnitAngle)
+            for (double i = ScaleStartAngle; i <= (ScaleStartAngle + ScaleSweepAngle); i = i + majorTickUnitAngle)
             {
 
                 //Majortick is drawn as a rectangle 
@@ -1158,7 +1156,7 @@ namespace CircularGauge
                 RotateTransform majortickrt = new RotateTransform();
 
                 //Obtaining the angle in radians for calulating the points
-                Double i_radian = (i * Math.PI) / 180;
+                double i_radian = (i * Math.PI) / 180;
                 majortickrt.Angle = i;
                 majortickgp.Children.Add(majortickrt);
                 TranslateTransform majorticktt = new TranslateTransform();
@@ -1191,7 +1189,7 @@ namespace CircularGauge
                 if (Math.Round(minvalue, ScaleValuePrecision) <= Math.Round(MaxValue, ScaleValuePrecision))
                 {
                     minvalue = Math.Round(minvalue, ScaleValuePrecision);
-                    tb.Text = minvalue.ToString();
+                    tb.Text = Math.Abs(minvalue).ToString();
                     minvalue = minvalue + majorTicksUnitValue;
 
                 }
@@ -1207,12 +1205,12 @@ namespace CircularGauge
 
 
                 //Drawing the minor axis ticks
-                Double onedegree = ((i + majorTickUnitAngle) - i) / (MinorDivisionsCount);
+                double onedegree = ((i + majorTickUnitAngle) - i) / (MinorDivisionsCount);
 
                 if ((i < (ScaleStartAngle + ScaleSweepAngle)) && (Math.Round(minvalue, ScaleValuePrecision) <= Math.Round(MaxValue, ScaleValuePrecision)))
                 {
                     //Drawing the minor scale
-                    for (Double mi = i + onedegree; mi < (i + majorTickUnitAngle); mi = mi + onedegree)
+                    for (double mi = i + onedegree; mi < (i + majorTickUnitAngle); mi = mi + onedegree)
                     {
                         //here the minortick is drawn as a rectangle 
                         Rectangle mr = new Rectangle();
@@ -1231,7 +1229,7 @@ namespace CircularGauge
                         TranslateTransform minorticktt = new TranslateTransform();
 
                         //Obtaining the angle in radians for calulating the points
-                        Double mi_radian = (mi * Math.PI) / 180;
+                        double mi_radian = (mi * Math.PI) / 180;
                         //Finding the point on the Scale where the minor ticks are drawn
                         minorticktt.X = (int)((ScaleRadius) * Math.Cos(mi_radian));
                         minorticktt.Y = (int)((ScaleRadius) * Math.Sin(mi_radian));
@@ -1269,6 +1267,9 @@ namespace CircularGauge
         /// </summary>
         private void DrawRangeIndicator()
         {
+            if(OptimalRangeStartValue == 0 && OptimalRangeEndValue == 0)
+                return;
+
             Double realworldunit = (ScaleSweepAngle / (MaxValue - MinValue));
             Double optimalStartAngle;
             Double optimalEndAngle;
@@ -1319,7 +1320,7 @@ namespace CircularGauge
             Point D = GetCircumferencePoint(optimalStartAngleFromStart, arcradius1);
 
             bool isReflexAngle = Math.Abs(optimalStartAngleFromStart - ScaleStartAngle) > 180.0;
-            DrawSegment(A, B, C, D, isReflexAngle, BelowOptimalRangeColor);
+            //DrawSegment(A, B, C, D, isReflexAngle, BelowOptimalRangeColor);
 
             // Calculating the Points for the Optimal Range segment from the center of the gauge
 

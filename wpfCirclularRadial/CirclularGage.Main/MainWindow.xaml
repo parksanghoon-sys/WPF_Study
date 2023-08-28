@@ -1,0 +1,77 @@
+﻿<Window x:Class="CirclularGage.Main.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CirclularGage.Main"
+        xmlns:control="clr-namespace:CirclularGage.Location.UI.Units;assembly=CirclularGage"
+        mc:Ignorable="d"        
+        Title="MainWindow" Height="450" Width="800">
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" >
+            <control:AirHeading HeadAngeleValue="{Binding AirPortHeadingAngle}" Panel.ZIndex="1" />
+            <control:CircularGaugeControl Radius="200" 
+                                        ScaleRadius="150" 
+                                        ScaleStartAngle="30" 
+                                        ScaleSweepAngle="300"
+                                                                                                                      
+                                        MinValue="-6" 
+                                        MaxValue="6"                                         
+                                        MajorDivisionsCount="10" 
+                                        MinorDivisionsCount="10" 
+                                        CurrentValue="{Binding Score}"                                                                                
+                                        RangeIndicatorThickness="10"
+                                        RangeIndicatorRadius="100"
+                              
+                                        ScaleLabelRadius="170"
+                                        ScaleLabelSize="40,20"
+                                        ScaleLabelFontSize="10"
+                                        ScaleLabelForeground="LightGray"
+                                        
+                                        MajorTickSize="10,3"
+                                        MinorTickSize="3,1"
+                                        MajorTickColor="LightGray"
+                                        MinorTickColor="LightGray"
+                                        
+                                        GaugeBackgroundColor="Black"
+                                          
+                                        PointerLength="100"                                             
+                                        PointerThickness ="6"
+                                          
+                                        OptimalRangeStartValue="{Binding StartSafeZon}"
+                                        OptimalRangeEndValue="{Binding EndSafeZon}" />
+
+        </Grid>
+        <Grid Grid.Column="1" Grid.RowSpan="2" Margin="3">
+            <Border BorderThickness="1" BorderBrush="Black">
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="TcasControl Test" FontSize="15" 
+                               TextAlignment="Center" FontWeight="Bold"/>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Heading   : "/>
+                        <TextBox x:Name="txtHeading" Text="{Binding AirPortHeadingAngle, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="50"/>
+                        <Button Content="전송" Command="{Binding SendHeading, Mode=TwoWay}" CommandParameter="{Binding Text, ElementName=txtHeading}" Width="50"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Start Safe : "/>
+                        <TextBox x:Name="txtStartSafe" Text="{Binding StartSafeZon, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="50"/>
+                        <Button Content="전송" Command="{Binding SendHeading, Mode=TwoWay}" CommandParameter="{Binding Text, ElementName=txtStartSafe}" Width="50"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="End Safe  : "/>
+                        <TextBox x:Name="txtEndSafe" Text="{Binding EndSafeZon, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="50"/>
+                        <Button Content="전송" Command="{Binding SendHeading, Mode=TwoWay}" CommandParameter="{Binding Text, ElementName=txtEndSafe}" Width="50"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Grid>
+</Window>

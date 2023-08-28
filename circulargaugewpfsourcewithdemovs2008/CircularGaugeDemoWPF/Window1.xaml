@@ -3,15 +3,24 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:gauge="clr-namespace:CircularGauge;assembly=CircularGauge"
     Title="Circular Gauge WPF Demo" Height="700" Width="700" >
-
+    <Window.Resources>
+        <LinearGradientBrush x:Key="CduLockDangerBrushOff"  StartPoint="0,0" EndPoint="0,1">
+            <GradientBrush.GradientStops>
+                <GradientStopCollection>
+                    <GradientStop Color="#939393" Offset="1.0" />
+                    <GradientStop Color="#FFFFFF" Offset="0.0" />
+                </GradientStopCollection>
+            </GradientBrush.GradientStops>
+        </LinearGradientBrush>
+    </Window.Resources>
 
     <Grid x:Name="LayoutRoot" >
-        <Grid.Background>
+        <!--<Grid.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                 <GradientStop Color="#FF552322" Offset="1"/>
                 <GradientStop Color="#FFFFFFFF" Offset="0"/>
             </LinearGradientBrush>
-        </Grid.Background>
+        </Grid.Background>-->
         <Grid >
             <Grid.RowDefinitions>
                 <RowDefinition Height="330" />
@@ -21,51 +30,80 @@
                 <ColumnDefinition Width="330" />
                 <ColumnDefinition Width="330"/>
             </Grid.ColumnDefinitions>
+            
 
 
-            <!--Black Gauge -->
+                <!--Black Gauge -->
             <gauge:CircularGaugeControl x:Name="myGauge1" Grid.Column="0" Grid.Row="0" 
                                         Radius="150" 
                                         ScaleRadius="100" 
-                                        ScaleStartAngle="10" 
+                                        ScaleStartAngle="30" 
                                         ScaleSweepAngle="300"
-                                        PointerLength="85" 
+                                        PointerLength="90" 
                                         PointerCapRadius="35" 
-                                        MinValue="-6000" 
-                                        MaxValue="6000" 
+                                        
+                                        MinValue="-6" 
+                                        MaxValue="6" 
                                         MajorDivisionsCount="10" 
-                                        MinorDivisionsCount="5" 
+                                        MinorDivisionsCount="10" 
                                         CurrentValue="{Binding Score}"                                                                                
-                                        RangeIndicatorThickness="8"
-                                        RangeIndicatorRadius="120"
+                                        RangeIndicatorThickness="5"
+                                        RangeIndicatorRadius="80"
                               
-                                        ScaleLabelRadius="90"
+                                        ScaleLabelRadius="115"
                                         ScaleLabelSize="40,20"
                                         ScaleLabelFontSize="10"
                                         ScaleLabelForeground="LightGray"
+                                        
                                         MajorTickSize="10,3"
                                         MinorTickSize="3,1"
                                         MajorTickColor="LightGray"
                                         MinorTickColor="LightGray"                                  
                                         GaugeBackgroundColor="Black"
-                                        PointerThickness ="16"
-                                        OptimalRangeStartValue="300"
-                                        OptimalRangeEndValue="700" 
-                                        DialTextOffset="40" 
-                                        DialText="Black"
-                                        DialTextColor="Black"
+                                        PointerThickness ="6"
+                                        OptimalRangeStartValue="0"
+                                        OptimalRangeEndValue="0" 
+                                        DialTextOffset="40"
+                                        
                                         >
 
             </gauge:CircularGaugeControl>
-
+            <Grid Grid.Column="0" Grid.Row="0"  Margin="0 ,100,0,0">
+                <Ellipse x:Name="uavEclipse" Height="75" Width="75" 
+                     HorizontalAlignment="Center" VerticalAlignment="Center"  Stroke="White" 
+                     StrokeDashArray="1 0 0 10" Margin="0" StrokeStartLineCap="Round" 
+                     StrokeEndLineCap="Round" StrokeDashCap="Round"/>
+                <Path x:Name="uavPath" Data="M 14,0 L 16,0     16,0 16,5 30,5 30,7 16,7     16,10 20,10 20,12 16,12    10,12 10,10 14,10      14,7 0,7 0,5 14,5 Z" Fill="White" Stretch="Fill" RenderTransformOrigin="0.5,0.5" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center" Width="15" Margin="0">
+                    <Path.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform ScaleY="1" ScaleX="-1"/>
+                            <SkewTransform AngleY="0" AngleX="0"/>
+                            <RotateTransform Angle="00"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Path.RenderTransform>
+                </Path>
+            </Grid>
+            <Grid Grid.Row="0" Grid.Column="1">
+                <Grid.Background>
+                    <LinearGradientBrush  StartPoint="0,0" EndPoint="0,1">
+                        <GradientBrush.GradientStops>
+                            <GradientStopCollection>
+                                <GradientStop Color="#939393" Offset="1.0" />
+                                <GradientStop Color="#FFFFFF" Offset="0.0" />
+                            </GradientStopCollection>
+                        </GradientBrush.GradientStops>
+                    </LinearGradientBrush>
+                </Grid.Background>
+            </Grid> 
             <!--Blue Gauge -->
-            <gauge:CircularGaugeControl x:Name="myGauge2"  Grid.Column="1" Grid.Row="0"
+            <!--<gauge:CircularGaugeControl x:Name="myGauge2"  Grid.Column="1" Grid.Row="0"
                                         Radius="150" 
                                         ScaleRadius="100" 
                                         ScaleStartAngle="140" 
                                         ScaleSweepAngle="270"
-                                        PointerLength="90" 
-                                        PointerCapRadius="35" 
+                                        PointerLength="60" 
+                                        PointerCapRadius="10" 
                                         MinValue="0" 
                                         MaxValue="1" 
                                         MajorDivisionsCount="10" 
@@ -92,11 +130,11 @@
                                         DialTextOffset="40"
                                         DialText="Aqua Blue"
                                         DialTextColor="DarkBlue"
-                                        
+                                        RangeIndicatorLightRadius ="10"
                                         />
 
 
-            <!--Red Gauge -->
+            --><!--Red Gauge --><!--
             <gauge:CircularGaugeControl x:Name="myGauge3" Grid.Column="0" Grid.Row="1"
                                         Radius="150" 
                                         ScaleRadius="90" 
@@ -132,7 +170,7 @@
                                         DialTextColor="DarkRed"
                                         />
 
-            <!--DarkSlateGray gauge-->
+            --><!--DarkSlateGray gauge--><!--
             <gauge:CircularGaugeControl x:Name="myGauge4" Grid.Column="1" Grid.Row="1" 
                                         Radius="150" 
                                         ScaleRadius="110" 
@@ -169,7 +207,7 @@
                                         >
 
 
-            </gauge:CircularGaugeControl>
+            </gauge:CircularGaugeControl>-->
 
 
         </Grid>

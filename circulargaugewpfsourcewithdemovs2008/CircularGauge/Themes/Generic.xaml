@@ -6,13 +6,19 @@ Redistribution and use in source and binary forms, with or without modification,
 
 1.Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
 
-2.Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in  the documentation and/or other materials provided with the distribution.
+2.Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in 
+ the documentation and/or other materials provided with the distribution.
 
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, 
-THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS 
-BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE 
-GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT 
-LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH 
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, 
+
+THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS 
+
+BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE 
+
+GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT 
+
+LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH 
+
 DAMAGE.-->
     
     <ResourceDictionary
@@ -31,8 +37,8 @@ DAMAGE.-->
 
 
     <Style TargetType="local:CircularGaugeControl" >
-        <Setter Property="ResetPointerOnStartUp" Value="True" />
-        <Setter Property="ScaleValuePrecision" Value="5" />
+        <Setter Property="ResetPointerOnStartUp" Value="False" />
+        <Setter Property="ScaleValuePrecision" Value="10" />
         <Setter Property="BorderBrush">
             <Setter.Value>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -60,7 +66,7 @@ DAMAGE.-->
                           Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Radius, Converter={StaticResource radiusToDiameterConverter}}" >
 
 
-                        <Ellipse x:Name="OuterFrame" StrokeThickness="16" 
+                        <!--<Ellipse x:Name="OuterFrame" StrokeThickness="16" 
                                  Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Radius, Converter={StaticResource radiusToDiameterConverter}}" 
                                  Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Radius, Converter={StaticResource radiusToDiameterConverter}}" 
                                  Fill="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=GaugeBackgroundColor, Converter={StaticResource backgroundColorConverter}}">
@@ -73,11 +79,11 @@ DAMAGE.-->
                                     <GradientStop Color="#FFA09595" Offset="0.705"/>
                                 </LinearGradientBrush>
                             </Ellipse.Stroke>
-                        </Ellipse>
+                        </Ellipse>-->
 
 
                         <!-- Gauge Image -->
-                        <Image Source="{TemplateBinding ImageSource}" 
+                        <!--<Image Source="{TemplateBinding ImageSource}" 
                                Width="{Binding RelativeSource={RelativeSource TemplatedParent}, 
                             Path=ImageSize, Converter={StaticResource sizeConverter}, ConverterParameter=Width }" 
                                
@@ -87,10 +93,10 @@ DAMAGE.-->
                                RenderTransform="{Binding RelativeSource={RelativeSource TemplatedParent}, 
                             Path=ImageOffset, Converter={StaticResource imageOffsetConverter}}">
 
-                        </Image>
+                        </Image>-->
 
                         <!-- Dial Text -->
-                        <TextBlock Text="{TemplateBinding DialText}"  
+                        <!--<TextBlock Text="{TemplateBinding DialText}"  
                                    HorizontalAlignment="Center" VerticalAlignment="Center"  
                                    Foreground="{Binding RelativeSource={RelativeSource TemplatedParent}, 
                             Path=DialTextColor, Converter={StaticResource colorToSolidColorBrushConverter}}"
@@ -100,8 +106,21 @@ DAMAGE.-->
                               RenderTransform="{Binding RelativeSource={RelativeSource TemplatedParent}, 
                             Path=DialTextOffset, Converter={StaticResource rangeIndicatorLightPositionConverter}}">
 
-                        </TextBlock>
-
+                        </TextBlock>-->
+                        <Ellipse x:Name="PointerCap" Height="{TemplateBinding Radius,Converter={StaticResource rangeIndicatorLightPositionConverter}}" Width="{TemplateBinding Radius,Converter={StaticResource rangeIndicatorLightPositionConverter}}" StrokeThickness="4" Opacity="1" >
+                            <Ellipse.Stroke>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FF000000" Offset="0.675"/>
+                                    <GradientStop Color="#FFC1B5B5" Offset="0.031"/>
+                                </LinearGradientBrush>
+                            </Ellipse.Stroke>
+                            <Ellipse.Fill>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FF152029" Offset="0.846"/>
+                                    <GradientStop Color="#FF140204" Offset="0.342"/>
+                                </LinearGradientBrush>
+                            </Ellipse.Fill>
+                        </Ellipse>
                         <!-- Pointer -->
                         <Path x:Name="Pointer" Stroke="#FFE91C1C" StrokeThickness="2" 
                               Width="{TemplateBinding PointerLength}" 
@@ -120,30 +139,13 @@ DAMAGE.-->
                         </Path>
 
 
-                        <!--Pointer Cap-->
-                        <Ellipse x:Name="PointerCap" Height="{TemplateBinding PointerCapRadius}" Width="{TemplateBinding PointerCapRadius}" StrokeThickness="4" Opacity="1" >
-                            <Ellipse.Stroke>
-                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                    <GradientStop Color="#FF000000" Offset="0.675"/>
-                                    <GradientStop Color="#FFC1B5B5" Offset="0.031"/>
-                                </LinearGradientBrush>
-                            </Ellipse.Stroke>
-                            <Ellipse.Fill>
-                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                    <GradientStop Color="#FF152029" Offset="0.846"/>
-                                    <GradientStop Color="#FF140204" Offset="0.342"/>
-                                </LinearGradientBrush>
-                            </Ellipse.Fill>
-                        </Ellipse>
+                        
 
                         <!--Range indicator light-->
                         <!--<Ellipse x:Name="RangeIndicatorLight" 
                                   Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=RangeIndicatorLightRadius, Converter={StaticResource radiusToDiameterConverter}}" 
-                                  Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=RangeIndicatorLightRadius, Converter={StaticResource radiusToDiameterConverter}}" 
-                                
-                                RenderTransform="{Binding RelativeSource={RelativeSource TemplatedParent}, 
-                                Path=RangeIndicatorLightOffset, Converter={StaticResource rangeIndicatorLightPositionConverter}}">
-                            --><!--Range indicator light off position effect--><!--
+                                  Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=RangeIndicatorLightRadius, Converter={StaticResource radiusToDiameterConverter}}"
+                                 RenderTransform="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=RangeIndicatorLightOffset, Converter={StaticResource rangeIndicatorLightPositionConverter}}">
                             <Ellipse.Fill>
                                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                                     <GradientStop Color="LightGray" Offset="0.2" />
