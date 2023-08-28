@@ -58,17 +58,22 @@
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Heading   : "/>
                         <TextBox x:Name="txtHeading" Text="{Binding AirPortHeadingAngle, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="50"/>
-                        <Button Content="전송" Command="{Binding SendHeading, Mode=TwoWay}" CommandParameter="{Binding Text, ElementName=txtHeading}" Width="50"/>
+                        <Button Content="전송" Command="{Binding SendHeading}" CommandParameter="{Binding Text, ElementName=txtHeading}" Width="50"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Start Safe : "/>
-                        <TextBox x:Name="txtStartSafe" Text="{Binding StartSafeZon, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="50"/>
-                        <Button Content="전송" Command="{Binding SendHeading, Mode=TwoWay}" CommandParameter="{Binding Text, ElementName=txtStartSafe}" Width="50"/>
+                        <TextBox x:Name="txtStartSafe" Text="{Binding StartSafeZon, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:F2}}" Width="50"/>
+                        <Button Content="전송"  CommandParameter="{Binding Text, ElementName=txtStartSafe}" Width="50"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="End Safe  : "/>
                         <TextBox x:Name="txtEndSafe" Text="{Binding EndSafeZon, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="50"/>
-                        <Button Content="전송" Command="{Binding SendHeading, Mode=TwoWay}" CommandParameter="{Binding Text, ElementName=txtEndSafe}" Width="50"/>
+                        <Button Content="전송" CommandParameter="{Binding Text, ElementName=txtEndSafe}" Width="50"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Current Value  : "/>
+                        <TextBox x:Name="txtValue" Text="{Binding Score, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="50"/>
+                        <Button Content="전송" CommandParameter="{Binding Text, ElementName=txtValue}" Width="50"/>
                     </StackPanel>
                 </StackPanel>
             </Border>

@@ -35,6 +35,13 @@ namespace CirclularGage.Main
             get { return _endtSafeZon; }
             set { _endtSafeZon = Convert.ToDouble(value); OnPropertyChagned(); }
         }
+        private double _score;
+
+        public double Score
+        {
+            get { return _score; }
+            set { _score = Convert.ToDouble(value); OnPropertyChagned(); }
+        }
 
         private ICommand _sendHeading;
         public ICommand SendHeading

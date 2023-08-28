@@ -339,7 +339,7 @@ namespace CirclularGage.Location.UI.Units
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(CircularGaugeControl), new FrameworkPropertyMetadata(typeof(CircularGaugeControl)));
         }
-        #region Draw
+        #region Draw       
         /// <summary>
         /// Control 생성시 만들어주는 Override
         /// </summary>
@@ -643,6 +643,8 @@ namespace CirclularGage.Location.UI.Units
         {
             CircularGaugeControl gauge = d as CircularGaugeControl;
             gauge.OnCurrentValueChanged(e);
+            gauge.DrawScale();
+            gauge.DrawRangeIndicator();
         }
         /// <summary>
         /// 게이지바 안전 상태 시작 설정부분 제한

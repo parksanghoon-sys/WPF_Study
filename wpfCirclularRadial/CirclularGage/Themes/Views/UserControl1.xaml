@@ -8,9 +8,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="154.611" d:DesignWidth="89.798">
     <UserControl.Resources>
-        <Style TargetType="{x:Type }">
-            <Setter Property="
-        </Style>
+
         <SolidColorBrush x:Key="WarningColor" Color="Lime"/>
     </UserControl.Resources>
     <Grid Height="150" Margin="0">
