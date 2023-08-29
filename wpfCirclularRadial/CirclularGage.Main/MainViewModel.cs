@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
@@ -49,13 +50,19 @@ namespace CirclularGage.Main
             get { return _sendHeading; }
             private set { _sendHeading = value;  }
         }
-        
+        public ObservableCollection<RectItem> RectItems { get; set; }
         public MainViewModel()
         {
             AirPortHeadingAngle = 12;
             EndSafeZon = 0;
             StartSafeZon = 0;
             SendHeading = new ParameterRelayCommand(btn => SendHeadingCommand(btn));
+
+            RectItems = new ObservableCollection<RectItem>();
+            RectItems.Add(RectItem.RectItemFactory(200, 50, 20, 30));
+            RectItems.Add(RectItem.RectItemFactory(200, 80, 10, 30));
+            RectItems.Add(RectItem.RectItemFactory(200, 20, 30, 30));
+            RectItems.Add(RectItem.RectItemFactory(200, 200, 30, 30));
         }
 
         private void SendHeadingCommand(object btn)
@@ -71,4 +78,17 @@ namespace CirclularGage.Main
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
+
+    public class RectItem
+    {
+        public double X { get; set; }
+        public double Y { get; set; }
+        public double Width { get; set; }
+        public double Height { get; set; }
+        public static RectItem RectItemFactory(double X, double Y, double width, double height)
+        {
+            return new RectItem { X = X, Y = Y, Width = width, Height = height };
+        }
+    }
+
 }
