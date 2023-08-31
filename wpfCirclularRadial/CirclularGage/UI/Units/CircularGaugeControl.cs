@@ -29,8 +29,8 @@ namespace CirclularGage.Location.UI.Units
         private Path rangeIndicator;
         private Path pointer;
         private bool isInitialValueSet = false;
-        private Double arcradius1;
-        private Double arcradius2;
+        private double arcradius1;
+        private double arcradius2;
         private int animatingSpeedFactor = 6;
         #endregion
         #region Dependency Properties
@@ -39,7 +39,7 @@ namespace CirclularGage.Location.UI.Units
             DependencyProperty.Register("GaugeBackgroundColor", typeof(Color), typeof(CircularGaugeControl), null);
 
         public static readonly DependencyProperty CurrentValueProperty =
-            DependencyProperty.Register("CurrentValue", typeof(double), typeof(CircularGaugeControl), new PropertyMetadata(Double.MinValue, new PropertyChangedCallback(CircularGaugeControl.OnCurrentValuePropertyChanged)));
+            DependencyProperty.Register("CurrentValue", typeof(double), typeof(CircularGaugeControl), new PropertyMetadata(double.MinValue, new PropertyChangedCallback(CircularGaugeControl.OnCurrentValuePropertyChanged)));
 
         public static readonly DependencyProperty MinValuePropertyProperty =
             DependencyProperty.Register("MinValue", typeof(double), typeof(CircularGaugeControl), new PropertyMetadata(null));
@@ -57,36 +57,24 @@ namespace CirclularGage.Location.UI.Units
 
         public static readonly DependencyProperty ScaleRadiusProperty =
             DependencyProperty.Register("ScaleRadius", typeof(double), typeof(CircularGaugeControl), null);
-        /// <summary>
-        /// 게이지 시작 각도
-        /// </summary>
+
         public static readonly DependencyProperty ScaleStartAngleProperty =
             DependencyProperty.Register("ScaleStartAngle", typeof(double), typeof(CircularGaugeControl), null);
 
         public static readonly DependencyProperty ScaleSweepAngleProperty =
             DependencyProperty.Register("ScaleSweepAngle", typeof(double), typeof(CircularGaugeControl), null);
 
-        /// <summary>
-        /// 게이지 표시 나누는 크게 나누는 라인 총 갯수 
-        /// </summary>
         public static readonly DependencyProperty MajorDivisionsCountProperty =
             DependencyProperty.Register("MajorDivisionsCount", typeof(double), typeof(CircularGaugeControl), new PropertyMetadata(null));
-        /// <summary>
-        /// 게이지 표시중 크게 나뉜 중간에 작게 표시되는 라인 총 갯수
-        /// </summary>
+
         public static readonly DependencyProperty MinorDivisionsCountProperty =
             DependencyProperty.Register("MinorDivisionsCount", typeof(double), typeof(CircularGaugeControl), new PropertyMetadata(null));
-        /// <summary>
-        /// 안전 게이지 끝값
-        /// </summary>
+
         public static readonly DependencyProperty OptimalRangeEndValueProperty =
            DependencyProperty.Register("OptimalRangeEndValue", typeof(double), typeof(CircularGaugeControl), new PropertyMetadata(new PropertyChangedCallback(CircularGaugeControl.OnOptimalRangeEndValuePropertyChanged)));
-        /// <summary>
-        /// 안전 게이지 시삭 값
-        /// </summary>
+
         public static readonly DependencyProperty OptimalRangeStartValueProperty =
            DependencyProperty.Register("OptimalRangeStartValue", typeof(double), typeof(CircularGaugeControl), new PropertyMetadata(new PropertyChangedCallback(CircularGaugeControl.OnOptimalRangeStartValuePropertyChanged)));
-
 
         public static readonly DependencyProperty RangeIndicatorRadiusProperty =
             DependencyProperty.Register("RangeIndicatorRadius", typeof(double), typeof(CircularGaugeControl), null);
@@ -94,68 +82,39 @@ namespace CirclularGage.Location.UI.Units
         public static readonly DependencyProperty RangeIndicatorThicknessProperty =
             DependencyProperty.Register("RangeIndicatorThickness", typeof(double), typeof(CircularGaugeControl), null);
 
-        /// <summary>
-        /// 게이지 라벨 반지름
-        /// </summary>
         public static readonly DependencyProperty ScaleLabelRadiusProperty =
             DependencyProperty.Register("ScaleLabelRadius", typeof(double), typeof(CircularGaugeControl), new PropertyMetadata(null));
-        /// <summary>
-        /// 게이지 라벨 위치
-        /// </summary>
+
         public static readonly DependencyProperty ScaleLabelSizeProperty =
             DependencyProperty.Register("ScaleLabelSize", typeof(Size), typeof(CircularGaugeControl), new PropertyMetadata(null));
-        /// <summary>
-        /// 게이지 라벨 글자 크기
-        /// </summary>
+
         public static readonly DependencyProperty ScaleLabelFontSizeProperty =
             DependencyProperty.Register("ScaleLabelFontSize", typeof(double), typeof(CircularGaugeControl), null);
-        /// <summary>
-        /// 게이지 라벨 글자 색상
-        /// </summary>
+
         public static readonly DependencyProperty ScaleLabelForegroundProperty =
             DependencyProperty.Register("ScaleLabelForeground", typeof(Color), typeof(CircularGaugeControl), null);
-        /// <summary>
-        /// 게이지 큰 라인 구분자 크기
-        /// </summary>
+
         public static readonly DependencyProperty MajorTickSizeProperty =
        DependencyProperty.Register("MajorTickSize", typeof(Size), typeof(CircularGaugeControl), null);
 
-        /// <summary>
-        /// 게이지 작은 라인 구분자 크기
-        /// </summary>
         public static readonly DependencyProperty MinorTickSizeProperty =
           DependencyProperty.Register("MinorTickSize", typeof(Size), typeof(CircularGaugeControl), null);
 
-        /// <summary>
-        /// 게이지 큰 라인 구분자 색상
-        /// </summary>
         public static readonly DependencyProperty MajorTickColorProperty =
            DependencyProperty.Register("MajorTickColor", typeof(Color), typeof(CircularGaugeControl), null);
 
-        /// <summary>
-        /// 게이지 작은 라인 구분자 색상
-        /// </summary>
         public static readonly DependencyProperty MinorTickColorProperty =
           DependencyProperty.Register("MinorTickColor", typeof(Color), typeof(CircularGaugeControl), null);
 
-        /// <summary>
-        /// 안전 게이지 바 색상
-        /// </summary>
         public static readonly DependencyProperty OptimalRangeColorProperty =
             DependencyProperty.Register("OptimalRangeColor", typeof(Color), typeof(CircularGaugeControl), null);
-        /// <summary>
-        /// 위험 게이지 바 색상
-        /// </summary>
+
         public static readonly DependencyProperty AboveOptimalRangeColorProperty =
             DependencyProperty.Register("AboveOptimalRangeColor", typeof(Color), typeof(CircularGaugeControl), null);
-        /// <summary>
-        /// Gauge 분해능
-        /// </summary>
+
         public static readonly DependencyProperty ScaleValuePrecisionProperty =
             DependencyProperty.Register("ScaleValuePrecision", typeof(int), typeof(CircularGaugeControl), null);
-        /// <summary>
-        /// Gauge 초기 생성 시 원점 여부
-        /// </summary>
+
         public static readonly DependencyProperty ResetPointerOnStartUpProperty =
             DependencyProperty.Register("ResetPointerOnStartUp", typeof(bool), typeof(CircularGaugeControl), new PropertyMetadata(false, null));
         #endregion
@@ -233,41 +192,65 @@ namespace CirclularGage.Location.UI.Units
             get { return (double)GetValue(ScaleSweepAngleProperty); }
             set { SetValue(ScaleSweepAngleProperty, value); }
         }
+        /// <summary>
+        /// Green 게이지 끝값
+        /// </summary>
         public double OptimalRangeEndValue
         {
             get { return (double)GetValue(OptimalRangeEndValueProperty); }
             set { SetValue(OptimalRangeEndValueProperty, value); }
         }
+        /// <summary>
+        /// Green 게이지 시작 값
+        /// </summary>
         public double OptimalRangeStartValue
         {
             get { return (double)GetValue(OptimalRangeStartValueProperty); }
             set { SetValue(OptimalRangeStartValueProperty, value); }
         }
+        /// <summary>
+        /// 게이지 시작 각도
+        /// </summary>
         public double ScaleStartAngle
         {
             get { return (double)GetValue(ScaleStartAngleProperty); }
             set { SetValue(ScaleStartAngleProperty, value); }
         }
+        /// <summary>
+        /// 게이지 라벨 반지름
+        /// </summary>
         public double ScaleLabelRadius
         {
             get { return (double)GetValue(ScaleLabelRadiusProperty); }
             set { SetValue(ScaleLabelRadiusProperty, value); }
         }
+        /// <summary>
+        /// 게이지 라벨 위치
+        /// </summary>
         public Size ScaleLabelSize
         {
             get { return (Size)GetValue(ScaleLabelSizeProperty); }
             set { SetValue(ScaleLabelSizeProperty, value); }
         }
+        /// <summary>
+        /// 게이지 라벨 글자 크기
+        /// </summary>
         public double ScaleLabelFontSize
         {
             get { return (double)GetValue(ScaleLabelFontSizeProperty); }
             set { SetValue(ScaleLabelFontSizeProperty, value); }
         }
+        /// <summary>
+        /// 게이지 메인 라인 인디게이터 총 갯수 
+        /// </summary>
         public double MajorDivisionsCount
         {
             get { return (double)GetValue(MajorDivisionsCountProperty); }
             set { SetValue(MajorDivisionsCountProperty, value); }
         }
+        /// <summary>
+        /// 게이지 서브 라인 인디게이터 총 갯수 
+        /// </summary>
         public double MinorDivisionsCount
         {
             get { return (double)GetValue(MinorDivisionsCountProperty); }
@@ -289,46 +272,73 @@ namespace CirclularGage.Location.UI.Units
             get { return (double)GetValue(RangeIndicatorThicknessProperty); }
             set { SetValue(RangeIndicatorThicknessProperty, value); }
         }
+        /// <summary>
+        /// 게이지 라벨 글자 색상
+        /// </summary>
         public Color ScaleLabelForeground
         {
             get { return (Color)GetValue(ScaleLabelForegroundProperty); }
             set { SetValue(ScaleLabelForegroundProperty, value); }
         }
+        /// <summary>
+        /// 게이지 큰 라인 구분자 크기
+        /// </summary>
         public Size MajorTickSize
         {
             get { return (Size)GetValue(MajorTickSizeProperty); }
             set { SetValue(MajorTickSizeProperty, value); }
         }
+        /// <summary>
+        /// 게이지 작은 라인 구분자 크기
+        /// </summary>
         public Size MinorTickSize
         {
             get { return (Size)GetValue(MinorTickSizeProperty); }
             set { SetValue(MinorTickSizeProperty, value); }
         }
+        /// <summary>
+        /// 게이지 큰 라인 구분자 색상
+        /// </summary>
         public Color MajorTickColor
         {
             get { return (Color)GetValue(MajorTickColorProperty); }
             set { SetValue(MajorTickColorProperty, value); }
         }
+        /// <summary>
+        /// 게이지 작은 라인 구분자 색상
+        /// </summary>
         public Color MinorTickColor
         {
             get { return (Color)GetValue(MinorTickColorProperty); }
             set { SetValue(MinorTickColorProperty, value); }
         }
+        /// <summary>
+        /// 안전 게이지 바 색상
+        /// </summary>
         public Color OptimalRangeColor
         {
             get { return (Color)GetValue(OptimalRangeColorProperty); }
             set { SetValue(OptimalRangeColorProperty, value); }
         }
+        /// <summary>
+        /// 위험 게이지 바 색상
+        /// </summary>
         public Color AboveOptimalRangeColor
         {
             get { return (Color)GetValue(AboveOptimalRangeColorProperty); }
             set { SetValue(AboveOptimalRangeColorProperty, value); }
         }
+        /// <summary>
+        /// Gauge 분해능
+        /// </summary>
         public int ScaleValuePrecision
         {
             get { return (int)GetValue(ScaleValuePrecisionProperty); }
             set { SetValue(ScaleValuePrecisionProperty, value); }
         }
+        /// <summary>
+        /// Gauge 초기 생성 시 원점 여부 불필요?
+        /// </summary>
         public bool ResetPointerOnStartUp
         {
             get { return (bool)GetValue(ResetPointerOnStartUpProperty); }
@@ -632,11 +642,7 @@ namespace CirclularGage.Location.UI.Units
                 }
 
             }
-        }
-        private void DraowScaleMajorTick(double angle)
-        {
-
-        }
+        }      
         #endregion
 
         private static void OnCurrentValuePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CirclularGage.Local.Enums
 {
-    public enum IntruderType
+    public enum DisplayMatrix
     {
         NoThreat,
         TA,

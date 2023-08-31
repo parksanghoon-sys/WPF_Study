@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CirclularGage.Local.Enums
 {
-    public enum IntruderVerticalMoveMentState
+    public enum IntruderVerticalSenseState
     {
         NoVerticalRate,
         Climbing,

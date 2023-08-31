@@ -8,7 +8,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="154.611" d:DesignWidth="89.798">
     <UserControl.Resources>
-
         <SolidColorBrush x:Key="WarningColor" Color="Lime"/>
     </UserControl.Resources>
     <Grid Height="150" Margin="0">
@@ -23,7 +22,7 @@
             </StackPanel.RenderTransform>
             <TextBlock x:Name="upTextBlock" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Text="-999" Foreground="{DynamicResource WarningColor}"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <ed:RegularPolygon x:Name="triangle" Height="8" InnerRadius="1" PointCount="4" Stretch="Fill" Width="8" Stroke="{DynamicResource WarningColor}" Visibility="Visible"/>
+                <ed:RegularPolygon x:Name="triangle" Height="8" InnerRadius="1" PointCount="4" Stretch="Fill" Width="8" Stroke="{DynamicResource WarningColor}" Visibility="Collapsed"/>
                 <ed:RegularPolygon x:Name="solidtriangle" Fill="{DynamicResource WarningColor}" Height="8" InnerRadius="1" PointCount="4" Stretch="Fill" Width="8" Visibility="Collapsed"/>
                 <Ellipse x:Name="eclipse" Fill="{DynamicResource WarningColor}" Height="8" Width="8" Margin="3,0,0,0" Visibility="Collapsed"/>
                 <Rectangle x:Name="rectangle" Fill="{DynamicResource WarningColor}" Height="8" Width="8" Margin="3,0,0,0" Visibility="Collapsed"/>

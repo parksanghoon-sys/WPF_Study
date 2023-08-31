@@ -3,27 +3,11 @@
                     xmlns:control="clr-namespace:CirclularGage.Location.UI.Units">
 
 
-    <Style x:Key="RectItemContentPresenterStyle" TargetType="ContentPresenter">
-        <Setter Property="Canvas.Left" Value="{Binding X}"/>
-        <Setter Property="Canvas.Top" Value="{Binding Y}"/>
-    </Style>
-
-    <DataTemplate x:Key="RectItemTemplate" >
-        <Rectangle Width="{Binding Width}" Height="{Binding Height}" Fill="Yellow">
-            <!--<Rectangle.RenderTransform>
-                <TransformGroup>
-                    <RotateTransform Angle="{Binding RectAngle}"/>
-                    <TranslateTransform X="{Binding X}" Y="{Binding Y}"/>
-                </TransformGroup>
-            </Rectangle.RenderTransform>-->
-        </Rectangle>
-    </DataTemplate>
     
     <Style TargetType="control:TcasIntruderItemsControl">
-        <Setter Property="HorizontalAlignment" Value="Center"/>
-        <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="ItemsSource" Value="{Binding RectItems}"/>
-        <Setter Property="SelectedItem" Value="{Binding RectItem}"/>
+        <!--<Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>-->
+        <Setter Property="ItemsSource" Value="{Binding IntruderItems}"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="ItemsPanel">
             <Setter.Value>
@@ -32,15 +16,15 @@
                 </ItemsPanelTemplate>
             </Setter.Value>
         </Setter>
-        <Setter Property="ItemContainerStyle" Value="{StaticResource RectItemContentPresenterStyle}"/>
-        <Setter Property="ItemTemplate" Value="{StaticResource RectItemTemplate}"/>
+        <!--<Setter Property="ItemContainerStyle" Value="{StaticResource RectItemContentPresenterStyle}"/>-->
+        <!--<Setter Property="ItemTemplate" Value="{StaticResource RectItemTemplate}"/>-->
+        <!--<Setter Property="ItemTemplate" Value="{S}"/>-->
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type control:TcasIntruderItemsControl}">
-                    <Grid>
-                        <ItemsPresenter/>
-                    </Grid>
+                    <ItemsPresenter/>
                 </ControlTemplate>
+                
             </Setter.Value>
         </Setter>
     </Style>

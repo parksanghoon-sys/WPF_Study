@@ -7,31 +7,11 @@
         xmlns:control="clr-namespace:CirclularGage.Location.UI.Units;assembly=CirclularGage"
         xmlns:uc="clr-namespace:CirclularGage.Themes.Views;assembly=CirclularGage"
         mc:Ignorable="d"        
-        Title="MainWindow" Height="450" Width="800">
-    <Window.Resources>
-        <ItemsControl x:Key="itemsControl" ItemsSource="{Binding RectItems}">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <Canvas/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Rectangle Width="{Binding Width}" Height="{Binding Height}" Fill="Yellow">
-                            <Rectangle.RenderTransform>
-                                <TransformGroup>
-                                    <TranslateTransform X="{Binding X}" Y="{Binding Y}"/>
-                                    <RotateTransform Angle="45"/>
-                                </TransformGroup>
-                            </Rectangle.RenderTransform>
-                        </Rectangle>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-    </Window.Resources>
+        Title="MainWindow" Height="450" Width="900">
+    
     <Grid Background="White">
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
+            
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
@@ -39,10 +19,9 @@
             <ColumnDefinition />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" >
+        <Grid Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Width="400" Height="400">
             <control:AirHeading HeadAngeleValue="{Binding AirPortHeadingAngle}" Panel.ZIndex="3" />
-            <control:CircularGaugeControl Radius="200" 
-                                        Margin="0 30 0 0"
+            <control:CircularGaugeControl Radius="{Binding GaugeRadius}"                                         
                                         Panel.ZIndex="2"
                                         ScaleRadius="150" 
                                         ScaleStartAngle="30" 
@@ -50,7 +29,7 @@
                                                                                                                       
                                         MinValue="-6" 
                                         MaxValue="6"                                         
-                                        MajorDivisionsCount="10" 
+                                        MajorDivisionsCount="12" 
                                         MinorDivisionsCount="10" 
                                         CurrentValue="{Binding Score}"                                                                                
                                         RangeIndicatorThickness="10"
@@ -60,7 +39,7 @@
                                         ScaleLabelSize="40,20"
                                         ScaleLabelFontSize="10"
                                         ScaleLabelForeground="LightGray"
-                                        
+                                        ScaleValuePrecision="1"
                                         MajorTickSize="10,3"
                                         MinorTickSize="3,1"
                                         MajorTickColor="LightGray"
@@ -72,7 +51,10 @@
                                         PointerThickness ="6"
                                           
                                         OptimalRangeStartValue="{Binding StartSafeZon}"
-                                        OptimalRangeEndValue="{Binding EndSafeZon}" />
+                                        OptimalRangeEndValue="{Binding EndSafeZon}" >
+                <control:TcasIntruderItemsControl Panel.ZIndex="1"/>
+            </control:CircularGaugeControl>
+
 
         </Grid>
         <!--<Canvas Grid.Column="0" Grid.Row="0" Grid.RowSpan="2">
@@ -106,13 +88,7 @@
                 </StackPanel>
             </Border>
         </Grid>
-        <Grid Grid.Column="0" Grid.Row="0" Grid.RowSpan="3">
-            <!--<uc:UserControl2/>-->
-            <Grid>
-                <control:TcasIntruderItemsControl/>
-            </Grid>
-            
-        </Grid>
+
     </Grid>
 
 </Window>

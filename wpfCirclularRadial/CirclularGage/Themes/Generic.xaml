@@ -6,5 +6,6 @@
         <ResourceDictionary Source="/CirclularGage;component/Themes/Units/CircularGaugeControl.xaml"/>
         <ResourceDictionary Source="/CirclularGage;component/Themes/Units/AirHeading.xaml"/>
         <ResourceDictionary Source="/CirclularGage;component/Themes/Units/TcasIntruderItemsControl.xaml"/>
+        <ResourceDictionary Source="/CirclularGage;component/Themes/Units/TcasIntruderItem.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

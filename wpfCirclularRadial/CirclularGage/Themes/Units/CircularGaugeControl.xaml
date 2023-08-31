@@ -74,6 +74,7 @@
                                 </LinearGradientBrush>
                             </Path.Fill>
                         </Path>
+                        <ContentPresenter/>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
