@@ -1,14 +1,7 @@
-﻿using CirclularGage.Local.Enums;
+﻿
+using CirclularGage.Location.Local.Enums;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace CirclularGage.Main
@@ -59,25 +52,25 @@ namespace CirclularGage.Main
             private set { _sendHeading = value; }
         }
         public ObservableCollection<IntruderModel> IntruderItems { get; set; }
+        public IntruderModel IntruderItem { get; set; }
         public MainViewModel()
         {
             AirPortHeadingAngle = 12;
             EndSafeZon = 0;
             StartSafeZon = 0;
             SendHeading = new ParameterRelayCommand(btn => SendHeadingCommand(btn));
-            GaugeRadius = 200;
+            GaugeRadius = 190;
 
             IntruderItems = new ObservableCollection<IntruderModel>();
-            var angle = 0;
-            var antTan = (angle * Math.PI) / 180;
-            double x = GaugeRadius + GaugeRadius * Math.Cos(antTan);
-            double y = GaugeRadius + GaugeRadius * Math.Sin(antTan);
+            var angle = 10;
+            var radianAngle = (angle * Math.PI) / 180;
+            double x = (GaugeRadius * Math.Cos(radianAngle) * 1);
+            double y = (GaugeRadius * Math.Sin(radianAngle) * 1);
 
-            IntruderItems.Add(IntruderModel.IntruderModelFactory(1, 150, 100, IntruderVerticalSenseState.NoVerticalRate, TcasSymbol.OtherTraffic, DisplayMatrix.NoThreat));
-            IntruderItems.Add(IntruderModel.IntruderModelFactory(2, 200, 150, IntruderVerticalSenseState.Climbing, TcasSymbol.ProximateTraffic, DisplayMatrix.NoThreat));
-            IntruderItems.Add(IntruderModel.IntruderModelFactory(3, 250, 120, IntruderVerticalSenseState.Descending, TcasSymbol.TrafficAdvisory, DisplayMatrix.NoThreat));
-            IntruderItems.Add(IntruderModel.IntruderModelFactory(4, x, y, IntruderVerticalSenseState.NoData, TcasSymbol.ResolutionAdvisorty, DisplayMatrix.NoThreat));
-
+            //IntruderItems.Add(IntruderModel.IntruderModelFactory(1, 15, -100, IntruderVerticalSenseState.NoVerticalRate, TcasSymbol.OtherTraffic, DisplayMatrix.NoThreat));
+            //IntruderItems.Add(IntruderModel.IntruderModelFactory(3, -50, 45, IntruderVerticalSenseState.Climbing, TcasSymbol.ProximateTraffic, DisplayMatrix.NoThreat));
+            //IntruderItems.Add(IntruderModel.IntruderModelFactory(5, 55, 50, IntruderVerticalSenseState.Descending, TcasSymbol.TrafficAdvisory, DisplayMatrix.NoThreat));
+            IntruderItems.Add(IntruderModel.IntruderModelFactory(6, x, y, IntruderVerticalSenseState.NoData, TcasSymbol.ResolutionAdvisorty, DisplayMatrix.NoThreat));
         }
 
         private void SendHeadingCommand(object btn)
@@ -123,6 +116,17 @@ namespace CirclularGage.Main
             set { _intruderVerticalMoveMentState = value; OnPropertyChagned(); }
         }
         /// <summary>
+        /// 항고기 Heading 기준 Intruder 위치 각도??
+        /// </summary>
+        private double _bearing;
+
+        public double Bearing
+        {
+            get { return _bearing; }
+            set { _bearing = value; OnPropertyChagned(); }
+        }
+
+        /// <summary>
         /// Intruder 종류
         /// </summary>
         public TcasSymbol IntruderType { get; set; }
@@ -130,10 +134,8 @@ namespace CirclularGage.Main
         /// Intruder 무전 타입?
         /// </summary>
         public DisplayMatrix IntruderDisplay { get; set; }
-        /// <summary>
-        /// 항고기 Heading 기준 Intruder 위치 각도??
-        /// </summary>
-        public double Bearing { get; set; }
+        
+        
         public static IntruderModel IntruderModelFactory(int index, double rnagne, double altitude, IntruderVerticalSenseState verticalState,
             TcasSymbol symbol, DisplayMatrix matrix, double bearing = 0)
             => new IntruderModel()

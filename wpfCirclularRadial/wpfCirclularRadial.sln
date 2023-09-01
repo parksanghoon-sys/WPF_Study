@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CirclularGage.Location", "CirclularGage\CirclularGage.Location.csproj", "{FB857336-5831-4639-AD69-6C294B820C2C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CirclularGage.Location", "CirclularGage.Location\CirclularGage.Location.csproj", "{FB857336-5831-4639-AD69-6C294B820C2C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CirclularGage.Main", "CirclularGage.Main\CirclularGage.Main.csproj", "{555255E6-A09A-4578-9F6C-DCDCEDA03479}"
 EndProject

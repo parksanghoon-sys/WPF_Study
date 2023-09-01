@@ -98,7 +98,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CirclularGage\CirclularGage.Location.csproj">
+    <ProjectReference Include="..\CirclularGage.Location\CirclularGage.Location.csproj">
       <Project>{fb857336-5831-4639-ad69-6c294b820c2c}</Project>
       <Name>CirclularGage.Location</Name>
     </ProjectReference>

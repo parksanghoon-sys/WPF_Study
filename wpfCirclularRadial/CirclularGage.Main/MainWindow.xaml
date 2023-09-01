@@ -4,14 +4,17 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CirclularGage.Main"
-        xmlns:control="clr-namespace:CirclularGage.Location.UI.Units;assembly=CirclularGage"
-        xmlns:uc="clr-namespace:CirclularGage.Themes.Views;assembly=CirclularGage"
+        xmlns:control="clr-namespace:CirclularGage.Location.UI.Units;assembly=CirclularGage.Location"        
         mc:Ignorable="d"        
-        Title="MainWindow" Height="450" Width="900">
-    
-    <Grid Background="White">
+        Title="MainWindow" Height="450" Width="1100">
+    <Window.Resources>
+        <LinearGradientBrush x:Key="TCAS.BG" StartPoint="0.5,0" EndPoint="0.5,1">
+            <GradientStop Color="#181D20" Offset="0"/>
+            <GradientStop Color="#1F1D20" Offset="1"/>
+        </LinearGradientBrush>
+    </Window.Resources>
+    <Grid Background="{StaticResource TCAS.BG}">
         <Grid.RowDefinitions>
-            
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
@@ -19,51 +22,48 @@
             <ColumnDefinition />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
+
         <Grid Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Width="400" Height="400">
             <control:AirHeading HeadAngeleValue="{Binding AirPortHeadingAngle}" Panel.ZIndex="3" />
-            <control:CircularGaugeControl Radius="{Binding GaugeRadius}"                                         
-                                        Panel.ZIndex="2"
-                                        ScaleRadius="150" 
-                                        ScaleStartAngle="30" 
-                                        ScaleSweepAngle="300"
+
+            <control:CircularGaugeControl Radius="{Binding GaugeRadius}"
+                                              Panel.ZIndex="2"
+                                              ScaleRadius="150" 
+                                              ScaleStartAngle="30" 
+                                              ScaleSweepAngle="300"
                                                                                                                       
-                                        MinValue="-6" 
-                                        MaxValue="6"                                         
-                                        MajorDivisionsCount="12" 
-                                        MinorDivisionsCount="10" 
-                                        CurrentValue="{Binding Score}"                                                                                
-                                        RangeIndicatorThickness="10"
-                                        RangeIndicatorRadius="100"
+                                              MinValue="-6" 
+                                              MaxValue="6"                                         
+                                              MajorDivisionsCount="12" 
+                                              MinorDivisionsCount="10" 
+                                              CurrentValue="{Binding Score}"                                                                                
+                                              RangeIndicatorThickness="10"
+                                              RangeIndicatorRadius="100"
                               
-                                        ScaleLabelRadius="170"
-                                        ScaleLabelSize="40,20"
-                                        ScaleLabelFontSize="10"
-                                        ScaleLabelForeground="LightGray"
-                                        ScaleValuePrecision="1"
-                                        MajorTickSize="10,3"
-                                        MinorTickSize="3,1"
-                                        MajorTickColor="LightGray"
-                                        MinorTickColor="LightGray"
+                                              ScaleLabelRadius="170"
+                                              ScaleLabelSize="40,20"
+                                              ScaleLabelFontSize="10"
+                                              ScaleLabelForeground="LightGray"
+                                              ScaleValuePrecision="1"
+                                              MajorTickSize="10,3"
+                                              MinorTickSize="3,1"
+                                              MajorTickColor="LightGray"
+                                              MinorTickColor="LightGray"
                                         
-                                        GaugeBackgroundColor="Black"
+                                              GaugeBackgroundColor="Black"
                                           
-                                        PointerLength="100"                                             
-                                        PointerThickness ="6"
+                                              PointerLength="100"                                             
+                                              PointerThickness ="6"
                                           
-                                        OptimalRangeStartValue="{Binding StartSafeZon}"
-                                        OptimalRangeEndValue="{Binding EndSafeZon}" >
-                <control:TcasIntruderItemsControl Panel.ZIndex="1"/>
+                                              OptimalRangeStartValue="{Binding StartSafeZon}"
+                                              OptimalRangeEndValue="{Binding EndSafeZon}" >
+                <control:TcasIntruderItemsControl Panel.ZIndex="1"  />
             </control:CircularGaugeControl>
-
-
         </Grid>
-        <!--<Canvas Grid.Column="0" Grid.Row="0" Grid.RowSpan="2">
-            <Rectangle Canvas.Top="136" Canvas.Left="182" Fill="Blue" Stroke="Red" StrokeThickness="1" Height="50" Width="20" Panel.ZIndex="-1"/>
-        </Canvas>-->
-        <Grid Grid.Column="1" Grid.Row="1" Margin="3">
-            <Border BorderThickness="1" BorderBrush="Black">
+        <Grid Grid.Column="1" Grid.Row="0" Margin="3">
+            <Border BorderThickness="1" BorderBrush="White">
                 <StackPanel Orientation="Vertical">
-                    <TextBlock Text="TcasControl Test" FontSize="15" 
+                    <TextBlock Text="Gauge Setting" FontSize="15" Foreground="White"
                                TextAlignment="Center" FontWeight="Bold"/>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Heading   : "/>
@@ -88,7 +88,14 @@
                 </StackPanel>
             </Border>
         </Grid>
-
+        <Grid Grid.Column="1" Grid.Row="1" Margin="3">
+            <Border BorderBrush="White" BorderThickness="1">
+                <StackPanel>
+                    <TextBlock Text="Intruder List" FontSize="15" Foreground="White"
+                               TextAlignment="Center" FontWeight="Bold"/>
+                    <control:TcasIntruderSettingListBox/>
+                </StackPanel>
+            </Border>
+        </Grid>
     </Grid>
-
 </Window>
