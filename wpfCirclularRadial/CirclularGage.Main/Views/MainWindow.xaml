@@ -1,0 +1,208 @@
+﻿<Window x:Class="CirclularGage.Main.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CirclularGage.Main"
+        xmlns:control="clr-namespace:CirclularGage.Location.UI.Units;assembly=CirclularGage.Location"
+        xmlns:convert="clr-namespace:CirclularGage.Location.Local.Converters;assembly=CirclularGage.Location"
+        xmlns:enum="clr-namespace:CirclularGage.Location.Local.Enums;assembly=CirclularGage.Location"
+        mc:Ignorable="d"        
+        Title="MainWindow" Height="700" Width="1100">
+    <Window.Resources>
+        <convert:RadioBoolToEnumConvert x:Key="RadioBoolToEnumConvert"/>
+        
+        <LinearGradientBrush x:Key="TCAS.BG" StartPoint="0.5,0" EndPoint="0.5,1">
+            <GradientStop Color="#181D20" Offset="0"/>
+            <GradientStop Color="#1F1D20" Offset="1"/>
+        </LinearGradientBrush>
+        
+        <Style TargetType="{x:Type TextBlock}">
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+        </Style>
+
+        <Style TargetType="{x:Type RadioButton}">
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+            <Setter Property="Margin" Value="13 0 0 0"/>
+        </Style>
+        
+        <Style x:Key="TCasRange" TargetType="{x:Type ContentControl}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ContentControl}">
+                        <Grid>
+                            <Border BorderBrush="White" BorderThickness="0 1 0 1"                                     
+                                    CornerRadius="3">
+                                <TextBlock FontSize="15" Foreground="#FFFFFF">
+                                    <Run Text="RNG  "/>
+                                    <Run Text="{Binding TCasDisplayRange}"/>
+                                </TextBlock>
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+    </Window.Resources>
+    <Grid Background="{StaticResource TCAS.BG}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="250"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <Grid x:Name="circle" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Width="400" Height="400">
+            <control:AirHeading HeadAngeleValue="{Binding AirPortHeadingAngle}" 
+                                Panel.ZIndex="3" 
+                                Margin="0 100 0 0"/>
+            <ContentControl Style="{StaticResource TCasRange}" HorizontalAlignment="Right" 
+                            VerticalAlignment="Top" Margin="10 10"/>
+
+            <control:CircularGaugeControl Radius="{Binding GaugeRadius}"       
+                                          Panel.ZIndex="2"
+                                          ScaleRadius="125" 
+                                          ScaleStartAngle="30" 
+                                          ScaleSweepAngle="300"
+                                                                                                                      
+                                          MinValue="-6" 
+                                          MaxValue="6"                                         
+                                          MajorDivisionsCount="12" 
+                                          MinorDivisionsCount="10" 
+                                          CurrentValue="{Binding Score}"                                                                                
+                                          RangeIndicatorThickness="5"
+                                          RangeIndicatorRadius="120"
+                              
+                                          ScaleLabelRadius="110"
+                                          ScaleLabelSize="40,20"
+                                          ScaleLabelFontSize="10"
+                                          ScaleLabelForeground="LightGray"
+                                          ScaleValuePrecision="1"
+                                          MajorTickSize="10,3"
+                                          MinorTickSize="3,1"
+                                          MajorTickColor="LightGray"
+                                          MinorTickColor="LightGray"
+                                        
+                                          GaugeBackgroundColor="Black"
+                                          
+                                          PointerLength="100"                                             
+                                          PointerThickness ="5"
+                                          
+                                          OptimalRangeStartValue="{Binding StartSafeZoon}"
+                                          OptimalRangeEndValue="{Binding EndSafeZoon}" 
+                                          WarningRangeStartValue="{Binding StartWarningZoon}"
+                                          WarningRangeEndValue="{Binding EndWarningZoon}">
+                <control:TcasIntruderItemsControl x:Name="TcasIntruderItems" Panel.ZIndex="4" />
+            </control:CircularGaugeControl>
+
+        </Grid>
+        <Grid Grid.Column="1" Grid.Row="0" Margin="3">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <TextBlock  Text="Gauge Setting" 
+                           FontSize="15" Foreground="White" TextAlignment="Center" FontWeight="Bold"/>
+            </Grid>
+
+            <Grid Grid.Row="1" Margin="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="Heading   : "/>
+                <Slider Grid.Column="1"
+                        Style="{StaticResource CustomSliderStyle}" Maximum="360" Minimum="0" 
+                        TickFrequency="0.1" IsSnapToTickEnabled="True" Value="{Binding AirPortHeadingAngle}"/>
+            </Grid>
+            <Grid Grid.Row="2" Margin="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="Start Safe : "/>
+                <control:NumericUpDownControl Grid.Column="1" MaxValue="6" MinValue="-6" Foreground="Wheat"
+                                              StepSize="0.1" FormatString="F2" IsReadOnly="True" 
+                                              NumberStyle="None" Value="{Binding StartSafeZoon, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock Grid.Column="2" Text="~" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <control:NumericUpDownControl Grid.Column="3" MaxValue="6" MinValue="-6" Foreground="Wheat"
+                                              StepSize="0.1" FormatString="F2" IsReadOnly="True" 
+                                              NumberStyle="None" Value="{Binding EndSafeZoon, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            </Grid>
+            <Grid Grid.Row="3" Margin="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="Start Warning : "/>
+                <control:NumericUpDownControl Grid.Column="1" MaxValue="6" MinValue="-6" Foreground="Wheat"
+                                              StepSize="0.1" FormatString="F2" IsReadOnly="True" 
+                                              NumberStyle="None" Value="{Binding StartWarningZoon, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock Grid.Column="2" Text="~" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <control:NumericUpDownControl Grid.Column="3" MaxValue="6" MinValue="-6" Foreground="Wheat"
+                                              StepSize="0.1" FormatString="F2" IsReadOnly="True" 
+                                              NumberStyle="None" Value="{Binding EndWarningZoon, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            </Grid>
+            <Grid Grid.Row="4" Margin="3">
+                <StackPanel Orientation="Horizontal">
+                    <RadioButton Content="10nm" IsChecked="{Binding Path=TcasDisplayRangeValue, 
+                        Converter={StaticResource RadioBoolToEnumConvert},  
+                        ConverterParameter={x:Static enum:TcasDisplayRange.TcasDisplayRange10nm}, 
+                        Mode=TwoWay}"/>
+                    <RadioButton Content="20nm" IsChecked="{Binding Path=TcasDisplayRangeValue, 
+                        Converter={StaticResource RadioBoolToEnumConvert}, 
+                        ConverterParameter={x:Static enum:TcasDisplayRange.TcasDisplayRange20nm},
+                        Mode=TwoWay}"/>
+                    <RadioButton Content="40nm" IsChecked="{Binding Path=TcasDisplayRangeValue, 
+                        Converter={StaticResource RadioBoolToEnumConvert}, 
+                        ConverterParameter={x:Static enum:TcasDisplayRange.TcasDisplayRange40nm},
+                        Mode=TwoWay}"/>
+                    <RadioButton Content="80nm" IsChecked="{Binding Path=TcasDisplayRangeValue, 
+                        Converter={StaticResource RadioBoolToEnumConvert}, 
+                        ConverterParameter={x:Static enum:TcasDisplayRange.TcasDisplayRange80nm},
+                        Mode=TwoWay}"/>
+                </StackPanel>
+            </Grid>
+
+            <Grid Grid.Row="5" Margin="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="Current Value : "/>
+                <Slider Grid.Column="1"
+                        Style="{StaticResource CustomSliderStyle}" Maximum="6" Minimum="-6" 
+                        TickFrequency="0.1" IsSnapToTickEnabled="True" Value="{Binding Score}"/>
+            </Grid>
+
+        </Grid>
+        <Grid Grid.Column="1" Grid.Row="1" Margin="3">
+            <Border BorderBrush="White" BorderThickness="1">
+                <local:TcasSettingView/>
+            </Border>
+        </Grid>
+        <Grid  Grid.Row="3" Grid.ColumnSpan="2" Margin="3">
+            <Border BorderBrush="White" BorderThickness="1">
+                <StackPanel>
+                    <TextBlock Text="Intruder List" FontSize="15" Foreground="White"
+                               TextAlignment="Center" FontWeight="Bold"/>
+                    <control:TcasIntruderSettingListBox HorizontalAlignment="Center" Height="220" />
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Grid>
+</Window>

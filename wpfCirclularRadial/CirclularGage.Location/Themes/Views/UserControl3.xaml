@@ -9,7 +9,7 @@
              d:DesignHeight="150" d:DesignWidth="40">
     <UserControl.Resources>
         <SolidColorBrush x:Key="WarningColor" Color="Lime"/>
-        <SolidColorBrush x:Key="OtherTrafficColor" Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="OtherTrafficColor" Color="#40E0D0"/>
         <SolidColorBrush x:Key="TrafficAdvisoryColor" Color="#FFFF00"/>
         <SolidColorBrush x:Key="ResolutionAdvisoryColor" Color="#FF0000"/>
         <Geometry x:Key="Arrow">

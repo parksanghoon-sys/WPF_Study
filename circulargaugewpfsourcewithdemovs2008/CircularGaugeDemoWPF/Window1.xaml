@@ -61,8 +61,8 @@
                                         MinorTickColor="LightGray"                                  
                                         GaugeBackgroundColor="Black"
                                         PointerThickness ="6"
-                                        OptimalRangeStartValue="0"
-                                        OptimalRangeEndValue="0" 
+                                        OptimalRangeStartValue="-5"
+                                        OptimalRangeEndValue="-2" 
                                         DialTextOffset="40"
                                         
                                         >

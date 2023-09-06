@@ -14,7 +14,7 @@ namespace CirclularGage.Location.Local.Converters
         {
             if ( value is double X)
             {
-                return X + 15;
+                return X - 13;
             }
             return null;
         }
@@ -28,9 +28,9 @@ namespace CirclularGage.Location.Local.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is double X)
+            if (value is double Y)
             {
-                return X + 20;
+                return Y - 17;
             }
             return null;
         }

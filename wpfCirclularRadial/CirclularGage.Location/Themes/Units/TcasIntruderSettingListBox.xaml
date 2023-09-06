@@ -48,6 +48,7 @@
 
     <Style TargetType="{x:Type ScrollViewer}" x:Key="ScrollViewerStyle">
         <Setter Property="Grid.Row" Value="1"/>
+        <Setter Property="HorizontalScrollBarVisibility" Value="Auto"/>
         <Setter Property="Grid.ColumnSpan" Value="6"/>
         <Setter Property="HorizontalScrollBarVisibility" Value="Disabled"/>
     </Style>
@@ -72,12 +73,12 @@
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="50" SharedSizeGroup="A"/>
-                            <ColumnDefinition Width="120" SharedSizeGroup="B"/>
-                            <ColumnDefinition Width="130" SharedSizeGroup="C"/>
-                            <ColumnDefinition Width="60" SharedSizeGroup="D"/>
-                            <ColumnDefinition Width="60" SharedSizeGroup="E"/>
-                            <ColumnDefinition Width="60" SharedSizeGroup="F"/>
+                            <ColumnDefinition Width="80" SharedSizeGroup="A"/>
+                            <ColumnDefinition Width="150" SharedSizeGroup="B"/>
+                            <ColumnDefinition Width="150" SharedSizeGroup="C"/>
+                            <ColumnDefinition Width="100" SharedSizeGroup="D"/>
+                            <ColumnDefinition Width="100" SharedSizeGroup="E"/>
+                            <ColumnDefinition Width="100" SharedSizeGroup="F"/>
                         </Grid.ColumnDefinitions>
 
                         <Label Style="{StaticResource IndexLabelStyle}"/>

@@ -16,10 +16,10 @@ namespace CirclularGage.Location.Local.Converters
             switch (intruderType)
             {
                 case TcasSymbol.OtherTraffic:
-                    bgColor.Color = Colors.White;
+                    bgColor.Color = Color.FromRgb(64,224,208);
                     break;
                 case TcasSymbol.ProximateTraffic:
-                    bgColor.Color = Colors.White;
+                    bgColor.Color = Color.FromRgb(64, 224, 208);
                     break;
                 case TcasSymbol.TrafficAdvisory:
                     bgColor.Color = Colors.Yellow;

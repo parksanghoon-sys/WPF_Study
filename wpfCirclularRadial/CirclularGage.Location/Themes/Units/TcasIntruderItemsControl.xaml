@@ -13,7 +13,8 @@
         <Setter Property="ItemsPanel">
             <Setter.Value>
                 <ItemsPanelTemplate>
-                    <Canvas/>
+                    <Canvas>
+                    </Canvas>
                 </ItemsPanelTemplate>
             </Setter.Value>
         </Setter>

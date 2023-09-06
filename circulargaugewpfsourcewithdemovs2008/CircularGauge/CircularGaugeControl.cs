@@ -1319,7 +1319,7 @@ namespace CircularGauge
             Point C = GetCircumferencePoint(optimalStartAngleFromStart, arcradius2);
             Point D = GetCircumferencePoint(optimalStartAngleFromStart, arcradius1);
 
-            bool isReflexAngle = Math.Abs(optimalStartAngleFromStart - ScaleStartAngle) > 180.0;
+            bool isReflexAngle =  Math.Abs(optimalStartAngleFromStart - ScaleStartAngle) > 180.0;
             //DrawSegment(A, B, C, D, isReflexAngle, BelowOptimalRangeColor);
 
             // Calculating the Points for the Optimal Range segment from the center of the gauge
@@ -1328,7 +1328,7 @@ namespace CircularGauge
             Point B1 = GetCircumferencePoint(optimalStartAngleFromStart, arcradius2);
             Point C1 = GetCircumferencePoint(optimalEndAngleFromStart, arcradius2);
             Point D1 = GetCircumferencePoint(optimalEndAngleFromStart, arcradius1);
-            bool isReflexAngle1 = Math.Abs(optimalEndAngleFromStart - optimalStartAngleFromStart) > 180.0;
+            bool isReflexAngle1 =  Math.Abs(optimalEndAngleFromStart - optimalStartAngleFromStart) > 180.0;
             DrawSegment(A1, B1, C1, D1, isReflexAngle1, OptimalRangeColor);
 
             // Calculating the Points for the Above Optimal Range segment from the center of the gauge

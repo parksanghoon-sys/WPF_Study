@@ -10,6 +10,10 @@
 
         <ResourceDictionary Source="/CirclularGage.Location;component/Themes/Units/TcasIntruderSettingListBox.xaml"/>
         <ResourceDictionary Source="/CirclularGage.Location;component/Themes/Units/TcasIntruderSettingListItem.xaml"/>
+
+        <ResourceDictionary Source="/CirclularGage.Location;component/Themes/Units/InputBaseUpDown.xaml"/>
+        <ResourceDictionary Source="/CirclularGage.Location;component/Themes/Units/NumericRepeatButtonControl.xaml"/>
+        
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>
  

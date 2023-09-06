@@ -11,12 +11,14 @@ namespace CirclularGage.Location.UI.Units
     [TemplatePart(Name = "Pointer", Type = typeof(Path))]
     public class CircularGaugeControl : ContentControl
     {
+        private enum IndicatorType { OptimalIndicator, WarningIndicator }
         #region Private 변수
         /// <summary>
         /// GauageControl Rander 하는데 필요한 Variables
         /// </summary>
         private Grid rootGrid;
-        private Path rangeIndicator;
+        private Path optimalRangeIndicator;
+        private Path warningRangeIndicator;
         private Path pointer;
         private bool isInitialValueSet = false;
         private double arcradius1;
@@ -29,7 +31,8 @@ namespace CirclularGage.Location.UI.Units
             DependencyProperty.Register("GaugeBackgroundColor", typeof(Color), typeof(CircularGaugeControl), null);
 
         public static readonly DependencyProperty CurrentValueProperty =
-            DependencyProperty.Register("CurrentValue", typeof(double), typeof(CircularGaugeControl), new PropertyMetadata(double.MinValue, new PropertyChangedCallback(CircularGaugeControl.OnCurrentValuePropertyChanged)));
+            DependencyProperty.Register("CurrentValue", typeof(double), typeof(CircularGaugeControl), 
+                new PropertyMetadata(double.MinValue, new PropertyChangedCallback(CircularGaugeControl.OnCurrentValuePropertyChanged)));
 
         public static readonly DependencyProperty MinValuePropertyProperty =
             DependencyProperty.Register("MinValue", typeof(double), typeof(CircularGaugeControl), new PropertyMetadata(null));
@@ -59,12 +62,23 @@ namespace CirclularGage.Location.UI.Units
 
         public static readonly DependencyProperty MinorDivisionsCountProperty =
             DependencyProperty.Register("MinorDivisionsCount", typeof(double), typeof(CircularGaugeControl), new PropertyMetadata(null));
-
+        
         public static readonly DependencyProperty OptimalRangeEndValueProperty =
-           DependencyProperty.Register("OptimalRangeEndValue", typeof(double), typeof(CircularGaugeControl), new PropertyMetadata(new PropertyChangedCallback(CircularGaugeControl.OnOptimalRangeEndValuePropertyChanged)));
+           DependencyProperty.Register("OptimalRangeEndValue", typeof(double), typeof(CircularGaugeControl), 
+               new PropertyMetadata(new PropertyChangedCallback(CircularGaugeControl.OnOptimalRangeEndValuePropertyChanged)));
 
         public static readonly DependencyProperty OptimalRangeStartValueProperty =
-           DependencyProperty.Register("OptimalRangeStartValue", typeof(double), typeof(CircularGaugeControl), new PropertyMetadata(new PropertyChangedCallback(CircularGaugeControl.OnOptimalRangeStartValuePropertyChanged)));
+           DependencyProperty.Register("OptimalRangeStartValue", typeof(double), typeof(CircularGaugeControl), 
+               new PropertyMetadata(new PropertyChangedCallback(CircularGaugeControl.OnOptimalRangeStartValuePropertyChanged)));
+
+        public static readonly DependencyProperty WarningRangeStartValueProperty =
+            DependencyProperty.Register("WarningRangeStartValue", typeof(double), typeof(CircularGaugeControl), 
+                new PropertyMetadata(new PropertyChangedCallback(CircularGaugeControl.OnWarningRangeStartValuePropertyChanged)));
+
+
+        public static readonly DependencyProperty WarningRangeEndValueProperty =
+            DependencyProperty.Register("WarningRangeEndValue", typeof(double), typeof(CircularGaugeControl), 
+                new PropertyMetadata(new PropertyChangedCallback(CircularGaugeControl.OnWarningRangeEndValuePropertyChanged)));
 
         public static readonly DependencyProperty RangeIndicatorRadiusProperty =
             DependencyProperty.Register("RangeIndicatorRadius", typeof(double), typeof(CircularGaugeControl), null);
@@ -197,6 +211,22 @@ namespace CirclularGage.Location.UI.Units
         {
             get { return (double)GetValue(OptimalRangeStartValueProperty); }
             set { SetValue(OptimalRangeStartValueProperty, value); }
+        }
+        /// <summary>
+        /// 위험 게이지 시작값
+        /// </summary>
+        public double WarningRangeEndValue
+        {
+            get { return (double)GetValue(WarningRangeEndValueProperty); }
+            set { SetValue(WarningRangeEndValueProperty, value); }
+        }
+        /// <summary>
+        /// 위험 게이지 끝값
+        /// </summary>
+        public double WarningRangeStartValue
+        {
+            get { return (double)GetValue(WarningRangeStartValueProperty); }
+            set { SetValue(WarningRangeStartValueProperty, value); }
         }
         /// <summary>
         /// 게이지 시작 각도
@@ -351,7 +381,8 @@ namespace CirclularGage.Location.UI.Units
             pointer = GetTemplateChild("Pointer") as Path;
 
             DrawScale();
-            DrawRangeIndicator();
+            DrawRangeIndicator(OptimalRangeStartValue, OptimalRangeEndValue, IndicatorType.OptimalIndicator);
+            DrawRangeIndicator(WarningRangeStartValue, WarningRangeEndValue, IndicatorType.WarningIndicator);
 
             Canvas.SetZIndex(pointer, 100000);
             if (ResetPointerOnStartUp)
@@ -360,69 +391,62 @@ namespace CirclularGage.Location.UI.Units
         /// <summary>
         /// Indicator 생성 (게이지 바)
         /// </summary>
-        private void DrawRangeIndicator()
+        private void DrawRangeIndicator(double startRange, double endRange, IndicatorType indicatorType)
         {
-            if (OptimalRangeStartValue == 0 && OptimalRangeEndValue == 0)
-                return;
-
+            if (startRange == 0 && endRange == 0) return;
             double realworldunit = (ScaleSweepAngle / (MaxValue - MinValue));
-            double optimalStartAngle;
-            double optimalEndAngle;
+            double startAngle;
+            double endAngle;
             double db;
-            
-            if (OptimalRangeStartValue < 0)
-            {
-                db = MinValue + Math.Abs(OptimalRangeStartValue);
-                optimalStartAngle = ((double)(Math.Abs(db * realworldunit)));
-            }
-            else
-            {
-                db = Math.Abs(MinValue) + OptimalRangeStartValue;
-                optimalStartAngle = ((double)(db * realworldunit));
-            }
-            
-            if (OptimalRangeEndValue < 0)
-            {
-                db = MinValue + Math.Abs(OptimalRangeEndValue);
-                optimalEndAngle = ((double)(Math.Abs(db * realworldunit)));
-            }
-            else
-            {
-                db = Math.Abs(MinValue) + OptimalRangeEndValue;
-                optimalEndAngle = ((double)(db * realworldunit));
-            }
-            
-            double optimalStartAngleFromStart = (ScaleStartAngle + optimalStartAngle);            
 
-            double optimalEndAngleFromStart = (ScaleStartAngle + optimalEndAngle);
-            
+            if (startRange < 0)
+            {
+                db = MinValue + Math.Abs(startRange);
+                startAngle = ((double)(Math.Abs(db * realworldunit)));
+            }
+            else
+            {
+                db = Math.Abs(MinValue) + startRange;
+                startAngle = ((double)(db * realworldunit));
+            }
+
+            if (endRange < 0)
+            {
+                db = MinValue + Math.Abs(endRange);
+                endAngle = ((double)(Math.Abs(db * realworldunit)));
+            }
+            else
+            {
+                db = Math.Abs(MinValue) + endRange;
+                endAngle = ((double)(db * realworldunit));
+            }
+            double startAngleFromStart = (ScaleStartAngle + startAngle);
+
+            double endAngleFromStart = (ScaleStartAngle + endAngle);
+
             arcradius1 = (RangeIndicatorRadius + RangeIndicatorThickness);
             arcradius2 = RangeIndicatorRadius;
 
-            double endAngle = ScaleStartAngle + ScaleSweepAngle;
+            double rangeEndAngle = ScaleStartAngle + ScaleSweepAngle;
 
-            Point A = GetCircumferencePoint(ScaleStartAngle, arcradius1);
-            Point B = GetCircumferencePoint(ScaleStartAngle, arcradius2);
-            Point C = GetCircumferencePoint(optimalStartAngleFromStart, arcradius2);
-            Point D = GetCircumferencePoint(optimalStartAngleFromStart, arcradius1);
+            Color indigatorColor;
 
-            bool isReflexAngle = Math.Abs(optimalStartAngleFromStart - ScaleStartAngle) > 180.0;
-            DrawSegment(A, B, C, D, isReflexAngle, AboveOptimalRangeColor);
-
-            Point A1 = GetCircumferencePoint(optimalStartAngleFromStart, arcradius1);
-            Point B1 = GetCircumferencePoint(optimalStartAngleFromStart, arcradius2);
-            Point C1 = GetCircumferencePoint(optimalEndAngleFromStart, arcradius2);
-            Point D1 = GetCircumferencePoint(optimalEndAngleFromStart, arcradius1);
-            bool isReflexAngle1 = Math.Abs(optimalEndAngleFromStart - optimalStartAngleFromStart) > 180.0;
-            DrawSegment(A1, B1, C1, D1, isReflexAngle1, OptimalRangeColor);
-
-            Point A2 = GetCircumferencePoint(optimalEndAngleFromStart, arcradius1);
-            Point B2 = GetCircumferencePoint(optimalEndAngleFromStart, arcradius2);
-            Point C2 = GetCircumferencePoint(endAngle, arcradius2);
-            Point D2 = GetCircumferencePoint(endAngle, arcradius1);
-            bool isReflexAngle2 = Math.Abs(endAngle - optimalEndAngleFromStart) > 180.0;
-            DrawSegment(A2, B2, C2, D2, isReflexAngle2, AboveOptimalRangeColor);
+            if (indicatorType == IndicatorType.OptimalIndicator)
+            {
+                indigatorColor = OptimalRangeColor;
+            }
+            else
+            {
+                indigatorColor = AboveOptimalRangeColor;
+            }
+            Point A1 = GetCircumferencePoint(startAngleFromStart, arcradius1);
+            Point B1 = GetCircumferencePoint(startAngleFromStart, arcradius2);
+            Point C1 = GetCircumferencePoint(endAngleFromStart, arcradius2);
+            Point D1 = GetCircumferencePoint(endAngleFromStart, arcradius1);
+            bool isReflexAngle1 = Math.Abs(endAngleFromStart - startAngleFromStart) > 180.0;
+            DrawSegment(A1, B1, C1, D1, isReflexAngle1, indigatorColor, indicatorType);
         }
+              
         /// <summary>
         /// Indigate 각도를 계산해주는 함수
         /// </summary>
@@ -438,8 +462,27 @@ namespace CirclularGage.Location.UI.Units
             Point p = new Point(X, Y);
             return p;
         }
-        private void DrawSegment(Point p1, Point p2, Point p3, Point p4, bool reflexangle, Color clr)
+        /// <summary>
+        /// IndigatorType에 따라 경고 혹은 안전 경고 Indigator Circle 생성
+        /// </summary>
+        /// <param name="p1"></param>
+        /// <param name="p2"></param>
+        /// <param name="p3"></param>
+        /// <param name="p4"></param>
+        /// <param name="reflexangle">역 원형 여부</param>
+        /// <param name="clr">칠할 색상</param>
+        /// <param name="indicatorType">Indigator 타입</param>
+        private void DrawSegment(Point p1, Point p2, Point p3, Point p4, bool reflexangle, Color clr, IndicatorType indicatorType)
         {
+            switch(indicatorType)
+            {
+                case IndicatorType.OptimalIndicator:
+                    rootGrid.Children.Remove(optimalRangeIndicator);
+                    break;
+                case IndicatorType.WarningIndicator:
+                    rootGrid.Children.Remove(warningRangeIndicator);
+                    break;
+            }
 
             // Segment Geometry
             PathSegmentCollection segments = new PathSegmentCollection();
@@ -480,18 +523,19 @@ namespace CirclularGage.Location.UI.Units
                 rangestrokecolor = Colors.White;
 
 
-
-            rangeIndicator = new Path()
+            if(indicatorType == IndicatorType.OptimalIndicator)
             {
-                StrokeLineJoin = PenLineJoin.Round,
-                Stroke = new SolidColorBrush(rangestrokecolor),
-                //Color.FromArgb(0xFF, 0xF5, 0x9A, 0x86)
-                Fill = new SolidColorBrush(clr),
-                Opacity = 0.65,
-                StrokeThickness = 0.25,
-                Data = new PathGeometry()
+                optimalRangeIndicator = new Path()
                 {
-                    Figures = new PathFigureCollection()
+                    StrokeLineJoin = PenLineJoin.Round,
+                    Stroke = new SolidColorBrush(rangestrokecolor),
+                    //Color.FromArgb(0xFF, 0xF5, 0x9A, 0x86)
+                    Fill = new SolidColorBrush(clr),
+                    Opacity = 0.65,
+                    StrokeThickness = 0.25,
+                    Data = new PathGeometry()
+                    {
+                        Figures = new PathFigureCollection()
                      {
                         new PathFigure()
                         {
@@ -500,13 +544,43 @@ namespace CirclularGage.Location.UI.Units
                             Segments = segments
                         }
                     }
-                }
-            };
+                    }
+                };
 
-            //Set Z index of range indicator
-            rangeIndicator.SetValue(Canvas.ZIndexProperty, 150);
-            // Adding the segment to the root grid 
-            rootGrid.Children.Add(rangeIndicator);
+                //Set Z index of range indicator
+                optimalRangeIndicator.SetValue(Canvas.ZIndexProperty, 150);
+                // Adding the segment to the root grid 
+                rootGrid.Children.Add(optimalRangeIndicator);
+            }else
+            {
+                warningRangeIndicator = new Path()
+                {
+                    StrokeLineJoin = PenLineJoin.Round,
+                    Stroke = new SolidColorBrush(rangestrokecolor),
+                    //Color.FromArgb(0xFF, 0xF5, 0x9A, 0x86)
+                    Fill = new SolidColorBrush(clr),
+                    Opacity = 0.65,
+                    StrokeThickness = 0.25,
+                    Data = new PathGeometry()
+                    {
+                        Figures = new PathFigureCollection()
+                     {
+                        new PathFigure()
+                        {
+                            IsClosed = true,
+                            StartPoint = p1,
+                            Segments = segments
+                        }
+                    }
+                    }
+                };
+
+                //Set Z index of range indicator
+                warningRangeIndicator.SetValue(Canvas.ZIndexProperty, 150);
+                // Adding the segment to the root grid 
+                rootGrid.Children.Add(warningRangeIndicator);
+            }
+
 
         }
         /// <summary>
@@ -632,13 +706,16 @@ namespace CirclularGage.Location.UI.Units
             }
         }      
         #endregion
-
+        /// <summary>
+        /// 현재 포인터가 데이터가 변경시 Event
+        /// </summary>
+        /// <param name="d"></param>
+        /// <param name="e"></param>
         private static void OnCurrentValuePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             CircularGaugeControl gauge = d as CircularGaugeControl;
             gauge.OnCurrentValueChanged(e);
-            gauge.DrawScale();
-            gauge.DrawRangeIndicator();
+            gauge.DrawScale();                       
         }
         /// <summary>
         /// 게이지바 안전 상태 시작 설정부분 제한
@@ -651,6 +728,7 @@ namespace CirclularGage.Location.UI.Units
             CircularGaugeControl gauge = d as CircularGaugeControl;
             if ((double)e.NewValue < gauge.MinValue)
                 gauge.OptimalRangeStartValue = gauge.MinValue;
+            
         }
         /// <summary>
         /// 게이지바 안전 상태 끝 설정부분 제한
@@ -662,6 +740,33 @@ namespace CirclularGage.Location.UI.Units
             CircularGaugeControl gauge = d as CircularGaugeControl;
             if ((double)e.NewValue > gauge.MaxValue)
                 gauge.OptimalRangeEndValue = gauge.MaxValue;
+            gauge.DrawRangeIndicator(gauge.OptimalRangeStartValue, gauge.OptimalRangeEndValue, IndicatorType.OptimalIndicator);
+            //gauge.DrawOptimalRankkgeIndicator();
+        }
+        /// <summary>
+        /// 위험 게이지 시작 설정부분 
+        /// </summary>
+        /// <param name="d"></param>
+        /// <param name="e"></param>
+        private static void OnWarningRangeStartValuePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            CircularGaugeControl gauge = d as CircularGaugeControl;
+            if ((double)e.NewValue < gauge.MinValue)
+                gauge.OptimalRangeStartValue = gauge.MinValue;
+            
+        }
+        /// <summary>
+        /// 위험 게이지 끝 설정 부분
+        /// </summary>
+        /// <param name="d"></param>
+        /// <param name="e"></param>
+        private static void OnWarningRangeEndValuePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            CircularGaugeControl gauge = d as CircularGaugeControl;
+            if ((double)e.NewValue > gauge.MaxValue)
+                gauge.OptimalRangeEndValue = gauge.MaxValue;
+            gauge.DrawRangeIndicator(gauge.WarningRangeStartValue, gauge.WarningRangeEndValue, IndicatorType.WarningIndicator);
+            //gauge.DrawWarningRangeIndicator();
         }
         /// <summary>
         /// Gauge 현재 상태 ChagneEvent
@@ -697,7 +802,7 @@ namespace CirclularGage.Location.UI.Units
                 double newcurr_realworldunit = 0;
                 double realworldunit = (ScaleSweepAngle / (MaxValue - MinValue));
 
-                if (oldValue == 0 && !isInitialValueSet)
+                if (oldValue == MinValue && !isInitialValueSet)
                 {
                     oldValue = MinValue;
                     isInitialValueSet = true;
@@ -756,6 +861,17 @@ namespace CirclularGage.Location.UI.Units
                 {
                     sb.Begin();
                 }
+                
+                //var test1 = rootGrid.Children.GetEnumerator();
+                //var test2 = GetTemplateChild("IntruderItems") as ContentPresenter;
+                //var test3 = test2.Content as TcasIntruderItemsControl;
+                //var test4 = test3.ItemsSource;
+                //foreach(var item in test4)
+                //{
+                //    item.
+                //    var test6 = test5.GetType();
+                //}
+                //var test99 = rootGrid.Children[0];
             }
         }
         private void MovePointer(double angleValue)
@@ -765,8 +881,8 @@ namespace CirclularGage.Location.UI.Units
                 TransformGroup tg = pointer.RenderTransform as TransformGroup;
                 RotateTransform rt = tg.Children[0] as RotateTransform;
                 rt.Angle = angleValue;
-
             }
+            
         }
         
     }

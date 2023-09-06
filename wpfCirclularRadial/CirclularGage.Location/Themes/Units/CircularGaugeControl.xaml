@@ -78,7 +78,7 @@
                                 </LinearGradientBrush>
                             </Path.Fill>
                         </Path>
-                        <ContentPresenter/>
+                        <ContentPresenter x:Name="IntruderItems"/>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
