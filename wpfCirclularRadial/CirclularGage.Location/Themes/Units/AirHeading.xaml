@@ -24,14 +24,15 @@
                                     <TransformGroup>
                                         <ScaleTransform ScaleY="1" ScaleX="-1"/>
                                         <SkewTransform AngleY="0" AngleX="0"/>
-                                        <RotateTransform Angle="{Binding HeadAngeleValue, RelativeSource={RelativeSource AncestorType={x:Type control:AirHeading}}}"/>
+                                        <RotateTransform Angle="{Binding HeadAngeleValue, 
+                                            RelativeSource={RelativeSource AncestorType={x:Type control:AirHeading}}}"/>
                                         <TranslateTransform/>
                                     </TransformGroup>
                                 </Path.RenderTransform>
                             </Path>
                             <TextBlock Grid.Row="1" HorizontalAlignment="Center" 
                                    FontSize="12" Margin="0 3 0 0" FontWeight="Bold"
-                                   Text="{Binding HeadAngeleValue, RelativeSource={RelativeSource AncestorType={x:Type control:AirHeading}}}"
+                                   Text="{Binding HeadAngeleValue, RelativeSource={RelativeSource TemplatedParent}}"
                                    TextWrapping="Wrap" Foreground="White" TextAlignment="Center"/>
                         </StackPanel>
                         

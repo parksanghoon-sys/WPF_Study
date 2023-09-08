@@ -14,40 +14,44 @@ namespace CirclularGage.Main
 {
     public class TcasSettingViewModel : ViewModelBase
     {
-        private TcasSymbol _intruderType;
-        private double _range;
-        private double _altritude;
-        private IntruderVerticalSenseState _intruderVerticalMoveMentState;
-        private double _bearing;
 
+        private IntruderModel _currentIntruder;
         public TcasSymbol IntruderType
         {
-            get { return _intruderType; }
-            set { _intruderType = value; OnPropertyChagned(); }
+            get { return _currentIntruder.IntruderType; }
+            set { _currentIntruder.IntruderType = value; OnPropertyChagned(); }
         }
         public IntruderVerticalSenseState IntruderVerticalMoveMentState
         {
-            get { return _intruderVerticalMoveMentState; }
-            set { _intruderVerticalMoveMentState = value; OnPropertyChagned(); }
+            get { return _currentIntruder.IntruderVerticalMoveMentState; }
+            set { _currentIntruder.IntruderVerticalMoveMentState = value; OnPropertyChagned(); }
         }
         public double Range
         {
-            get { return _range; }
-            set { _range = value; OnPropertyChagned(); }
+            get { return _currentIntruder.Range; }
+            set 
+            { 
+                _currentIntruder.Range = value; 
+                OnPropertyChagned(); 
+            }
         }
         public double Bearing
         {
-            get { return _bearing; }
-            set { _bearing = value; OnPropertyChagned(); }
+            get { return _currentIntruder.Bearing; }
+            set 
+            { 
+                _currentIntruder.Bearing = value; 
+                OnPropertyChagned(); 
+            }
         }
         public double Altitude
         {
-            get { return _altritude; }
+            get { return _currentIntruder.Altitude; }
             set
             {
-                if (_altritude != value)
+                if (_currentIntruder.Altitude != value)
                 {
-                    _altritude = value;
+                    _currentIntruder.Altitude = value;
                     OnPropertyChagned();
                 }
             }
@@ -61,15 +65,30 @@ namespace CirclularGage.Main
             get { return Enum.GetValues(typeof(IntruderVerticalSenseState)); }
         }
         private ICommand _intruderItemSendCommand;
+        private ICommand _intruderItemUpdateCommand;
         public ICommand IntruderItemSendCommand
         {
             get => _intruderItemSendCommand;
             private set { _intruderItemSendCommand = value; }
         }
+        public ICommand IntruderItemUpdateCommand
+        {
+            get { return _intruderItemUpdateCommand; }
+            private set { _intruderItemUpdateCommand = value; }
+        }
+
         public TcasSettingViewModel()
         {
-            IntruderItemSendCommand = new ParameterRelayCommand(btn => OnIntruderItemSend(btn), obj => NotIntruderItemSend(obj));
-            Messenger.Register<ObservableCollection<IntruderModel>>(this, OnViewModel2MessageReceived);
+            IntruderItemSendCommand = new ParameterRelayCommand(obj => OnIntruderItemSend(obj), obj => NotIntruderItemSend(obj));
+            IntruderItemUpdateCommand = new ParameterRelayCommand(obj => OnIntruderItemUpdate(obj));
+
+            Messenger.Register<IntruderModel>( "TcasSettingViewModel", OnViewModelMessageReceived);
+            _currentIntruder = new IntruderModel();
+        }
+
+        private void OnIntruderItemUpdate(object _)
+        {
+            Messenger.Send("MainViewModel", _currentIntruder);
         }
 
         private bool NotIntruderItemSend(object _)
@@ -81,21 +100,18 @@ namespace CirclularGage.Main
         }
 
         private void OnIntruderItemSend(object _)
-        {
-            var IntruderItem = new IntruderModel
-            {
-                Range = Range,
-                Altitude = Altitude,
-                IntruderType = IntruderType,
-                IntruderVerticalMoveMentState = IntruderVerticalMoveMentState,
-                Bearing = Bearing
-            };
-            Messenger.Send(IntruderItem);
+        {            
+            Messenger.Send("MainViewModel",_currentIntruder);
         }
 
-        private void OnViewModel2MessageReceived(ObservableCollection<IntruderModel> obj)
+        private void OnViewModelMessageReceived(IntruderModel model)
         {
-            throw new NotImplementedException();
+            _currentIntruder.Number = model.Number;
+            Bearing = model.Bearing;
+            IntruderType = model.IntruderType;
+            Altitude = model.Altitude;
+            Range = model.Range;
+            IntruderVerticalMoveMentState = model.IntruderVerticalMoveMentState;
         }
     }
 }

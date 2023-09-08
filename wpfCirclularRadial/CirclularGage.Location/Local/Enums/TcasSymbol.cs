@@ -5,7 +5,6 @@
         OtherTraffic,
         ProximateTraffic,
         TrafficAdvisory,
-        ResolutionAdvisorty,
-        Nodata
+        ResolutionAdvisorty
     }
 }

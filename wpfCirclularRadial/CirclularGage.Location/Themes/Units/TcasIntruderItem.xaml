@@ -8,6 +8,7 @@
     <convert:IntruderBackgroundConverter x:Key="IntruderBackgroundConverter"/>
     <convert:TcasIntruderItemXAxsisConverter x:Key="TcasIntruderItemXAxsisConverter"/>
     <convert:TcasIntruderItemYAxsisConverter x:Key="TcasIntruderItemYAxsisConverter"/>
+    <convert:NegativePositiveConverter x:Key="NegativePositiveConverter"/>
 
     <SolidColorBrush x:Key="WarningColor" Color="Lime"/>
     <SolidColorBrush x:Key="OtherTrafficColor" Color="#40E0D0"/>
@@ -124,6 +125,14 @@
                         </DataTrigger>
                         <DataTrigger Binding="{Binding IntruderVerticalMoveMentState}" Value="NoData">
                             <Setter TargetName="flyarrow" Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Altitude, Converter={StaticResource NegativePositiveConverter}}" Value="True">
+                            <Setter TargetName="txtUpDownLayout" Property="Grid.Row" Value="0"/>
+                            <Setter TargetName="IntruderSymbolLayout" Property="Grid.Row" Value="1"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Altitude, Converter={StaticResource NegativePositiveConverter}}" Value="False">
+                            <Setter TargetName="txtUpDownLayout" Property="Grid.Row" Value="1"/>
+                            <Setter TargetName="IntruderSymbolLayout" Property="Grid.Row" Value="0"/>
                         </DataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
