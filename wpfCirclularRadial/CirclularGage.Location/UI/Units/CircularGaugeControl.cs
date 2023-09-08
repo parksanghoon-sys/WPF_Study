@@ -861,17 +861,6 @@ namespace CirclularGage.Location.UI.Units
                 {
                     sb.Begin();
                 }
-                
-                //var test1 = rootGrid.Children.GetEnumerator();
-                //var test2 = GetTemplateChild("IntruderItems") as ContentPresenter;
-                //var test3 = test2.Content as TcasIntruderItemsControl;
-                //var test4 = test3.ItemsSource;
-                //foreach(var item in test4)
-                //{
-                //    item.
-                //    var test6 = test5.GetType();
-                //}
-                //var test99 = rootGrid.Children[0];
             }
         }
         private void MovePointer(double angleValue)
@@ -881,8 +870,7 @@ namespace CirclularGage.Location.UI.Units
                 TransformGroup tg = pointer.RenderTransform as TransformGroup;
                 RotateTransform rt = tg.Children[0] as RotateTransform;
                 rt.Angle = angleValue;
-            }
-            
+            }            
         }
         
     }

@@ -5,7 +5,9 @@ namespace CirclularGage.Location.UI.Units
 {
     public class AirHeading : ContentControl
     {
-        // Using a DependencyProperty as the backing store for Angele.  This enables animation, styling, binding, etc...
+        /// <summary>
+        /// Air Heading 각도
+        /// </summary>
         public static readonly DependencyProperty HeadAngeleroperty =
             DependencyProperty.Register("HeadAngeleValue", typeof(double), typeof(AirHeading),new PropertyMetadata(null));
         public double HeadAngeleValue

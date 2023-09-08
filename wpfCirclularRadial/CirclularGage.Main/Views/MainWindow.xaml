@@ -8,7 +8,7 @@
         xmlns:convert="clr-namespace:CirclularGage.Location.Local.Converters;assembly=CirclularGage.Location"
         xmlns:enum="clr-namespace:CirclularGage.Location.Local.Enums;assembly=CirclularGage.Location"
         mc:Ignorable="d"        
-        Title="MainWindow" Height="700" Width="1100">
+        Title="MainWindow" Height="700" Width="900">
     <Window.Resources>
         <convert:RadioBoolToEnumConvert x:Key="RadioBoolToEnumConvert"/>
         
@@ -52,18 +52,18 @@
             <RowDefinition Height="250"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
 
-        <Grid x:Name="circle" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Width="400" Height="400">
+        <Grid x:Name="circle" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Width="300" Height="285">
             <control:AirHeading HeadAngeleValue="{Binding AirPortHeadingAngle}" 
                                 Panel.ZIndex="3" 
                                 Margin="0 100 0 0"/>
             <ContentControl Style="{StaticResource TCasRange}" HorizontalAlignment="Right" 
-                            VerticalAlignment="Top" Margin="10 10"/>
+                            VerticalAlignment="Top" Margin="0 10"/>
 
-            <control:CircularGaugeControl Radius="{Binding GaugeRadius}"       
+            <!--<control:CircularGaugeControl Radius="{Binding GaugeRadius}"       
                                           Panel.ZIndex="2"
                                           ScaleRadius="125" 
                                           ScaleStartAngle="30" 
@@ -95,11 +95,44 @@
                                           OptimalRangeStartValue="{Binding StartSafeZoon}"
                                           OptimalRangeEndValue="{Binding EndSafeZoon}" 
                                           WarningRangeStartValue="{Binding StartWarningZoon}"
+                                          WarningRangeEndValue="{Binding EndWarningZoon}">-->            
+                <control:CircularGaugeControl Radius="{Binding GaugeRadius}"       
+                                          Panel.ZIndex="2"
+                                          ScaleRadius="125" 
+                                          ScaleStartAngle="30" 
+                                          ScaleSweepAngle="300"
+                                                                                                                      
+                                          MinValue="-6" 
+                                          MaxValue="6"                                         
+                                          MajorDivisionsCount="12" 
+                                          MinorDivisionsCount="10" 
+                                          CurrentValue="{Binding Score}"                                                                                
+                                          RangeIndicatorThickness="5"
+                                          RangeIndicatorRadius="120"
+                              
+                                          ScaleLabelRadius="110"
+                                          ScaleLabelSize="40,20"
+                                          ScaleLabelFontSize="10"
+                                          ScaleLabelForeground="LightGray"
+                                          ScaleValuePrecision="1"
+                                          MajorTickSize="10,3"
+                                          MinorTickSize="3,1"
+                                          MajorTickColor="LightGray"
+                                          MinorTickColor="LightGray"                                                                                 
+                                          
+                                          PointerLength="100"                                             
+                                          PointerThickness ="5"
+                                          
+                                          OptimalRangeStartValue="{Binding StartSafeZoon}"
+                                          OptimalRangeEndValue="{Binding EndSafeZoon}" 
+                                          WarningRangeStartValue="{Binding StartWarningZoon}"
                                           WarningRangeEndValue="{Binding EndWarningZoon}">
-                <control:TcasIntruderItemsControl x:Name="TcasIntruderItems" Panel.ZIndex="4"  
+                <control:TcasIntruderItemsControl x:Name="TcasIntruderItems" Panel.ZIndex="160"  
                                                   TcasDisplayRange="{Binding TcasDisplayRangeValue}"
                                                   Radius ="{Binding GaugeRadius}"/>
             </control:CircularGaugeControl>
+            <!--<TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="VSI : 1000 FPM" VerticalAlignment="Bottom" 
+                       Background="Black" Foreground="White" Height="12" Width="68" TextAlignment="Center" Margin="0,0,0,0" FontSize="8"/>-->
 
         </Grid>
         <Grid Grid.Column="1" Grid.Row="0" Margin="3">
@@ -166,22 +199,23 @@
                         Converter={StaticResource RadioBoolToEnumConvert},  
                         ConverterParameter={x:Static enum:TcasDisplayRange.TcasDisplayRangeNone}, 
                         Mode=TwoWay}"/>
-                    <RadioButton Content="10nm" IsChecked="{Binding Path=TcasDisplayRangeValue, 
-                        Converter={StaticResource RadioBoolToEnumConvert},  
-                        ConverterParameter={x:Static enum:TcasDisplayRange.TcasDisplayRange10nm}, 
-                        Mode=TwoWay}"/>
-                    <RadioButton Content="20nm" IsChecked="{Binding Path=TcasDisplayRangeValue, 
+                    <RadioButton Content="80nm" IsChecked="{Binding Path=TcasDisplayRangeValue, 
                         Converter={StaticResource RadioBoolToEnumConvert}, 
-                        ConverterParameter={x:Static enum:TcasDisplayRange.TcasDisplayRange20nm},
+                        ConverterParameter={x:Static enum:TcasDisplayRange.TcasDisplayRange80nm},
                         Mode=TwoWay}"/>
                     <RadioButton Content="40nm" IsChecked="{Binding Path=TcasDisplayRangeValue, 
                         Converter={StaticResource RadioBoolToEnumConvert}, 
                         ConverterParameter={x:Static enum:TcasDisplayRange.TcasDisplayRange40nm},
                         Mode=TwoWay}"/>
-                    <RadioButton Content="80nm" IsChecked="{Binding Path=TcasDisplayRangeValue, 
+                    <RadioButton Content="20nm" IsChecked="{Binding Path=TcasDisplayRangeValue, 
                         Converter={StaticResource RadioBoolToEnumConvert}, 
-                        ConverterParameter={x:Static enum:TcasDisplayRange.TcasDisplayRange80nm},
+                        ConverterParameter={x:Static enum:TcasDisplayRange.TcasDisplayRange20nm},
                         Mode=TwoWay}"/>
+                    <RadioButton Content="10nm" IsChecked="{Binding Path=TcasDisplayRangeValue, 
+                        Converter={StaticResource RadioBoolToEnumConvert},  
+                        ConverterParameter={x:Static enum:TcasDisplayRange.TcasDisplayRange10nm}, 
+                        Mode=TwoWay}"/>
+
                 </StackPanel>
             </Grid>
 
@@ -196,7 +230,7 @@
                         TickFrequency="0.1" IsSnapToTickEnabled="True" Value="{Binding Score}"/>
             </Grid>
             <Grid Grid.Row="6" Margin="10">
-                <Button Content="Test" Command="{Binding StartTcasItemsRandom}"/>
+                <Button Content="Random Test" Command="{Binding StartTcasItemsRandom}"/>
             </Grid>
         </Grid>
         <Grid Grid.Column="1" Grid.Row="1" Margin="3">
@@ -206,10 +240,11 @@
         </Grid>
         <Grid  Grid.Row="3" Grid.ColumnSpan="2" Margin="3">
             <Border BorderBrush="White" BorderThickness="1">
-                <StackPanel>
+                <StackPanel >
                     <TextBlock Text="Intruder List" FontSize="15" Foreground="White"
                                TextAlignment="Center" FontWeight="Bold"/>
                     <control:TcasIntruderSettingListBox HorizontalAlignment="Center" Height="220" />
+
                 </StackPanel>
             </Border>
         </Grid>

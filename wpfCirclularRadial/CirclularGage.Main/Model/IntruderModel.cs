@@ -9,20 +9,34 @@ namespace CirclularGage.Main.Model
 {
     public class IntruderModel : ViewModelBase
     {
-        #region Properties
         private double _bearing;
         private double _range;
         private double _altritude;
         private IntruderVerticalSenseState _intruderVerticalMoveMentState;
         private TcasSymbol _intruderType;
-
+        private DisplayMatrix _intruderDisplay;
+        /// <summary>
+        /// ItemModel의 X축 위치
+        /// </summary>
         public double X => CalculateIntruderXPoint();
+        /// <summary>
+        /// ItemModel의 Y축 위치
+        /// </summary>
         public double Y => CalculateIntruderYPoint();
         /// <summary>
-        /// Intruder Index ? 
+        /// Intruder 종류
+        /// </summary>
+        public TcasSymbol IntruderType => CalculateIntruderType();
+        //{
+        //    get { return _intruderType; }
+        //    set { _intruderType = value; OnPropertyChagned(); }
+        //}
+        #region Properties
+
+        /// <summary>
+        /// Intruder Index 
         /// </summary>
         public int Number { get; set; }
-
         /// <summary>
         /// 수평거리
         /// </summary>
@@ -36,6 +50,7 @@ namespace CirclularGage.Main.Model
                     _range = value;
                     OnPropertyChagned(nameof(X));
                     OnPropertyChagned(nameof(Y));
+                    OnPropertyChagned(nameof(IntruderType));
                     OnPropertyChagned();
                 }
             }
@@ -46,7 +61,7 @@ namespace CirclularGage.Main.Model
         public double Altitude
         {
             get { return _altritude; }
-            set { _altritude = value; OnPropertyChagned(); }
+            set { _altritude = value; OnPropertyChagned(); OnPropertyChagned(nameof(IntruderType)); }
         }
         /// <summary>
         /// Intruder 수직 상태 이동
@@ -73,20 +88,25 @@ namespace CirclularGage.Main.Model
                 }
             }
         }
-        /// <summary>
-        /// Intruder 종류
-        /// </summary>
-        public TcasSymbol IntruderType
-        {
-            get { return _intruderType; }
-            set { _intruderType = value; OnPropertyChagned(); }
-        }
+   
         /// <summary>
         /// Intruder 무전 타입?
         /// </summary>
-        public DisplayMatrix IntruderDisplay { get; set; }
+        public DisplayMatrix IntruderDisplay
+        {
+            get => _intruderDisplay;
+            set
+            {
+                if (_intruderDisplay != value)
+                {
+                    _intruderDisplay = value;
+                    OnPropertyChagned(nameof(IntruderType));
+                    OnPropertyChagned();
+                }
+            }
+        }
         #endregion
-
+        
         #region constructor
         public IntruderModel()
         {
@@ -100,8 +120,7 @@ namespace CirclularGage.Main.Model
              Number = index,
              Range = rnagne,
              Altitude = altitude,
-             IntruderVerticalMoveMentState = verticalState,
-             IntruderType = symbol,
+             IntruderVerticalMoveMentState = verticalState,             
              IntruderDisplay = matrix
 
          };
@@ -111,15 +130,29 @@ namespace CirclularGage.Main.Model
         {
             var angle = Bearing - 90;
             var radianAngle = (angle * Math.PI) / 180;
-            var x = (Range * Math.Cos(radianAngle) * 1);
-            return x;
+            return (Range * Math.Cos(radianAngle) * 1);            
         }
         private double CalculateIntruderYPoint()
         {
             var angle = Bearing - 90;
             var radianAngle = (angle * Math.PI) / 180;
-            var y = (Range * Math.Sin(radianAngle) * 1);
-            return y;
+            return (Range * Math.Sin(radianAngle) * 1);            
+        }
+        private TcasSymbol CalculateIntruderType()
+        {
+            if (IntruderDisplay == DisplayMatrix.RA)
+                return TcasSymbol.ResolutionAdvisorty;
+
+            if (IntruderDisplay == DisplayMatrix.TA)
+                return TcasSymbol.TrafficAdvisory;
+
+            if ((Range >= 60) && (50 >= Math.Abs(Altitude)))
+                return TcasSymbol.OtherTraffic;
+
+            if ((Range < 60) && (50 < Math.Abs(Altitude)))
+                return TcasSymbol.ProximateTraffic;
+
+            return TcasSymbol.OtherTraffic;
         }
         #endregion
 

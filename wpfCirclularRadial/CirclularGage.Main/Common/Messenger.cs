@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace CirclularGage.Main
 {
+    /// <summary>
+    /// ViewModel 끼리 통신을 위한 Key 클래스 Viewmodel 이름을 string으로 구분하여 전달 할 수 있게끔 조치
+    /// </summary>
     public class MessengerKey
     {
         public string Recipient { get; set; }
@@ -31,8 +34,9 @@ namespace CirclularGage.Main
             }
         }
     }
-
-
+    /// <summary>
+    /// ViewModel 데이터 전송을 위한 Messenger 클래스
+    /// </summary>
     public class Messenger
     {
         private static readonly Dictionary<MessengerKey, List<Action<object>>> _messageHandlers = new Dictionary<MessengerKey, List<Action<object>>>();
@@ -44,17 +48,7 @@ namespace CirclularGage.Main
                 _messageHandlers.Add(key, new List<Action<object>>());
             }
             _messageHandlers[key].Add(obj => action((T)obj));
-        }
-        //public static void Send<T>(T message)
-        //{
-        //    if (_messageHandlers.ContainsKey(typeof(T)))
-        //    {
-        //        foreach (var handler in _messageHandlers[typeof(T)])
-        //        {
-        //            handler(message);
-        //        }
-        //    }
-        //}
+        }   
         public static void Send<T>(string targetRecipient, T message)
         {
             var key = new MessengerKey(typeof(T), targetRecipient);

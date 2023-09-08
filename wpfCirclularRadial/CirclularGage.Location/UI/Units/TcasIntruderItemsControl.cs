@@ -64,16 +64,16 @@ namespace CirclularGage.Location.UI.Units
                                 ratito = 1;
                                 break;
                             case TcasDisplayRange.TcasDisplayRange10nm:
-                                ratito = 0.08;
+                                ratito = 12.7;
                                 break;
                             case TcasDisplayRange.TcasDisplayRange20nm:
-                                ratito = 0.16;
+                                ratito = 6.35;
                                 break;
                             case TcasDisplayRange.TcasDisplayRange40nm:
-                                ratito = 0.31;
+                                ratito = 3.175;
                                 break;
                             case TcasDisplayRange.TcasDisplayRange80nm:
-                                ratito = 0.62;
+                                ratito = 1.5;
                                 break;
                         }
 

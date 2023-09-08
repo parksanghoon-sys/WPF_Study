@@ -10,9 +10,7 @@ using System.Windows.Input;
 namespace CirclularGage.Main
 {
     internal class MainViewModel : ViewModelBase
-    {
-
-        #region fildVariable
+    {       
         private double _airPortHeadingAngle;
         private double _startSafeZoon;
         private double _endtSafeZoon;
@@ -20,9 +18,11 @@ namespace CirclularGage.Main
         private double _score;
         private int _gaugeRadius;
         private double _endWarningZoon;
+        private IntruderModel _intruderItem;
         private TcasDisplayRange _tcasDisplayRange;
         private ICommand _startTcasItemsRandom;
-        #endregion
+
+        #region Properties
         public double AirPortHeadingAngle
         {
             get { return _airPortHeadingAngle; }
@@ -96,27 +96,28 @@ namespace CirclularGage.Main
 
             }
         }
+        public IntruderModel IntruderItem
+        {
+            get => _intruderItem;
+            set
+            {
+                if (_intruderItem != value)
+                {
+                    _intruderItem = value;
+                    Messenger.Send(nameof(TcasSettingViewModel), IntruderItem);
+                }
+            }
+        }
+        public ObservableCollection<IntruderModel> IntruderItems { get; set; }
+        #endregion
+        #region Commands
 
         public ICommand StartTcasItemsRandom
         {
             get { return _startTcasItemsRandom; }
             private set { _startTcasItemsRandom = value; }
-        }
-
-        public ObservableCollection<IntruderModel> IntruderItems { get; set; }
-        private IntruderModel _intruderItem;
-        public IntruderModel IntruderItem 
-        { 
-            get => _intruderItem;
-            set
-            {
-                if( _intruderItem != value)
-                {
-                    _intruderItem = value;
-                    Messenger.Send("TcasSettingViewModel", IntruderItem);
-                }
-            } 
-        }
+        } 
+        #endregion
         public MainViewModel()
         {
             AirPortHeadingAngle = 12;
@@ -129,25 +130,47 @@ namespace CirclularGage.Main
 
             StartTcasItemsRandom = new ParameterRelayCommand(btn => StartTcasItemsRandomCommand(btn));
             GaugeRadius = 140;
-            Messenger.Register<IntruderModel>("MainViewModel", OnIntruderModelMessageReceived);
+            Messenger.Register<IntruderModel>(nameof(MainViewModel), OnIntruderModelMessageReceived);
             Score = 0;
             IntruderItems = new ObservableCollection<IntruderModel>();
+            
+            for (int i = 0; i < 30; i ++)
+            {
+                var random = new Random();
+                Array values2 = Enum.GetValues(typeof(IntruderVerticalSenseState));
+                var randomIntruderVerticalSenseState = (IntruderVerticalSenseState)values2.GetValue(random.Next(values2.Length));
+                Array values3 = Enum.GetValues(typeof(DisplayMatrix));
+                var randomDisplayMatrix = (DisplayMatrix)values3.GetValue(random.Next(values3.Length));
 
-            OnIntruderModelMessageReceived(IntruderModel.IntruderModelFactory(1, 120, -100, IntruderVerticalSenseState.Climbing, TcasSymbol.ProximateTraffic, DisplayMatrix.NoThreat, 10));
-            OnIntruderModelMessageReceived(IntruderModel.IntruderModelFactory(3,120, 45, IntruderVerticalSenseState.Climbing, TcasSymbol.ProximateTraffic, DisplayMatrix.NoThreat, 50));
-            OnIntruderModelMessageReceived(IntruderModel.IntruderModelFactory(5, 120, 50, IntruderVerticalSenseState.Climbing, TcasSymbol.ProximateTraffic, DisplayMatrix.NoThreat, 120));
-            OnIntruderModelMessageReceived(IntruderModel.IntruderModelFactory(6, 120, -150, IntruderVerticalSenseState.Climbing, TcasSymbol.ProximateTraffic, DisplayMatrix.NoThreat, 170));
-            OnIntruderModelMessageReceived(IntruderModel.IntruderModelFactory(1, 120, -100, IntruderVerticalSenseState.Climbing, TcasSymbol.ProximateTraffic, DisplayMatrix.NoThreat,180));
-
-            OnIntruderModelMessageReceived(IntruderModel.IntruderModelFactory(3, 120, 45, IntruderVerticalSenseState.Climbing, TcasSymbol.ProximateTraffic, DisplayMatrix.NoThreat, -50));
-            OnIntruderModelMessageReceived(IntruderModel.IntruderModelFactory(5, 120, 50, IntruderVerticalSenseState.Descending, TcasSymbol.ProximateTraffic, DisplayMatrix.NoThreat, -100));
-            OnIntruderModelMessageReceived(IntruderModel.IntruderModelFactory(6, 120, -150, IntruderVerticalSenseState.NoData, TcasSymbol.ProximateTraffic, DisplayMatrix.NoThreat, -150));
-
+                OnIntruderModelMessageReceived(IntruderModel.IntruderModelFactory(i+1, 120, random.Next(-1200,1200), randomIntruderVerticalSenseState, TcasSymbol.ProximateTraffic, randomDisplayMatrix, 360/30 * (i+1)));
+            }
+          
         }
+        #region Commands Excuate Methods
+        private void StartTcasItemsRandomCommand(object _)
+        {
+            Random random = new Random();
+            foreach (var item in IntruderItems)
+            {
+                Array values2 = Enum.GetValues(typeof(IntruderVerticalSenseState));
+                var randomIntruderVerticalSenseState = (IntruderVerticalSenseState)values2.GetValue(random.Next(values2.Length));
+                Array values3 = Enum.GetValues(typeof(DisplayMatrix));
+                var randomDisplayMatrix = (DisplayMatrix)values3.GetValue(random.Next(values3.Length));
 
+                item.IntruderDisplay = randomDisplayMatrix;
+                item.IntruderVerticalMoveMentState = randomIntruderVerticalSenseState;
+                item.Bearing = random.Next(0, 360);
+                item.Altitude = random.Next(-127, 127);
+                item.Range = random.Next(0, 120);
+
+            }
+        }
+        #endregion
+
+        #region Methods
         private void OnIntruderModelMessageReceived(IntruderModel model)
         {
-            if(IntruderItems.Count > 30)
+            if (IntruderItems.Count > 30)
             {
                 string message = "더 이상 불가";
                 var result = MessageBox.Show(message);
@@ -156,80 +179,21 @@ namespace CirclularGage.Main
 
             if (IntruderItems.Contains(model))
             {
-                var item = IntruderItems.Where(k => k.Equals(model)).FirstOrDefault();                
-                //var angle = model.Bearing - 90;
-                //var radianAngle = (angle * Math.PI) / 180;
-                //double x = (model.Range * Math.Cos(radianAngle) * 1);
-                //double y = (model.Range * Math.Sin(radianAngle) * 1);
-                //item.Altitude = y;
-                //item.Range = x;
+                var item = IntruderItems.Where(k => k.Equals(model)).FirstOrDefault();
                 item.IntruderVerticalMoveMentState = model.IntruderVerticalMoveMentState;
-                item.IntruderType = model.IntruderType;
+                item.IntruderDisplay = model.IntruderDisplay;
                 item.Bearing = model.Bearing;
                 item.Altitude = model.Altitude;
                 item.Range = model.Range;
-             
             }
             else
-            {
-                model.Number = IntruderItems.Count + 1;
-                //var angle = model.Bearing - 90;
-                //var radianAngle = (angle * Math.PI) / 180;
-                //double x = (model.Range * Math.Cos(radianAngle) * 1);
-                //double y = (model.Range * Math.Sin(radianAngle) * 1);
-                //model.Altitude = y;
-                //model.Range = x;                
+            {                
                 IntruderItems.Add(model);
             }
+       
+        } 
+        #endregion
 
-            //IntruderItems.Add(IntruderModel.IntruderModelFactory(IntruderItems.Count + 1, x, y,
-            //    model.IntruderVerticalMoveMentState, model.IntruderType, DisplayMatrix.NoThreat, model.Bearing));
-        }
-        //private void CalculateIntruderPoint(IntruderModel model)
-        //{            
-        //    var angle = model.Bearing - 90;
-        //    var radianAngle = (angle * Math.PI) / 180;
-        //    if (model.Number == 1)
-        //    {
-        //        model.Number = 1;
-        //    }
-        //    double x = (model.Range * Math.Cos(radianAngle) * 1);
-        //    double y = (model.Range * Math.Sin(radianAngle) * 1);
-        //    model.Altitude = y;
-        //    model.Range = x;
-          
-        //}
-        private void StartTcasItemsRandomCommand(object _)
-        {
-            Random random = new Random();
-            foreach (var item in IntruderItems)
-            {
-                Array values1 = Enum.GetValues(typeof(TcasSymbol));                
-                TcasSymbol randomTcasSymbol = (TcasSymbol)values1.GetValue(random.Next(values1.Length));
-
-                Array values2 = Enum.GetValues(typeof(IntruderVerticalSenseState));
-                var randomIntruderVerticalSenseState = (IntruderVerticalSenseState)values2.GetValue(random.Next(values2.Length));
-
-                item.IntruderType = randomTcasSymbol;
-                item.IntruderVerticalMoveMentState = randomIntruderVerticalSenseState;
-                item.Bearing = random.Next(0,360);
-                item.Altitude = random.Next(-127, 127);
-                item.Range = random.Next(0,120);                
-
-            }
-            //if (btn is string value)
-            //{
-            //    AirPortHeadingAngle = Convert.ToDouble(value);
-            //}
-            //foreach (IntruderModel model in IntruderItems)
-            //{
-            //    if (model.Number == 3)
-            //    {
-            //        model.IntruderVerticalMoveMentState = IntruderVerticalSenseState.NoVerticalRate;
-            //    }
-            //}
-            //Messenger.Send("TcasSettingViewModel", IntruderItems);
-        }
 
     }
     
