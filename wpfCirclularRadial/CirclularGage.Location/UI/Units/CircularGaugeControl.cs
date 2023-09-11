@@ -483,14 +483,11 @@ namespace CirclularGage.Location.UI.Units
                     rootGrid.Children.Remove(warningRangeIndicator);
                     break;
             }
-
-            // Segment Geometry
+            
             PathSegmentCollection segments = new PathSegmentCollection();
 
-            // First line segment from pt p1 - pt p2
             segments.Add(new LineSegment() { Point = p2 });
 
-            //Arc drawn from pt p2 - pt p3 with the RangeIndicatorRadius 
             segments.Add(new ArcSegment()
             {
                 Size = new Size(arcradius2, arcradius2),
@@ -499,11 +496,9 @@ namespace CirclularGage.Location.UI.Units
                 IsLargeArc = reflexangle
 
             });
-
-            // Second line segment from pt p3 - pt p4
+            
             segments.Add(new LineSegment() { Point = p4 });
-
-            //Arc drawn from pt p4 - pt p1 with the Radius of arcradius1 
+            
             segments.Add(new ArcSegment()
             {
                 Size = new Size(arcradius1, arcradius1),
@@ -513,7 +508,6 @@ namespace CirclularGage.Location.UI.Units
 
             });
 
-            // Defining the segment path properties
             Color rangestrokecolor;
             if (clr == Colors.Transparent)
             {
@@ -528,8 +522,7 @@ namespace CirclularGage.Location.UI.Units
                 optimalRangeIndicator = new Path()
                 {
                     StrokeLineJoin = PenLineJoin.Round,
-                    Stroke = new SolidColorBrush(rangestrokecolor),
-                    //Color.FromArgb(0xFF, 0xF5, 0x9A, 0x86)
+                    Stroke = new SolidColorBrush(rangestrokecolor),                    
                     Fill = new SolidColorBrush(clr),
                     Opacity = 0.65,
                     StrokeThickness = 0.25,
@@ -546,10 +539,8 @@ namespace CirclularGage.Location.UI.Units
                     }
                     }
                 };
-
-                //Set Z index of range indicator
+                
                 optimalRangeIndicator.SetValue(Canvas.ZIndexProperty, 150);
-                // Adding the segment to the root grid 
                 rootGrid.Children.Add(optimalRangeIndicator);
             }else
             {
@@ -574,37 +565,26 @@ namespace CirclularGage.Location.UI.Units
                     }
                     }
                 };
-
-                //Set Z index of range indicator
+                
                 warningRangeIndicator.SetValue(Canvas.ZIndexProperty, 150);
-                // Adding the segment to the root grid 
                 rootGrid.Children.Add(warningRangeIndicator);
             }
-
 
         }
         /// <summary>
         /// Gauge Indigate 생성
         /// </summary>
         private void DrawScale()
-        {
-            //Calculate one major tick angle 
-            double majorTickUnitAngle = ScaleSweepAngle / MajorDivisionsCount;
-
-            //Obtaining One minor tick angle 
-            double minorTickUnitAngle = ScaleSweepAngle / MinorDivisionsCount;
-
-            //Obtaining One major ticks value
+        {         
+            double majorTickUnitAngle = ScaleSweepAngle / MajorDivisionsCount;                        
+            
             double majorTicksUnitValue = (MaxValue - MinValue) / MajorDivisionsCount;
             majorTicksUnitValue = Math.Round(majorTicksUnitValue, ScaleValuePrecision);
 
             double minvalue = MinValue;
-
-            // Drawing Major scale ticks
+            
             for (double i = ScaleStartAngle; i <= (ScaleStartAngle + ScaleSweepAngle); i = i + majorTickUnitAngle)
             {
-
-                //Majortick is drawn as a rectangle 
                 Rectangle majortickrect = new Rectangle();
                 majortickrect.Height = MajorTickSize.Height;
                 majortickrect.Width = MajorTickSize.Width;
@@ -616,25 +596,20 @@ namespace CirclularGage.Location.UI.Units
 
                 TransformGroup majortickgp = new TransformGroup();
                 RotateTransform majortickrt = new RotateTransform();
-
-                //Obtaining the angle in radians for calulating the points
+                
                 double i_radian = (i * Math.PI) / 180;
                 majortickrt.Angle = i;
                 majortickgp.Children.Add(majortickrt);
                 TranslateTransform majorticktt = new TranslateTransform();
 
-                //Finding the point on the Scale where the major ticks are drawn
-                //here drawing the points with center as (0,0)
                 majorticktt.X = (int)((ScaleRadius) * Math.Cos(i_radian));
                 majorticktt.Y = (int)((ScaleRadius) * Math.Sin(i_radian));
 
-                //Points for the textblock which hold the scale value
                 TranslateTransform majorscalevaluett = new TranslateTransform();
-                //here drawing the points with center as (0,0)
                 majorscalevaluett.X = (int)((ScaleLabelRadius) * Math.Cos(i_radian));
                 majorscalevaluett.Y = (int)((ScaleLabelRadius) * Math.Sin(i_radian));
 
-                //Defining the properties of the scale value textbox
+                // Indigate Label TextBlock                
                 TextBlock tb = new TextBlock();
 
                 tb.Height = ScaleLabelSize.Height;
@@ -645,9 +620,6 @@ namespace CirclularGage.Location.UI.Units
                 tb.VerticalAlignment = VerticalAlignment.Center;
                 tb.HorizontalAlignment = HorizontalAlignment.Center;
 
-                //Writing and appending the scale value
-
-                //checking minvalue < maxvalue w.r.t scale precion value
                 if (Math.Round(minvalue, ScaleValuePrecision) <= Math.Round(MaxValue, ScaleValuePrecision))
                 {
                     minvalue = Math.Round(minvalue, ScaleValuePrecision);
@@ -670,10 +642,8 @@ namespace CirclularGage.Location.UI.Units
 
                 if ((i < (ScaleStartAngle + ScaleSweepAngle)) && (Math.Round(minvalue, ScaleValuePrecision) <= Math.Round(MaxValue, ScaleValuePrecision)))
                 {
-                    //Drawing the minor scale
                     for (double mi = i + onedegree; mi < (i + majorTickUnitAngle); mi = mi + onedegree)
                     {
-                        //here the minortick is drawn as a rectangle 
                         Rectangle mr = new Rectangle();
                         mr.Height = MinorTickSize.Height;
                         mr.Width = MinorTickSize.Width;
@@ -689,9 +659,7 @@ namespace CirclularGage.Location.UI.Units
                         minortickgp.Children.Add(minortickrt);
                         TranslateTransform minorticktt = new TranslateTransform();
 
-                        //Obtaining the angle in radians for calulating the points
                         double mi_radian = (mi * Math.PI) / 180;
-                        //Finding the point on the Scale where the minor ticks are drawn
                         minorticktt.X = (int)((ScaleRadius) * Math.Cos(mi_radian));
                         minorticktt.Y = (int)((ScaleRadius) * Math.Sin(mi_radian));
 

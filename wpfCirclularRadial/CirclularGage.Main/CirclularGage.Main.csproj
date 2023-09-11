@@ -124,6 +124,10 @@
       <Project>{fb857336-5831-4639-ad69-6c294b820c2c}</Project>
       <Name>CirclularGage.Location</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Log.Common\Log.Common.csproj">
+      <Project>{32ba8901-7c3d-430a-b48a-00e8ff841d7b}</Project>
+      <Name>Log.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CirclularGage.Location", "C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CirclularGage.Main", "CirclularGage.Main\CirclularGage.Main.csproj", "{555255E6-A09A-4578-9F6C-DCDCEDA03479}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Log.Common", "Log.Common\Log.Common.csproj", "{32BA8901-7C3D-430A-B48A-00E8FF841D7B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{555255E6-A09A-4578-9F6C-DCDCEDA03479}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{555255E6-A09A-4578-9F6C-DCDCEDA03479}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{555255E6-A09A-4578-9F6C-DCDCEDA03479}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32BA8901-7C3D-430A-B48A-00E8FF841D7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32BA8901-7C3D-430A-B48A-00E8FF841D7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32BA8901-7C3D-430A-B48A-00E8FF841D7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32BA8901-7C3D-430A-B48A-00E8FF841D7B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
