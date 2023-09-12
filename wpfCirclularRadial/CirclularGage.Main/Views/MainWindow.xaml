@@ -63,7 +63,7 @@
             <ContentControl Style="{StaticResource TCasRange}" HorizontalAlignment="Right" 
                             VerticalAlignment="Top" Margin="0 10"/>
 
-            <!--<control:CircularGaugeControl Radius="{Binding GaugeRadius}"       
+            <!--<control:CircularGaugeBaseControl Radius="{Binding GaugeRadius}"       
                                           Panel.ZIndex="2"
                                           ScaleRadius="125" 
                                           ScaleStartAngle="30" 
@@ -96,32 +96,18 @@
                                           OptimalRangeEndValue="{Binding EndSafeZoon}" 
                                           WarningRangeStartValue="{Binding StartWarningZoon}"
                                           WarningRangeEndValue="{Binding EndWarningZoon}">-->            
-                <control:CircularGaugeControl Radius="{Binding GaugeRadius}"       
+                <control:TcasGaugeControl Radius="{Binding GaugeRadius}"                                          
                                           Panel.ZIndex="2"
                                           ScaleRadius="125" 
-                                          ScaleStartAngle="30" 
-                                          ScaleSweepAngle="300"
-                                                                                                                      
-                                          MinValue="-6" 
-                                          MaxValue="6"                                         
-                                          MajorDivisionsCount="12" 
-                                          MinorDivisionsCount="10" 
+                                          ScaleSweepAngle="340"
+                                                          
+                                          MajorDivisionsCount="10" 
+                                          MinorDivisionsCount="4" 
                                           CurrentValue="{Binding Score}"                                                                                
                                           RangeIndicatorThickness="5"
                                           RangeIndicatorRadius="120"
                               
-                                          ScaleLabelRadius="110"
-                                          ScaleLabelSize="40,20"
-                                          ScaleLabelFontSize="10"
-                                          ScaleLabelForeground="LightGray"
-                                          ScaleValuePrecision="1"
-                                          MajorTickSize="10,3"
-                                          MinorTickSize="3,1"
-                                          MajorTickColor="LightGray"
-                                          MinorTickColor="LightGray"                                                                                 
-                                          
-                                          PointerLength="100"                                             
-                                          PointerThickness ="5"
+                                          ScaleLabelRadius="110"                                        
                                           
                                           OptimalRangeStartValue="{Binding StartSafeZoon}"
                                           OptimalRangeEndValue="{Binding EndSafeZoon}" 
@@ -130,7 +116,7 @@
                 <control:TcasIntruderItemsControl x:Name="TcasIntruderItems" Panel.ZIndex="160"  
                                                   TcasDisplayRange="{Binding TcasDisplayRangeValue}"
                                                   Radius ="{Binding GaugeRadius}"/>
-            </control:CircularGaugeControl>
+            </control:TcasGaugeControl>
             <!--<TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="VSI : 1000 FPM" VerticalAlignment="Bottom" 
                        Background="Black" Foreground="White" Height="12" Width="68" TextAlignment="Center" Margin="0,0,0,0" FontSize="8"/>-->
 

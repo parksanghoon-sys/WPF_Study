@@ -67,6 +67,7 @@
     </Compile>
     <Compile Include="UI\Units\InputBaseUpDown.cs" />
     <Compile Include="UI\Units\NumericUpDownControl.cs" />
+    <Compile Include="UI\Units\TcasGaugeControl.cs" />
     <Compile Include="UI\Units\TcasIntruderItem.cs" />
     <Compile Include="UI\Units\TcasIntruderItemsControl.cs" />
     <Compile Include="UI\Units\TcasIntruderSettingListItem.cs" />
@@ -89,14 +90,14 @@
       <DependentUpon>UserControl2.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\Units\AirHeading.cs" />
-    <Compile Include="UI\Units\CircularGaugeControl.cs">
+    <Compile Include="UI\Units\CircularGaugeBaseControl.cs">
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Themes\Units\AirHeading.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Themes\Units\CircularGaugeControl.xaml">
+    <Page Include="Themes\Units\CircularGaugeBaseControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

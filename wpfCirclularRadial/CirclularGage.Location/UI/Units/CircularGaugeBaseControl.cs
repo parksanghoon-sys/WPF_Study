@@ -9,18 +9,18 @@ namespace CirclularGage.Location.UI.Units
 {
     [TemplatePart(Name = "LayoutRoot", Type = typeof(Grid))]
     [TemplatePart(Name = "Pointer", Type = typeof(Path))]
-    public class CircularGaugeControl : ContentControl
+    public abstract class CircularGaugeBaseControl : ContentControl
     {
-        private enum IndicatorType { OptimalIndicator, WarningIndicator }
+        protected enum IndicatorType { OptimalIndicator, WarningIndicator }
         #region Private 변수
         /// <summary>
         /// GauageControl Rander 하는데 필요한 Variables
         /// </summary>
-        private Grid rootGrid;
-        private Path optimalRangeIndicator;
-        private Path warningRangeIndicator;
-        private Path pointer;
-        private bool isInitialValueSet = false;
+        protected Grid rootGrid;
+        protected Path optimalRangeIndicator;
+        protected Path warningRangeIndicator;
+        protected Path pointer;
+        protected bool isInitialValueSet = false;
         private double arcradius1;
         private double arcradius2;
         private int animatingSpeedFactor = 6;
@@ -28,99 +28,99 @@ namespace CirclularGage.Location.UI.Units
         #region Dependency Properties
 
         public static readonly DependencyProperty GaugeBackgroundColorProperty =
-            DependencyProperty.Register("GaugeBackgroundColor", typeof(Color), typeof(CircularGaugeControl), null);
+            DependencyProperty.Register("GaugeBackgroundColor", typeof(Color), typeof(CircularGaugeBaseControl), null);
 
         public static readonly DependencyProperty CurrentValueProperty =
-            DependencyProperty.Register("CurrentValue", typeof(double), typeof(CircularGaugeControl), 
-                new PropertyMetadata(double.MinValue, new PropertyChangedCallback(CircularGaugeControl.OnCurrentValuePropertyChanged)));
+            DependencyProperty.Register("CurrentValue", typeof(double), typeof(CircularGaugeBaseControl), 
+                new PropertyMetadata(double.MinValue, new PropertyChangedCallback(CircularGaugeBaseControl.OnCurrentValuePropertyChanged)));
 
         public static readonly DependencyProperty MinValuePropertyProperty =
-            DependencyProperty.Register("MinValue", typeof(double), typeof(CircularGaugeControl), new PropertyMetadata(null));
+            DependencyProperty.Register("MinValue", typeof(double), typeof(CircularGaugeBaseControl), new PropertyMetadata(null));
 
         public static readonly DependencyProperty MaxValuePropertyProperty =
-            DependencyProperty.Register("MaxValue", typeof(double), typeof(CircularGaugeControl), new PropertyMetadata(null));
+            DependencyProperty.Register("MaxValue", typeof(double), typeof(CircularGaugeBaseControl), new PropertyMetadata(null));
 
         public static readonly DependencyProperty RadiusProperty =
-            DependencyProperty.Register("Radius", typeof(double), typeof(CircularGaugeControl), new PropertyMetadata(null));
+            DependencyProperty.Register("Radius", typeof(double), typeof(CircularGaugeBaseControl), new PropertyMetadata(null));
         public static readonly DependencyProperty PointerLengthProperty =
-            DependencyProperty.Register("PointerLength", typeof(double), typeof(CircularGaugeControl), new PropertyMetadata(null));
+            DependencyProperty.Register("PointerLength", typeof(double), typeof(CircularGaugeBaseControl), new PropertyMetadata(null));
 
         public static readonly DependencyProperty PointerThicknessProperty =
-            DependencyProperty.Register("PointerThickness", typeof(double), typeof(CircularGaugeControl), null);
+            DependencyProperty.Register("PointerThickness", typeof(double), typeof(CircularGaugeBaseControl), null);
 
         public static readonly DependencyProperty ScaleRadiusProperty =
-            DependencyProperty.Register("ScaleRadius", typeof(double), typeof(CircularGaugeControl), null);
+            DependencyProperty.Register("ScaleRadius", typeof(double), typeof(CircularGaugeBaseControl), null);
 
         public static readonly DependencyProperty ScaleStartAngleProperty =
-            DependencyProperty.Register("ScaleStartAngle", typeof(double), typeof(CircularGaugeControl), null);
+            DependencyProperty.Register("ScaleStartAngle", typeof(double), typeof(CircularGaugeBaseControl), null);
 
         public static readonly DependencyProperty ScaleSweepAngleProperty =
-            DependencyProperty.Register("ScaleSweepAngle", typeof(double), typeof(CircularGaugeControl), null);
+            DependencyProperty.Register("ScaleSweepAngle", typeof(double), typeof(CircularGaugeBaseControl), null);
 
         public static readonly DependencyProperty MajorDivisionsCountProperty =
-            DependencyProperty.Register("MajorDivisionsCount", typeof(double), typeof(CircularGaugeControl), new PropertyMetadata(null));
+            DependencyProperty.Register("MajorDivisionsCount", typeof(double), typeof(CircularGaugeBaseControl), new PropertyMetadata(null));
 
         public static readonly DependencyProperty MinorDivisionsCountProperty =
-            DependencyProperty.Register("MinorDivisionsCount", typeof(double), typeof(CircularGaugeControl), new PropertyMetadata(null));
+            DependencyProperty.Register("MinorDivisionsCount", typeof(double), typeof(CircularGaugeBaseControl), new PropertyMetadata(null));
         
         public static readonly DependencyProperty OptimalRangeEndValueProperty =
-           DependencyProperty.Register("OptimalRangeEndValue", typeof(double), typeof(CircularGaugeControl), 
-               new PropertyMetadata(new PropertyChangedCallback(CircularGaugeControl.OnOptimalRangeEndValuePropertyChanged)));
+           DependencyProperty.Register("OptimalRangeEndValue", typeof(double), typeof(CircularGaugeBaseControl), 
+               new PropertyMetadata(new PropertyChangedCallback(CircularGaugeBaseControl.OnOptimalRangeEndValuePropertyChanged)));
 
         public static readonly DependencyProperty OptimalRangeStartValueProperty =
-           DependencyProperty.Register("OptimalRangeStartValue", typeof(double), typeof(CircularGaugeControl), 
-               new PropertyMetadata(new PropertyChangedCallback(CircularGaugeControl.OnOptimalRangeStartValuePropertyChanged)));
+           DependencyProperty.Register("OptimalRangeStartValue", typeof(double), typeof(CircularGaugeBaseControl), 
+               new PropertyMetadata(new PropertyChangedCallback(CircularGaugeBaseControl.OnOptimalRangeStartValuePropertyChanged)));
 
         public static readonly DependencyProperty WarningRangeStartValueProperty =
-            DependencyProperty.Register("WarningRangeStartValue", typeof(double), typeof(CircularGaugeControl), 
-                new PropertyMetadata(new PropertyChangedCallback(CircularGaugeControl.OnWarningRangeStartValuePropertyChanged)));
+            DependencyProperty.Register("WarningRangeStartValue", typeof(double), typeof(CircularGaugeBaseControl), 
+                new PropertyMetadata(new PropertyChangedCallback(CircularGaugeBaseControl.OnWarningRangeStartValuePropertyChanged)));
 
 
         public static readonly DependencyProperty WarningRangeEndValueProperty =
-            DependencyProperty.Register("WarningRangeEndValue", typeof(double), typeof(CircularGaugeControl), 
-                new PropertyMetadata(new PropertyChangedCallback(CircularGaugeControl.OnWarningRangeEndValuePropertyChanged)));
+            DependencyProperty.Register("WarningRangeEndValue", typeof(double), typeof(CircularGaugeBaseControl), 
+                new PropertyMetadata(new PropertyChangedCallback(CircularGaugeBaseControl.OnWarningRangeEndValuePropertyChanged)));
 
         public static readonly DependencyProperty RangeIndicatorRadiusProperty =
-            DependencyProperty.Register("RangeIndicatorRadius", typeof(double), typeof(CircularGaugeControl), null);
+            DependencyProperty.Register("RangeIndicatorRadius", typeof(double), typeof(CircularGaugeBaseControl), null);
 
         public static readonly DependencyProperty RangeIndicatorThicknessProperty =
-            DependencyProperty.Register("RangeIndicatorThickness", typeof(double), typeof(CircularGaugeControl), null);
+            DependencyProperty.Register("RangeIndicatorThickness", typeof(double), typeof(CircularGaugeBaseControl), null);
 
         public static readonly DependencyProperty ScaleLabelRadiusProperty =
-            DependencyProperty.Register("ScaleLabelRadius", typeof(double), typeof(CircularGaugeControl), new PropertyMetadata(null));
+            DependencyProperty.Register("ScaleLabelRadius", typeof(double), typeof(CircularGaugeBaseControl), new PropertyMetadata(null));
 
         public static readonly DependencyProperty ScaleLabelSizeProperty =
-            DependencyProperty.Register("ScaleLabelSize", typeof(Size), typeof(CircularGaugeControl), new PropertyMetadata(null));
+            DependencyProperty.Register("ScaleLabelSize", typeof(Size), typeof(CircularGaugeBaseControl), new PropertyMetadata(null));
 
         public static readonly DependencyProperty ScaleLabelFontSizeProperty =
-            DependencyProperty.Register("ScaleLabelFontSize", typeof(double), typeof(CircularGaugeControl), null);
+            DependencyProperty.Register("ScaleLabelFontSize", typeof(double), typeof(CircularGaugeBaseControl), null);
 
         public static readonly DependencyProperty ScaleLabelForegroundProperty =
-            DependencyProperty.Register("ScaleLabelForeground", typeof(Color), typeof(CircularGaugeControl), null);
+            DependencyProperty.Register("ScaleLabelForeground", typeof(Color), typeof(CircularGaugeBaseControl), null);
 
         public static readonly DependencyProperty MajorTickSizeProperty =
-       DependencyProperty.Register("MajorTickSize", typeof(Size), typeof(CircularGaugeControl), null);
+       DependencyProperty.Register("MajorTickSize", typeof(Size), typeof(CircularGaugeBaseControl), null);
 
         public static readonly DependencyProperty MinorTickSizeProperty =
-          DependencyProperty.Register("MinorTickSize", typeof(Size), typeof(CircularGaugeControl), null);
+          DependencyProperty.Register("MinorTickSize", typeof(Size), typeof(CircularGaugeBaseControl), null);
 
         public static readonly DependencyProperty MajorTickColorProperty =
-           DependencyProperty.Register("MajorTickColor", typeof(Color), typeof(CircularGaugeControl), null);
+           DependencyProperty.Register("MajorTickColor", typeof(Color), typeof(CircularGaugeBaseControl), null);
 
         public static readonly DependencyProperty MinorTickColorProperty =
-          DependencyProperty.Register("MinorTickColor", typeof(Color), typeof(CircularGaugeControl), null);
+          DependencyProperty.Register("MinorTickColor", typeof(Color), typeof(CircularGaugeBaseControl), null);
 
         public static readonly DependencyProperty OptimalRangeColorProperty =
-            DependencyProperty.Register("OptimalRangeColor", typeof(Color), typeof(CircularGaugeControl), null);
+            DependencyProperty.Register("OptimalRangeColor", typeof(Color), typeof(CircularGaugeBaseControl), null);
 
         public static readonly DependencyProperty AboveOptimalRangeColorProperty =
-            DependencyProperty.Register("AboveOptimalRangeColor", typeof(Color), typeof(CircularGaugeControl), null);
+            DependencyProperty.Register("AboveOptimalRangeColor", typeof(Color), typeof(CircularGaugeBaseControl), null);
 
         public static readonly DependencyProperty ScaleValuePrecisionProperty =
-            DependencyProperty.Register("ScaleValuePrecision", typeof(int), typeof(CircularGaugeControl), null);
+            DependencyProperty.Register("ScaleValuePrecision", typeof(int), typeof(CircularGaugeBaseControl), null);
 
         public static readonly DependencyProperty ResetPointerOnStartUpProperty =
-            DependencyProperty.Register("ResetPointerOnStartUp", typeof(bool), typeof(CircularGaugeControl), new PropertyMetadata(false, null));
+            DependencyProperty.Register("ResetPointerOnStartUp", typeof(bool), typeof(CircularGaugeBaseControl), new PropertyMetadata(false, null));
         #endregion
 
         #region Dependcy Variables
@@ -365,9 +365,9 @@ namespace CirclularGage.Location.UI.Units
             set { SetValue(ResetPointerOnStartUpProperty, value); }
         }
         #endregion
-        static CircularGaugeControl()
+        static CircularGaugeBaseControl()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(CircularGaugeControl), new FrameworkPropertyMetadata(typeof(CircularGaugeControl)));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(CircularGaugeBaseControl), new FrameworkPropertyMetadata(typeof(CircularGaugeBaseControl)));
         }
         #region Draw       
         /// <summary>
@@ -391,7 +391,7 @@ namespace CirclularGage.Location.UI.Units
         /// <summary>
         /// Indicator 생성 (게이지 바)
         /// </summary>
-        private void DrawRangeIndicator(double startRange, double endRange, IndicatorType indicatorType)
+        protected virtual void DrawRangeIndicator(double startRange, double endRange, IndicatorType indicatorType)
         {
             if (startRange == 0 && endRange == 0) return;
             double realworldunit = (ScaleSweepAngle / (MaxValue - MinValue));
@@ -574,7 +574,7 @@ namespace CirclularGage.Location.UI.Units
         /// <summary>
         /// Gauge Indigate 생성
         /// </summary>
-        private void DrawScale()
+        protected virtual void DrawScale()
         {         
             double majorTickUnitAngle = ScaleSweepAngle / MajorDivisionsCount;                        
             
@@ -681,7 +681,7 @@ namespace CirclularGage.Location.UI.Units
         /// <param name="e"></param>
         private static void OnCurrentValuePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            CircularGaugeControl gauge = d as CircularGaugeControl;
+            CircularGaugeBaseControl gauge = d as CircularGaugeBaseControl;
             gauge.OnCurrentValueChanged(e);
             gauge.DrawScale();                       
         }
@@ -693,7 +693,7 @@ namespace CirclularGage.Location.UI.Units
 
         private static void OnOptimalRangeStartValuePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            CircularGaugeControl gauge = d as CircularGaugeControl;
+            CircularGaugeBaseControl gauge = d as CircularGaugeBaseControl;
             if ((double)e.NewValue < gauge.MinValue)
                 gauge.OptimalRangeStartValue = gauge.MinValue;
             
@@ -705,7 +705,7 @@ namespace CirclularGage.Location.UI.Units
         /// <param name="e"></param>
         private static void OnOptimalRangeEndValuePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            CircularGaugeControl gauge = d as CircularGaugeControl;
+            CircularGaugeBaseControl gauge = d as CircularGaugeBaseControl;
             if ((double)e.NewValue > gauge.MaxValue)
                 gauge.OptimalRangeEndValue = gauge.MaxValue;
             gauge.DrawRangeIndicator(gauge.OptimalRangeStartValue, gauge.OptimalRangeEndValue, IndicatorType.OptimalIndicator);
@@ -718,7 +718,7 @@ namespace CirclularGage.Location.UI.Units
         /// <param name="e"></param>
         private static void OnWarningRangeStartValuePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            CircularGaugeControl gauge = d as CircularGaugeControl;
+            CircularGaugeBaseControl gauge = d as CircularGaugeBaseControl;
             if ((double)e.NewValue < gauge.MinValue)
                 gauge.OptimalRangeStartValue = gauge.MinValue;
             
@@ -730,7 +730,7 @@ namespace CirclularGage.Location.UI.Units
         /// <param name="e"></param>
         private static void OnWarningRangeEndValuePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            CircularGaugeControl gauge = d as CircularGaugeControl;
+            CircularGaugeBaseControl gauge = d as CircularGaugeBaseControl;
             if ((double)e.NewValue > gauge.MaxValue)
                 gauge.OptimalRangeEndValue = gauge.MaxValue;
             gauge.DrawRangeIndicator(gauge.WarningRangeStartValue, gauge.WarningRangeEndValue, IndicatorType.WarningIndicator);
@@ -740,7 +740,7 @@ namespace CirclularGage.Location.UI.Units
         /// Gauge 현재 상태 ChagneEvent
         /// </summary>
         /// <param name="e"></param>
-        private void OnCurrentValueChanged(DependencyPropertyChangedEventArgs e)
+        protected virtual void OnCurrentValueChanged(DependencyPropertyChangedEventArgs e)
         {
             double newValue = (double)e.NewValue;
             double oldValue = (double)e.OldValue;
@@ -808,7 +808,7 @@ namespace CirclularGage.Location.UI.Units
         /// <param name="oldCurrentValueAngle">이전 각도</param>
         /// <param name="newCurrentValueAngle">이동할 각도</param>
         /// <exception cref="NotImplementedException"></exception>
-        private void AnimaterPointer(double oldCurrentValueAngle, double newCurrentValueAngle)
+        protected virtual void AnimaterPointer(double oldCurrentValueAngle, double newCurrentValueAngle)
         {
             if (pointer != null)
             {

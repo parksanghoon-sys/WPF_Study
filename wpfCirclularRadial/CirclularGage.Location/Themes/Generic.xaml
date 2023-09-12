@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/CirclularGage.Location;component/Themes/Units/CircularGaugeControl.xaml"/>
+        <ResourceDictionary Source="/CirclularGage.Location;component/Themes/Units/CircularGaugeBaseControl.xaml"/>
         <ResourceDictionary Source="/CirclularGage.Location;component/Themes/Units/AirHeading.xaml"/>
         <ResourceDictionary Source="/CirclularGage.Location;component/Themes/Units/TcasIntruderItemsControl.xaml"/>
         <ResourceDictionary Source="/CirclularGage.Location;component/Themes/Units/TcasIntruderItem.xaml"/>

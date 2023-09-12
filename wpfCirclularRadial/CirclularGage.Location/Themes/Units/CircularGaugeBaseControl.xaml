@@ -8,7 +8,7 @@
     <convert:RadiusToDiameterConverter x:Key="rangeIndicatorLightPositionConverter"/>
     <convert:GlassEffectWidthConverter x:Key="glassEffectWidthConverter"/>
 
-    <Style TargetType="{x:Type view:CircularGaugeControl}">
+    <Style x:Key="CircularGaugeBaseControl" TargetType="{x:Type view:CircularGaugeBaseControl}">
         <Setter Property="ResetPointerOnStartUp" Value="False" />
         <Setter Property="ScaleValuePrecision" Value="10" />
         <Setter Property="HorizontalAlignment" Value="Center"/>
@@ -29,7 +29,7 @@
         <Setter Property="AboveOptimalRangeColor" Value="Red" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type view:CircularGaugeControl}">
+                <ControlTemplate TargetType="{x:Type view:CircularGaugeBaseControl}">
                     <Grid x:Name="LayoutRoot" Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Radius, Converter={StaticResource rangeIndicatorLightPositionConverter}}"
                           Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Radius, Converter={StaticResource rangeIndicatorLightPositionConverter}}">
                         <!--Gage Circle-->
@@ -85,4 +85,18 @@
         </Setter>
     </Style>
 
+    <Style BasedOn="{StaticResource CircularGaugeBaseControl}" TargetType="{x:Type view:TcasGaugeControl}">
+        <Setter Property="ScaleStartAngle" Value="10"/>
+        <Setter Property="MinValue" Value="-6"/>
+        <Setter Property="MaxValue" Value="6"/>
+        <Setter Property="ScaleLabelSize" Value="40,20"/>
+        <Setter Property="ScaleLabelFontSize" Value="10"/>
+        <Setter Property="ScaleLabelForeground" Value="LightGray"/>
+        <Setter Property="MajorTickSize" Value="10,3"/>
+        <Setter Property="MinorTickSize" Value="3,1"/>
+        <Setter Property="MajorTickColor" Value="LightGray"/>
+        <Setter Property="MinorTickColor" Value="LightGray"/>
+        <Setter Property="PointerLength" Value="100"/>
+        <Setter Property="PointerThickness" Value="5"/>
+    </Style>
 </ResourceDictionary>
