@@ -20,9 +20,11 @@ namespace CirclularGage.Location.UI.Units
         protected Path optimalRangeIndicator;
         protected Path warningRangeIndicator;
         protected Path pointer;
+        protected double minvalue;
+
         protected bool isInitialValueSet = false;
-        private double arcradius1;
-        private double arcradius2;
+        protected double arcradius1;
+        protected double arcradius2;
         private int animatingSpeedFactor = 6;
         #endregion
         #region Dependency Properties
@@ -31,7 +33,7 @@ namespace CirclularGage.Location.UI.Units
             DependencyProperty.Register("GaugeBackgroundColor", typeof(Color), typeof(CircularGaugeBaseControl), null);
 
         public static readonly DependencyProperty CurrentValueProperty =
-            DependencyProperty.Register("CurrentValue", typeof(double), typeof(CircularGaugeBaseControl), 
+            DependencyProperty.Register("CurrentValue", typeof(double), typeof(CircularGaugeBaseControl),
                 new PropertyMetadata(double.MinValue, new PropertyChangedCallback(CircularGaugeBaseControl.OnCurrentValuePropertyChanged)));
 
         public static readonly DependencyProperty MinValuePropertyProperty =
@@ -62,22 +64,22 @@ namespace CirclularGage.Location.UI.Units
 
         public static readonly DependencyProperty MinorDivisionsCountProperty =
             DependencyProperty.Register("MinorDivisionsCount", typeof(double), typeof(CircularGaugeBaseControl), new PropertyMetadata(null));
-        
+
         public static readonly DependencyProperty OptimalRangeEndValueProperty =
-           DependencyProperty.Register("OptimalRangeEndValue", typeof(double), typeof(CircularGaugeBaseControl), 
+           DependencyProperty.Register("OptimalRangeEndValue", typeof(double), typeof(CircularGaugeBaseControl),
                new PropertyMetadata(new PropertyChangedCallback(CircularGaugeBaseControl.OnOptimalRangeEndValuePropertyChanged)));
 
         public static readonly DependencyProperty OptimalRangeStartValueProperty =
-           DependencyProperty.Register("OptimalRangeStartValue", typeof(double), typeof(CircularGaugeBaseControl), 
+           DependencyProperty.Register("OptimalRangeStartValue", typeof(double), typeof(CircularGaugeBaseControl),
                new PropertyMetadata(new PropertyChangedCallback(CircularGaugeBaseControl.OnOptimalRangeStartValuePropertyChanged)));
 
         public static readonly DependencyProperty WarningRangeStartValueProperty =
-            DependencyProperty.Register("WarningRangeStartValue", typeof(double), typeof(CircularGaugeBaseControl), 
+            DependencyProperty.Register("WarningRangeStartValue", typeof(double), typeof(CircularGaugeBaseControl),
                 new PropertyMetadata(new PropertyChangedCallback(CircularGaugeBaseControl.OnWarningRangeStartValuePropertyChanged)));
 
 
         public static readonly DependencyProperty WarningRangeEndValueProperty =
-            DependencyProperty.Register("WarningRangeEndValue", typeof(double), typeof(CircularGaugeBaseControl), 
+            DependencyProperty.Register("WarningRangeEndValue", typeof(double), typeof(CircularGaugeBaseControl),
                 new PropertyMetadata(new PropertyChangedCallback(CircularGaugeBaseControl.OnWarningRangeEndValuePropertyChanged)));
 
         public static readonly DependencyProperty RangeIndicatorRadiusProperty =
@@ -409,17 +411,10 @@ namespace CirclularGage.Location.UI.Units
                 db = Math.Abs(MinValue) + startRange;
                 startAngle = ((double)(db * realworldunit));
             }
+            startAngle = CalculationStartAngel(realworldunit, startRange);
 
-            if (endRange < 0)
-            {
-                db = MinValue + Math.Abs(endRange);
-                endAngle = ((double)(Math.Abs(db * realworldunit)));
-            }
-            else
-            {
-                db = Math.Abs(MinValue) + endRange;
-                endAngle = ((double)(db * realworldunit));
-            }
+            endAngle = CalculationEndAngel(realworldunit, endRange);
+
             double startAngleFromStart = (ScaleStartAngle + startAngle);
 
             double endAngleFromStart = (ScaleStartAngle + endAngle);
@@ -446,14 +441,15 @@ namespace CirclularGage.Location.UI.Units
             bool isReflexAngle1 = Math.Abs(endAngleFromStart - startAngleFromStart) > 180.0;
             DrawSegment(A1, B1, C1, D1, isReflexAngle1, indigatorColor, indicatorType);
         }
-              
+
+
         /// <summary>
-        /// Indigate 각도를 계산해주는 함수
+        /// Indigate 좌표를 계산해주는 함수
         /// </summary>
         /// <param name="angle">시작 각도</param>
         /// <param name="radius"></param>
         /// <returns></returns>
-        private Point GetCircumferencePoint(double angle, double radius)
+        protected Point GetCircumferencePoint(double angle, double radius)
         {
             double angle_radian = (angle * Math.PI) / 180;
             //Radius-- is the Radius of the gauge
@@ -472,9 +468,9 @@ namespace CirclularGage.Location.UI.Units
         /// <param name="reflexangle">역 원형 여부</param>
         /// <param name="clr">칠할 색상</param>
         /// <param name="indicatorType">Indigator 타입</param>
-        private void DrawSegment(Point p1, Point p2, Point p3, Point p4, bool reflexangle, Color clr, IndicatorType indicatorType)
+        protected void DrawSegment(Point p1, Point p2, Point p3, Point p4, bool reflexangle, Color clr, IndicatorType indicatorType)
         {
-            switch(indicatorType)
+            switch (indicatorType)
             {
                 case IndicatorType.OptimalIndicator:
                     rootGrid.Children.Remove(optimalRangeIndicator);
@@ -483,7 +479,7 @@ namespace CirclularGage.Location.UI.Units
                     rootGrid.Children.Remove(warningRangeIndicator);
                     break;
             }
-            
+
             PathSegmentCollection segments = new PathSegmentCollection();
 
             segments.Add(new LineSegment() { Point = p2 });
@@ -496,9 +492,9 @@ namespace CirclularGage.Location.UI.Units
                 IsLargeArc = reflexangle
 
             });
-            
+
             segments.Add(new LineSegment() { Point = p4 });
-            
+
             segments.Add(new ArcSegment()
             {
                 Size = new Size(arcradius1, arcradius1),
@@ -517,12 +513,12 @@ namespace CirclularGage.Location.UI.Units
                 rangestrokecolor = Colors.White;
 
 
-            if(indicatorType == IndicatorType.OptimalIndicator)
+            if (indicatorType == IndicatorType.OptimalIndicator)
             {
                 optimalRangeIndicator = new Path()
                 {
                     StrokeLineJoin = PenLineJoin.Round,
-                    Stroke = new SolidColorBrush(rangestrokecolor),                    
+                    Stroke = new SolidColorBrush(rangestrokecolor),
                     Fill = new SolidColorBrush(clr),
                     Opacity = 0.65,
                     StrokeThickness = 0.25,
@@ -539,10 +535,11 @@ namespace CirclularGage.Location.UI.Units
                     }
                     }
                 };
-                
+
                 optimalRangeIndicator.SetValue(Canvas.ZIndexProperty, 150);
                 rootGrid.Children.Add(optimalRangeIndicator);
-            }else
+            }
+            else
             {
                 warningRangeIndicator = new Path()
                 {
@@ -565,114 +562,12 @@ namespace CirclularGage.Location.UI.Units
                     }
                     }
                 };
-                
+
                 warningRangeIndicator.SetValue(Canvas.ZIndexProperty, 150);
                 rootGrid.Children.Add(warningRangeIndicator);
             }
 
         }
-        /// <summary>
-        /// Gauge Indigate 생성
-        /// </summary>
-        protected virtual void DrawScale()
-        {         
-            double majorTickUnitAngle = ScaleSweepAngle / MajorDivisionsCount;                        
-            
-            double majorTicksUnitValue = (MaxValue - MinValue) / MajorDivisionsCount;
-            majorTicksUnitValue = Math.Round(majorTicksUnitValue, ScaleValuePrecision);
-
-            double minvalue = MinValue;
-            
-            for (double i = ScaleStartAngle; i <= (ScaleStartAngle + ScaleSweepAngle); i = i + majorTickUnitAngle)
-            {
-                Rectangle majortickrect = new Rectangle();
-                majortickrect.Height = MajorTickSize.Height;
-                majortickrect.Width = MajorTickSize.Width;
-                majortickrect.Fill = new SolidColorBrush(MajorTickColor);
-                Point p = new Point(0.5, 0.5);
-                majortickrect.RenderTransformOrigin = p;
-                majortickrect.HorizontalAlignment = HorizontalAlignment.Center;
-                majortickrect.VerticalAlignment = VerticalAlignment.Center;
-
-                TransformGroup majortickgp = new TransformGroup();
-                RotateTransform majortickrt = new RotateTransform();
-                
-                double i_radian = (i * Math.PI) / 180;
-                majortickrt.Angle = i;
-                majortickgp.Children.Add(majortickrt);
-                TranslateTransform majorticktt = new TranslateTransform();
-
-                majorticktt.X = (int)((ScaleRadius) * Math.Cos(i_radian));
-                majorticktt.Y = (int)((ScaleRadius) * Math.Sin(i_radian));
-
-                TranslateTransform majorscalevaluett = new TranslateTransform();
-                majorscalevaluett.X = (int)((ScaleLabelRadius) * Math.Cos(i_radian));
-                majorscalevaluett.Y = (int)((ScaleLabelRadius) * Math.Sin(i_radian));
-
-                // Indigate Label TextBlock                
-                TextBlock tb = new TextBlock();
-
-                tb.Height = ScaleLabelSize.Height;
-                tb.Width = ScaleLabelSize.Width;
-                tb.FontSize = ScaleLabelFontSize;
-                tb.Foreground = new SolidColorBrush(ScaleLabelForeground);
-                tb.TextAlignment = TextAlignment.Center;
-                tb.VerticalAlignment = VerticalAlignment.Center;
-                tb.HorizontalAlignment = HorizontalAlignment.Center;
-
-                if (Math.Round(minvalue, ScaleValuePrecision) <= Math.Round(MaxValue, ScaleValuePrecision))
-                {
-                    minvalue = Math.Round(minvalue, ScaleValuePrecision);
-                    tb.Text = Math.Abs(minvalue).ToString();
-                    minvalue = minvalue + majorTicksUnitValue;
-               }
-                else
-                {
-                    break;
-                }
-                majortickgp.Children.Add(majorticktt);
-                majortickrect.RenderTransform = majortickgp;
-                tb.RenderTransform = majorscalevaluett;
-                rootGrid.Children.Add(majortickrect);
-                rootGrid.Children.Add(tb);
-
-
-                //Drawing the minor axis ticks
-                double onedegree = ((i + majorTickUnitAngle) - i) / (MinorDivisionsCount);
-
-                if ((i < (ScaleStartAngle + ScaleSweepAngle)) && (Math.Round(minvalue, ScaleValuePrecision) <= Math.Round(MaxValue, ScaleValuePrecision)))
-                {
-                    for (double mi = i + onedegree; mi < (i + majorTickUnitAngle); mi = mi + onedegree)
-                    {
-                        Rectangle mr = new Rectangle();
-                        mr.Height = MinorTickSize.Height;
-                        mr.Width = MinorTickSize.Width;
-                        mr.Fill = new SolidColorBrush(MinorTickColor);
-                        mr.HorizontalAlignment = HorizontalAlignment.Center;
-                        mr.VerticalAlignment = VerticalAlignment.Center;
-                        Point p1 = new Point(0.5, 0.5);
-                        mr.RenderTransformOrigin = p1;
-
-                        TransformGroup minortickgp = new TransformGroup();
-                        RotateTransform minortickrt = new RotateTransform();
-                        minortickrt.Angle = mi;
-                        minortickgp.Children.Add(minortickrt);
-                        TranslateTransform minorticktt = new TranslateTransform();
-
-                        double mi_radian = (mi * Math.PI) / 180;
-                        minorticktt.X = (int)((ScaleRadius) * Math.Cos(mi_radian));
-                        minorticktt.Y = (int)((ScaleRadius) * Math.Sin(mi_radian));
-
-                        minortickgp.Children.Add(minorticktt);
-                        mr.RenderTransform = minortickgp;
-                        rootGrid.Children.Add(mr);
-
-                    }
-
-                }
-
-            }
-        }      
         #endregion
         /// <summary>
         /// 현재 포인터가 데이터가 변경시 Event
@@ -683,7 +578,7 @@ namespace CirclularGage.Location.UI.Units
         {
             CircularGaugeBaseControl gauge = d as CircularGaugeBaseControl;
             gauge.OnCurrentValueChanged(e);
-            gauge.DrawScale();                       
+            //gauge.DrawScale();                       
         }
         /// <summary>
         /// 게이지바 안전 상태 시작 설정부분 제한
@@ -696,7 +591,7 @@ namespace CirclularGage.Location.UI.Units
             CircularGaugeBaseControl gauge = d as CircularGaugeBaseControl;
             if ((double)e.NewValue < gauge.MinValue)
                 gauge.OptimalRangeStartValue = gauge.MinValue;
-            
+
         }
         /// <summary>
         /// 게이지바 안전 상태 끝 설정부분 제한
@@ -721,7 +616,7 @@ namespace CirclularGage.Location.UI.Units
             CircularGaugeBaseControl gauge = d as CircularGaugeBaseControl;
             if ((double)e.NewValue < gauge.MinValue)
                 gauge.OptimalRangeStartValue = gauge.MinValue;
-            
+
         }
         /// <summary>
         /// 위험 게이지 끝 설정 부분
@@ -740,7 +635,7 @@ namespace CirclularGage.Location.UI.Units
         /// Gauge 현재 상태 ChagneEvent
         /// </summary>
         /// <param name="e"></param>
-        protected virtual void OnCurrentValueChanged(DependencyPropertyChangedEventArgs e)
+        private void OnCurrentValueChanged(DependencyPropertyChangedEventArgs e)
         {
             double newValue = (double)e.NewValue;
             double oldValue = (double)e.OldValue;
@@ -765,7 +660,6 @@ namespace CirclularGage.Location.UI.Units
 
             if (pointer != null)
             {
-                double db1 = 0;
                 double oldcurr_realworldunit = 0;
                 double newcurr_realworldunit = 0;
                 double realworldunit = (ScaleSweepAngle / (MaxValue - MinValue));
@@ -775,26 +669,29 @@ namespace CirclularGage.Location.UI.Units
                     oldValue = MinValue;
                     isInitialValueSet = true;
                 }
-                if (oldValue < 0)
-                {
-                    db1 = MinValue + Math.Abs(oldValue);
-                    oldcurr_realworldunit = ((double)(Math.Abs(db1 * realworldunit)));
-                }
-                else
-                {
-                    db1 = Math.Abs(MinValue) + oldValue;
-                    oldcurr_realworldunit = ((double)(db1 * realworldunit));
-                }
-                if (newValue < 0)
-                {
-                    db1 = MinValue + Math.Abs(newValue);
-                    newcurr_realworldunit = ((double)(Math.Abs(db1 * realworldunit)));
-                }
-                else
-                {
-                    db1 = Math.Abs(MinValue) + newValue;
-                    newcurr_realworldunit = ((double)(db1 * realworldunit));
-                }
+
+                //if (oldValue < 0)
+                //{
+                //    db1 = MinValue + Math.Abs(oldValue);
+                //    oldcurr_realworldunit = ((double)(Math.Abs(db1 * realworldunit)));
+                //}
+                //else
+                //{
+                //    db1 = Math.Abs(MinValue) + oldValue;
+                //    oldcurr_realworldunit = ((double)(db1 * realworldunit));
+                //}
+                oldcurr_realworldunit = CalculationStartAngel(realworldunit, oldValue);
+                //if (newValue < 0)
+                //{
+                //    db1 = MinValue + Math.Abs(newValue);
+                //    newcurr_realworldunit = ((double)(Math.Abs(db1 * realworldunit)));
+                //}
+                //else
+                //{
+                //    db1 = Math.Abs(MinValue) + newValue;
+                //    newcurr_realworldunit = ((double)(db1 * realworldunit));
+                //}
+                newcurr_realworldunit = CalculationEndAngel(realworldunit, newValue);
                 double oldCurrentValueAngle = ScaleStartAngle + oldcurr_realworldunit;
                 double newCurrentValueAngle = ScaleStartAngle + newcurr_realworldunit;
 
@@ -802,13 +699,161 @@ namespace CirclularGage.Location.UI.Units
             }
 
         }
+        protected virtual void DrawMajorTicksRectangle(double majorTickUnitAngle)
+        {
+            minvalue = MinValue;
+            double majorTicksUnitValue = (MaxValue - MinValue) / MajorDivisionsCount;
+            majorTicksUnitValue = Math.Round(majorTicksUnitValue, ScaleValuePrecision);
+
+            for (double i = ScaleStartAngle; i <= (ScaleStartAngle + ScaleSweepAngle); i = i + majorTickUnitAngle)
+            {
+                Rectangle majortickrect = new Rectangle();
+                majortickrect.Height = MajorTickSize.Height;
+                majortickrect.Width = MajorTickSize.Width;
+                majortickrect.Fill = new SolidColorBrush(MajorTickColor);
+                Point p = new Point(0.5, 0.5);
+                majortickrect.RenderTransformOrigin = p;
+                majortickrect.HorizontalAlignment = HorizontalAlignment.Center;
+                majortickrect.VerticalAlignment = VerticalAlignment.Center;
+
+                TransformGroup majortickgp = new TransformGroup();
+                RotateTransform majortickrt = new RotateTransform();
+
+                double i_radian = (i * Math.PI) / 180;
+                majortickrt.Angle = i;
+                majortickgp.Children.Add(majortickrt);
+                TranslateTransform majorticktt = new TranslateTransform();
+
+                majorticktt.X = (int)((ScaleRadius) * Math.Cos(i_radian));
+                majorticktt.Y = (int)((ScaleRadius) * Math.Sin(i_radian));
+
+                TranslateTransform majorscalevaluett = new TranslateTransform();
+                majorscalevaluett.X = (int)((ScaleLabelRadius) * Math.Cos(i_radian));
+                majorscalevaluett.Y = (int)((ScaleLabelRadius) * Math.Sin(i_radian));
+
+                TextBlock tb = DrawMajorLabel(majorTicksUnitValue);
+
+                if (tb is null)
+                    break;
+                majortickgp.Children.Add(majorticktt);
+                majortickrect.RenderTransform = majortickgp;
+                tb.RenderTransform = majorscalevaluett;
+                rootGrid.Children.Add(majortickrect);
+                rootGrid.Children.Add(tb);
+
+                DrawMinorTicksRectangle(i, majorTickUnitAngle);
+            }
+        }
+        protected virtual void DrawMinorTicksRectangle(double scaleStartAngle, double majorTickUnitAngle)
+        {
+            //Drawing the minor axis ticks
+            double onedegree = ((scaleStartAngle + majorTickUnitAngle) - scaleStartAngle) / (MinorDivisionsCount);
+
+            if ((scaleStartAngle < (ScaleStartAngle + ScaleSweepAngle)) && (Math.Round(minvalue, ScaleValuePrecision) <= Math.Round(MaxValue, ScaleValuePrecision)))
+            {
+                for (double mi = scaleStartAngle + onedegree; mi < (scaleStartAngle + majorTickUnitAngle); mi = mi + onedegree)
+                {
+                    Rectangle mr = new Rectangle();
+                    mr.Height = MinorTickSize.Height;
+                    mr.Width = MinorTickSize.Width;
+                    mr.Fill = new SolidColorBrush(MinorTickColor);
+                    mr.HorizontalAlignment = HorizontalAlignment.Center;
+                    mr.VerticalAlignment = VerticalAlignment.Center;
+                    Point p1 = new Point(0.5, 0.5);
+                    mr.RenderTransformOrigin = p1;
+
+                    TransformGroup minortickgp = new TransformGroup();
+                    RotateTransform minortickrt = new RotateTransform();
+                    minortickrt.Angle = mi;
+                    minortickgp.Children.Add(minortickrt);
+                    TranslateTransform minorticktt = new TranslateTransform();
+
+                    double mi_radian = (mi * Math.PI) / 180;
+                    minorticktt.X = (int)((ScaleRadius) * Math.Cos(mi_radian));
+                    minorticktt.Y = (int)((ScaleRadius) * Math.Sin(mi_radian));
+
+                    minortickgp.Children.Add(minorticktt);
+                    mr.RenderTransform = minortickgp;
+                    rootGrid.Children.Add(mr);
+
+                }
+
+            }
+        }
+        protected virtual TextBlock DrawMajorLabel(double majorTicksUnitValue)
+        {
+            // Indigate Label TextBlock                
+            TextBlock tb = new TextBlock();
+
+            tb.Height = ScaleLabelSize.Height;
+            tb.Width = ScaleLabelSize.Width;
+            tb.FontSize = ScaleLabelFontSize;
+            tb.Foreground = new SolidColorBrush(ScaleLabelForeground);
+            tb.TextAlignment = TextAlignment.Center;
+            tb.VerticalAlignment = VerticalAlignment.Center;
+            tb.HorizontalAlignment = HorizontalAlignment.Center;
+
+            if (Math.Round(minvalue, ScaleValuePrecision) <= Math.Round(MaxValue, ScaleValuePrecision))
+            {
+                minvalue = Math.Round(minvalue, ScaleValuePrecision);
+                tb.Text = Math.Abs(minvalue).ToString();
+                minvalue = minvalue + majorTicksUnitValue;
+                return tb;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        protected virtual double CalculationStartAngel(double realworldunit, double startRange)
+        {
+            double db;
+            double startAngle;
+            if (startRange < 0)
+            {
+                db = MinValue + Math.Abs(startRange);
+                startAngle = ((double)(Math.Abs(db * realworldunit)));
+            }
+            else
+            {
+                db = Math.Abs(MinValue) + startRange;
+                startAngle = ((double)(db * realworldunit));
+            }
+            return startAngle;
+        }
+        protected virtual double CalculationEndAngel(double realworldunit, double endRange)
+        {
+            double db;
+            double endAngle;
+            if (endRange < 0)
+            {
+                db = MinValue + Math.Abs(endRange);
+                endAngle = ((double)(Math.Abs(db * realworldunit)));
+            }
+            else
+            {
+                db = Math.Abs(MinValue) + endRange;
+                endAngle = ((double)(db * realworldunit));
+            }
+            return endAngle;
+        }
+
+        /// <summary>
+        /// Gauge Indigate 생성
+        /// </summary>
+        private void DrawScale()
+        {
+            double majorTickUnitAngle = ScaleSweepAngle / MajorDivisionsCount;
+            DrawMajorTicksRectangle(majorTickUnitAngle);
+        }
+
         /// <summary>
         /// Gauge Pointer 이동 Animation
         /// </summary>
         /// <param name="oldCurrentValueAngle">이전 각도</param>
         /// <param name="newCurrentValueAngle">이동할 각도</param>
         /// <exception cref="NotImplementedException"></exception>
-        protected virtual void AnimaterPointer(double oldCurrentValueAngle, double newCurrentValueAngle)
+        private void AnimaterPointer(double oldCurrentValueAngle, double newCurrentValueAngle)
         {
             if (pointer != null)
             {
@@ -838,8 +883,8 @@ namespace CirclularGage.Location.UI.Units
                 TransformGroup tg = pointer.RenderTransform as TransformGroup;
                 RotateTransform rt = tg.Children[0] as RotateTransform;
                 rt.Angle = angleValue;
-            }            
+            }
         }
-        
+
     }
 }
