@@ -10,16 +10,16 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type control:AirHeading}">
                     <Grid Background="Transparent">
-                        <Ellipse x:Name="uavEclipse" Height="55" Width="55" Fill="Transparent"
+                        <Ellipse x:Name="uavEclipse" Height="39" Width="29" Fill="Transparent"
                                     HorizontalAlignment="Center" VerticalAlignment="Center"  Stroke="White" 
-                                    StrokeDashArray="1 0 0 10" Margin="0" StrokeStartLineCap="Round" 
+                                    StrokeDashArray="1 0 0 10"  StrokeStartLineCap="Round" 
                                     StrokeEndLineCap="Round" StrokeDashCap="Round">
                         </Ellipse>
-                        <StackPanel Grid.RowSpan="2" Margin="10">
+                        <StackPanel Grid.RowSpan="2" Margin="0" VerticalAlignment="Bottom">
                             <Path x:Name="uavPath" Grid.Row="0"
                               Data="M 14,0 L 16,0     16,0 16,5 30,5 30,7 16,7     16,10 20,10 20,12 16,12    10,12 10,10 14,10      14,7 0,7 0,5 14,5 Z" 
                               Fill="White" Stretch="Fill" RenderTransformOrigin="0.5,0.5"
-                              Height="17" Width="20">
+                              Height="14" Width="14">
                                 <Path.RenderTransform>
                                     <TransformGroup>
                                         <ScaleTransform ScaleY="1" ScaleX="-1"/>
@@ -31,11 +31,11 @@
                                 </Path.RenderTransform>
                             </Path>
                             <TextBlock Grid.Row="1" HorizontalAlignment="Center" 
-                                   FontSize="12" Margin="0 3 0 0" FontWeight="Bold"
+                                   FontSize="10" Padding="0 5 0 0" FontWeight="Bold"
                                    Text="{Binding HeadAngeleValue, RelativeSource={RelativeSource TemplatedParent}}"
                                    TextWrapping="Wrap" Foreground="White" TextAlignment="Center"/>
                         </StackPanel>
-                        
+                    
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

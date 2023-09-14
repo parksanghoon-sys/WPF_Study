@@ -7,7 +7,7 @@ namespace CirclularGage.Location.Local.Converters
     public class GlassEffectWidthConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
+        {            
             if (value is double width)
                 return (width * 2) * 0.94;
             return null;

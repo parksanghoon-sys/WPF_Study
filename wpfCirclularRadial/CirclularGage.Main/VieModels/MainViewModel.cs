@@ -126,15 +126,15 @@ namespace CirclularGage.Main
             StartWarningZoon = -5;
             EndWarningZoon = -2;
             TCasDisplayRange = 1;
-            TcasDisplayRangeValue = TcasDisplayRange.TcasDisplayRangeNone;
+            
 
             StartTcasItemsRandom = new ParameterRelayCommand(btn => StartTcasItemsRandomCommand(btn));
             GaugeRadius = 140;
             Messenger.Register<IntruderModel>(nameof(MainViewModel), OnIntruderModelMessageReceived);
             Score = 0;
             IntruderItems = new ObservableCollection<IntruderModel>();
-            
-            //for (int i = 0; i < 30; i ++)
+
+            //for (int i = 0; i < 30; i++)
             //{
             //    var random = new Random();
             //    Array values2 = Enum.GetValues(typeof(IntruderVerticalSenseState));
@@ -142,9 +142,10 @@ namespace CirclularGage.Main
             //    Array values3 = Enum.GetValues(typeof(DisplayMatrix));
             //    var randomDisplayMatrix = (DisplayMatrix)values3.GetValue(random.Next(values3.Length));
 
-            //    OnIntruderModelMessageReceived(IntruderModel.IntruderModelFactory(i+1, 120, random.Next(-1200,1200), randomIntruderVerticalSenseState, TcasSymbol.ProximateTraffic, randomDisplayMatrix, 360/30 * (i+1)));
+            //    OnIntruderModelMessageReceived(IntruderModel.IntruderModelFactory(i + 1, 120, 
+            //        random.Next(-1200, 1200), randomIntruderVerticalSenseState, TcasSymbol.ProximateTraffic, randomDisplayMatrix, 360 / 30 * (i + 1)));
             //}
-          
+            TcasDisplayRangeValue = TcasDisplayRange.TcasDisplayRange20nm;
         }
         #region Commands Excuate Methods
         private void StartTcasItemsRandomCommand(object _)

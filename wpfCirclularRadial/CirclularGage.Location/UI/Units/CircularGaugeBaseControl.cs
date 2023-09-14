@@ -21,7 +21,7 @@ namespace CirclularGage.Location.UI.Units
         protected Path warningRangeIndicator;
         protected Path pointer;
         protected double minvalue;
-
+        
         protected bool isInitialValueSet = false;
         protected double arcradius1;
         protected double arcradius2;
@@ -31,6 +31,9 @@ namespace CirclularGage.Location.UI.Units
 
         public static readonly DependencyProperty GaugeBackgroundColorProperty =
             DependencyProperty.Register("GaugeBackgroundColor", typeof(Color), typeof(CircularGaugeBaseControl), null);
+
+        public static readonly DependencyProperty GaugePointColorProperty =
+            DependencyProperty.Register("GaugePointColor", typeof(Color), typeof(CircularGaugeBaseControl), null);
 
         public static readonly DependencyProperty CurrentValueProperty =
             DependencyProperty.Register("CurrentValue", typeof(double), typeof(CircularGaugeBaseControl),
@@ -133,6 +136,14 @@ namespace CirclularGage.Location.UI.Units
         {
             get { return (Color)GetValue(GaugeBackgroundColorProperty); }
             set { SetValue(GaugeBackgroundColorProperty, value); }
+        }
+        /// <summary>
+        /// Gauge 배경색
+        /// </summary>
+        public Color GaugePointColor
+        {
+            get { return (Color)GetValue(GaugePointColorProperty); }
+            set { SetValue(GaugePointColorProperty, value); }
         }
         /// <summary>
         /// 현재 Gauge값 
@@ -469,7 +480,7 @@ namespace CirclularGage.Location.UI.Units
         /// <param name="clr">칠할 색상</param>
         /// <param name="indicatorType">Indigator 타입</param>
         protected void DrawSegment(Point p1, Point p2, Point p3, Point p4, bool reflexangle, Color clr, IndicatorType indicatorType)
-        {
+        {            
             switch (indicatorType)
             {
                 case IndicatorType.OptimalIndicator:
@@ -670,28 +681,9 @@ namespace CirclularGage.Location.UI.Units
                     isInitialValueSet = true;
                 }
 
-                //if (oldValue < 0)
-                //{
-                //    db1 = MinValue + Math.Abs(oldValue);
-                //    oldcurr_realworldunit = ((double)(Math.Abs(db1 * realworldunit)));
-                //}
-                //else
-                //{
-                //    db1 = Math.Abs(MinValue) + oldValue;
-                //    oldcurr_realworldunit = ((double)(db1 * realworldunit));
-                //}
                 oldcurr_realworldunit = CalculationStartAngel(realworldunit, oldValue);
-                //if (newValue < 0)
-                //{
-                //    db1 = MinValue + Math.Abs(newValue);
-                //    newcurr_realworldunit = ((double)(Math.Abs(db1 * realworldunit)));
-                //}
-                //else
-                //{
-                //    db1 = Math.Abs(MinValue) + newValue;
-                //    newcurr_realworldunit = ((double)(db1 * realworldunit));
-                //}
                 newcurr_realworldunit = CalculationEndAngel(realworldunit, newValue);
+
                 double oldCurrentValueAngle = ScaleStartAngle + oldcurr_realworldunit;
                 double newCurrentValueAngle = ScaleStartAngle + newcurr_realworldunit;
 
@@ -699,6 +691,10 @@ namespace CirclularGage.Location.UI.Units
             }
 
         }
+        /// <summary>
+        /// MajorRectengle을 그리는 함수 내부에 Lable 과 MinorRect그리는 함수가 포함
+        /// </summary>
+        /// <param name="majorTickUnitAngle"></param>
         protected virtual void DrawMajorTicksRectangle(double majorTickUnitAngle)
         {
             minvalue = MinValue;
@@ -744,6 +740,11 @@ namespace CirclularGage.Location.UI.Units
                 DrawMinorTicksRectangle(i, majorTickUnitAngle);
             }
         }
+        /// <summary>
+        /// MinorRectangle을 그리는 함수
+        /// </summary>
+        /// <param name="scaleStartAngle"></param>
+        /// <param name="majorTickUnitAngle"></param>
         protected virtual void DrawMinorTicksRectangle(double scaleStartAngle, double majorTickUnitAngle)
         {
             //Drawing the minor axis ticks
@@ -780,6 +781,11 @@ namespace CirclularGage.Location.UI.Units
 
             }
         }
+        /// <summary>
+        /// Gauge Label을 그리는 Method
+        /// </summary>
+        /// <param name="majorTicksUnitValue">이전 값에서 추가될 값</param>
+        /// <returns></returns>
         protected virtual TextBlock DrawMajorLabel(double majorTicksUnitValue)
         {
             // Indigate Label TextBlock                
@@ -805,6 +811,12 @@ namespace CirclularGage.Location.UI.Units
                 return null;
             }
         }
+        /// <summary>
+        /// Pointer, Indigate 목표 각도 계산
+        /// </summary>
+        /// <param name="realworldunit">1도당 각도</param>
+        /// <param name="startRange">시작 각도</param>
+        /// <returns></returns>
         protected virtual double CalculationStartAngel(double realworldunit, double startRange)
         {
             double db;
@@ -821,6 +833,12 @@ namespace CirclularGage.Location.UI.Units
             }
             return startAngle;
         }
+        /// <summary>
+        /// Pointer, Indigate 목표 각도 계산
+        /// </summary>
+        /// <param name="realworldunit">1도당 각도</param>
+        /// <param name="endRange">목표 각도</param>
+        /// <returns></returns>
         protected virtual double CalculationEndAngel(double realworldunit, double endRange)
         {
             double db;
@@ -876,6 +894,10 @@ namespace CirclularGage.Location.UI.Units
                 }
             }
         }
+        /// <summary>
+        /// 초기 Pointer를 0으로 세팅
+        /// </summary>
+        /// <param name="angleValue"></param>
         private void MovePointer(double angleValue)
         {
             if (pointer != null)

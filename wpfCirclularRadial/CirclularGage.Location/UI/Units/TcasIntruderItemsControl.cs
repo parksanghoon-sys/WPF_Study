@@ -16,18 +16,21 @@ namespace CirclularGage.Location.UI.Units
         private double[] _intruderInitialPointRatito;             
         
         public static readonly DependencyProperty TcasDisplayRangeProperty =
-            DependencyProperty.Register("TcasDisplayRange", typeof(TcasDisplayRange), typeof(TcasIntruderItemsControl), new PropertyMetadata(TcasDisplayRange.TcasDisplayRangeNone, OnTcasDisplayRangePropertyChanged));
+            DependencyProperty.Register("TcasDisplayRange", typeof(TcasDisplayRange), typeof(TcasIntruderItemsControl), 
+                new PropertyMetadata(TcasDisplayRange.TcasDisplayRangeNone, OnTcasDisplayRangePropertyChanged));
 
         // Using a DependencyProperty as the backing store for Radios.  This enables animation, styling, binding, etc...
 
         public static readonly DependencyProperty RadiusProperty =
             DependencyProperty.Register("Radius", typeof(double), typeof(TcasIntruderItemsControl), new PropertyMetadata(null));
 
+        // Tcas Display 반지름
         public double Radius
         {
             get { return (double)GetValue(RadiusProperty); }
             set { SetValue(RadiusProperty, value); }
         }
+        // Tcas Display Range 변화
         public TcasDisplayRange TcasDisplayRange
         {
             get { return (TcasDisplayRange)GetValue(TcasDisplayRangeProperty); }
@@ -57,7 +60,6 @@ namespace CirclularGage.Location.UI.Units
                     double ratito = 1;
                     for (int i = 0; i < tcasIntruderItems.Items.Count; i++)
                     {
-
                         switch (e.NewValue)
                         {
                             case TcasDisplayRange.TcasDisplayRangeNone:
@@ -79,7 +81,7 @@ namespace CirclularGage.Location.UI.Units
 
                         var child = tcasIntruderItems.Items[i];
 
-                        var container = child.GetType();
+                        var container = child.GetType();                        
                         var itemsFild = container.GetProperty("Range");                        
                         var objjectPointX = (double)itemsFild.GetValue(child, null) / tcasIntruderItems._intruderInitialPointRatito[i];
 

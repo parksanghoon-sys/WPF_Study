@@ -24,7 +24,7 @@
             </Setter.Value>
         </Setter>
         <Setter Property="RangeIndicatorThickness" Value="5"/>
-        <Setter Property="GaugeBackgroundColor" Value="Black" />
+        
         <Setter Property="OptimalRangeColor" Value="Green" />
         <Setter Property="AboveOptimalRangeColor" Value="Red" />
         <Setter Property="Template">
@@ -45,13 +45,13 @@
                             </Ellipse.Stroke>
                             <Ellipse.Fill>
                                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                    <GradientStop Color="#FF152029" Offset="0.846"/>
+                                    <GradientStop Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=GaugeBackgroundColor}" Offset="0.86"/>
                                     <GradientStop Color="#FF140204" Offset="0.342"/>
                                 </LinearGradientBrush>
                             </Ellipse.Fill>
                         </Ellipse>
                         <!--Gauge Point-->
-                        <Path x:Name="Pointer" Stroke="#FFE91C1C" StrokeThickness="2" 
+                        <!--<Path x:Name="Pointer" Stroke="#FFE91C1C" StrokeThickness="2" 
                               Width="{TemplateBinding PointerLength}" 
                               Height="{TemplateBinding PointerThickness}" HorizontalAlignment="Center"
                               Data="M1,1 L1,10 L156,6 z" Stretch="Fill"  RenderTransformOrigin="0,0.5" 
@@ -59,9 +59,23 @@
                             Path=PointerLength, Converter={StaticResource pointerCenterConverter}}">
                             <Path.Fill>
                                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                    <GradientStop Color="#FF890A0A" Offset="0.197"/>
+                                    --><!--<GradientStop Color="#FF890A0A" Offset="0.197"/>--><!--
                                     <GradientStop Color="#FFC40808" Offset="1"/>
-                                    <GradientStop Color="#FFE32323" Offset="0.61"/>
+                                    --><!--<GradientStop Color="#FFE32323" Offset="0.61"/>--><!--
+                                </LinearGradientBrush>
+                            </Path.Fill>
+                        </Path>-->
+                        <Path x:Name="Pointer" Stroke="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=GaugePointColor}" StrokeThickness="2" 
+                              Width="{TemplateBinding PointerLength}" 
+                              Height="{TemplateBinding PointerThickness}" HorizontalAlignment="Center"
+                              Data="M1,1 L1,10 L156,6 z" Stretch="Fill"  RenderTransformOrigin="0,0.5" 
+                              RenderTransform="{Binding RelativeSource={RelativeSource TemplatedParent}, 
+                            Path=PointerLength, Converter={StaticResource pointerCenterConverter}}">
+                            <Path.Fill>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <!--<GradientStop Color="#FF890A0A" Offset="0.197"/>-->
+                                    <GradientStop Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=GaugePointColor}" Offset="1"/>
+                                    <!--<GradientStop Color="#FFE32323" Offset="0.61"/>-->
                                 </LinearGradientBrush>
                             </Path.Fill>
                         </Path>
@@ -78,6 +92,7 @@
                                 </LinearGradientBrush>
                             </Path.Fill>
                         </Path>
+                       
                         <ContentPresenter x:Name="IntruderItems"/>
                     </Grid>
                 </ControlTemplate>
@@ -91,11 +106,14 @@
         <Setter Property="MaxValue" Value="6"/>
         <Setter Property="ScaleLabelSize" Value="40,20"/>
         <Setter Property="ScaleLabelFontSize" Value="10"/>
-        <Setter Property="ScaleLabelForeground" Value="LightGray"/>
+        <Setter Property="ScaleLabelForeground" Value="#FFFFFF"/>
         <Setter Property="MajorTickSize" Value="10,3"/>
         <Setter Property="MinorTickSize" Value="3,1"/>
-        <Setter Property="MajorTickColor" Value="LightGray"/>
-        <Setter Property="MinorTickColor" Value="LightGray"/>
+        <Setter Property="MajorTickColor" Value="#FFFFFF"/>
+        <Setter Property="GaugeBackgroundColor" Value="#FF152029" />
+        <!--<Setter Property="GaugePointColor" Value="#FFE91C1C"/>-->
+        <Setter Property="GaugePointColor" Value="#FFFFFF"/>
+        <Setter Property="MinorTickColor" Value="#FFFFFF"/>
         <Setter Property="PointerLength" Value="100"/>
         <Setter Property="PointerThickness" Value="5"/>
     </Style>

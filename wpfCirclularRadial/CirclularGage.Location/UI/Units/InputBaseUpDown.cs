@@ -138,8 +138,7 @@ namespace CirclularGage.Location.UI.Units
 
         #endregion properties
 
-        #region methods
-        #region Commands
+        #region methods        
         /// <summary>
         /// Increase the displayed integer value
         /// </summary>
@@ -241,7 +240,7 @@ namespace CirclularGage.Location.UI.Units
                 e.Handled = true;
             }
         }
-        #endregion
+        
         #endregion methods
     }
 }

@@ -10,7 +10,7 @@ namespace CirclularGage.Location.Local.Enums
     {
         TcasDisplayRangeNone,
         TcasDisplayRange10nm,
-        TcasDisplayRange20nm,
+        TcasDisplayRange20nm, // default
         TcasDisplayRange40nm,
         TcasDisplayRange80nm,
         TcasDisplayRangeTotalCount
