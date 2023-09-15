@@ -83,6 +83,7 @@
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="Stroke" Value="Transparent"/>
     </Style>
+    
     <Style TargetType="{x:Type control:TcasIntruderSettingListItem}">
         <Setter Property="Foreground" Value="#CFDFDF"/>
         <Setter Property="Height" Value="24"/>

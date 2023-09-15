@@ -6,6 +6,7 @@ using System.Windows.Media;
 
 namespace CirclularGage.Location.Local.Converters
 {
+    [ValueConversion(typeof(string),typeof(TransformGroup))]
     internal class PointerCenterConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

@@ -5,7 +5,6 @@
     
     <convert:BackgroundColorConverter x:Key="backgroundColorConverter"/>
     <convert:PointerCenterConverter x:Key="pointerCenterConverter"/>
-    <convert:RadiusToDiameterConverter x:Key="rangeIndicatorLightPositionConverter"/>
     <convert:GlassEffectWidthConverter x:Key="glassEffectWidthConverter"/>
 
     <Style x:Key="CircularGaugeBaseControl" TargetType="{x:Type view:CircularGaugeBaseControl}">
@@ -30,12 +29,14 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type view:CircularGaugeBaseControl}">
-                    <Grid x:Name="LayoutRoot" Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Radius, Converter={StaticResource rangeIndicatorLightPositionConverter}}"
-                          Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Radius, Converter={StaticResource rangeIndicatorLightPositionConverter}}">
+                    <Grid x:Name="LayoutRoot" Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Radius, 
+                        Converter={convert:RadiusToDiameterConverter}, ConverterParameter=2}"
+                          Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Radius, 
+                        Converter={convert:RadiusToDiameterConverter}, ConverterParameter=2}">
                         <!--Gage Circle-->
                         <Ellipse x:Name="PointerCap" 
-                                 Height="{TemplateBinding Radius,Converter={StaticResource rangeIndicatorLightPositionConverter}}" 
-                                 Width="{TemplateBinding Radius,Converter={StaticResource rangeIndicatorLightPositionConverter}}"                                  
+                                 Height="{TemplateBinding Radius,Converter={convert:RadiusToDiameterConverter}, ConverterParameter=2}" 
+                                 Width="{TemplateBinding Radius,Converter={convert:RadiusToDiameterConverter}, ConverterParameter=2}"                                  
                                  StrokeThickness="4" Opacity="1" >
                             <Ellipse.Stroke>
                                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -82,7 +83,8 @@
                         <!--Gauge Effect-->
                         <Path x:Name="GlassEffect" StrokeThickness="1" Stretch="Fill" VerticalAlignment="Bottom"
                               Height="{TemplateBinding Radius}"
-                              Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Radius, Converter={StaticResource glassEffectWidthConverter}}" 
+                              Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Radius, 
+                                        Converter={convert:RadiusToDiameterConverter}, ConverterParameter=1.88}"
                               Opacity="0.18" 
                               Data="M265.99997,151.00005 C263.99994,194.00003 209.55908,259 135.00064,259 C60.442207,259 11,200.00003 5.9999995,157.00005 C5.0181994,148.55656 73.000877,112.00006 137.00053,112.00007 C199.00887,112.00008 266.72015,135.5164 265.99997,151.00005 z">
                             <Path.Fill>

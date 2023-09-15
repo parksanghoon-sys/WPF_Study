@@ -53,7 +53,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Local\Common\AbstractBaseUpDown.cs" />
+    <Compile Include="Local\Common\ConverterMarkupExtension.cs" />
     <Compile Include="Local\Common\MouseIncrementor.cs" />
+    <Compile Include="Local\Common\MultiConverterMarkupExtension.cs" />
     <Compile Include="Local\Converters\BoolToVisibilityPropConverter.cs" />
     <Compile Include="Local\Converters\ByteToPlaceHolderStringConverter.cs" />
     <Compile Include="Local\Converters\EnumToStringConverter.cs" />
@@ -62,9 +64,7 @@
     <Compile Include="Local\Converters\RadioBoolToEnumConverter.cs" />
     <Compile Include="Local\Converters\TcasIntruderItemXAxsisConverter.cs" />
     <Compile Include="Local\Enums\TcasDisplayRange.cs" />
-    <Compile Include="Themes\Views\UserControl3.xaml.cs">
-      <DependentUpon>UserControl3.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="UI\Views\TcasControlView.cs" />
     <Compile Include="UI\Units\InputBaseUpDown.cs" />
     <Compile Include="UI\Units\NumericUpDownControl.cs" />
     <Compile Include="UI\Units\TcasGaugeControl.cs" />
@@ -83,12 +83,6 @@
     <Compile Include="Local\Enums\IntruderType.cs" />
     <Compile Include="Local\Enums\IntruderVerticalMoveMentState.cs" />
     <Compile Include="Local\Enums\TcasSymbol.cs" />
-    <Compile Include="Themes\Views\UserControl1.xaml.cs">
-      <DependentUpon>UserControl1.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Themes\Views\UserControl2.xaml.cs">
-      <DependentUpon>UserControl2.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UI\Units\AirHeading.cs" />
     <Compile Include="UI\Units\CircularGaugeBaseControl.cs">
       <SubType>Code</SubType>
@@ -125,15 +119,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Themes\Views\UserControl1.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Themes\Views\UserControl2.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Themes\Views\UserControl3.xaml">
+    <Page Include="Themes\Views\TcasControlView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -162,8 +148,6 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="UI\Views\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

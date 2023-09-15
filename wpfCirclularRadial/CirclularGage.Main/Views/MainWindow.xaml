@@ -13,8 +13,8 @@
         <convert:RadioBoolToEnumConvert x:Key="RadioBoolToEnumConvert"/>
         
         <LinearGradientBrush x:Key="TCAS.BG" StartPoint="0.5,0" EndPoint="0.5,1">
-            <GradientStop Color="#181D20" Offset="0"/>
-            <GradientStop Color="#1F1D20" Offset="1"/>
+            <GradientStop Color="#181D20" Offset="0.2"/>
+            <GradientStop Color="#1F1D20" Offset="0.92"/>
         </LinearGradientBrush>
         
         <Style TargetType="{x:Type TextBlock}">
@@ -62,40 +62,7 @@
                                 Margin="0 100 0 0"/>
             <ContentControl Style="{StaticResource TCasRange}" HorizontalAlignment="Right" 
                             VerticalAlignment="Top" Margin="0 10"/>
-
-            <!--<control:CircularGaugeBaseControl Radius="{Binding GaugeRadius}"       
-                                          Panel.ZIndex="2"
-                                          ScaleRadius="125" 
-                                          ScaleStartAngle="30" 
-                                          ScaleSweepAngle="300"
-                                                                                                                      
-                                          MinValue="-6" 
-                                          MaxValue="6"                                         
-                                          MajorDivisionsCount="12" 
-                                          MinorDivisionsCount="10" 
-                                          CurrentValue="{Binding Score}"                                                                                
-                                          RangeIndicatorThickness="5"
-                                          RangeIndicatorRadius="120"
-                              
-                                          ScaleLabelRadius="110"
-                                          ScaleLabelSize="40,20"
-                                          ScaleLabelFontSize="10"
-                                          ScaleLabelForeground="LightGray"
-                                          ScaleValuePrecision="1"
-                                          MajorTickSize="10,3"
-                                          MinorTickSize="3,1"
-                                          MajorTickColor="LightGray"
-                                          MinorTickColor="LightGray"
-                                        
-                                          GaugeBackgroundColor="Black"
-                                          
-                                          PointerLength="100"                                             
-                                          PointerThickness ="5"
-                                          
-                                          OptimalRangeStartValue="{Binding StartSafeZoon}"
-                                          OptimalRangeEndValue="{Binding EndSafeZoon}" 
-                                          WarningRangeStartValue="{Binding StartWarningZoon}"
-                                          WarningRangeEndValue="{Binding EndWarningZoon}">-->            
+          
                 <control:TcasGaugeControl Radius="{Binding GaugeRadius}"                                          
                                           Panel.ZIndex="2"
                                           ScaleRadius="125" 

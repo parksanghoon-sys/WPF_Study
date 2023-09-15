@@ -2,10 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:convert ="clr-namespace:CirclularGage.Location.Local.Converters"
                     xmlns:control="clr-namespace:CirclularGage.Location.UI.Units">
-    
-    <convert:RadiusToDiameterConverter x:Key="rangeIndicatorLightPositionConverter"/>
 
-        <Style TargetType="{x:Type control:TcasIntruderItemsControl}">
+    <Style TargetType="{x:Type control:TcasIntruderItemsControl}">
         <Setter Property="HorizontalAlignment" Value="Center"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="ItemsSource" Value="{Binding IntruderItems}"/>
