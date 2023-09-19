@@ -382,7 +382,11 @@ namespace CirclularGage.Location.UI.Units
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(CircularGaugeBaseControl), new FrameworkPropertyMetadata(typeof(CircularGaugeBaseControl)));
         }
-        #region Draw       
+        public CircularGaugeBaseControl()
+        {
+
+        }
+        #region Draw
         /// <summary>
         /// Control 생성시 만들어주는 Override
         /// </summary>
@@ -484,10 +488,17 @@ namespace CirclularGage.Location.UI.Units
             switch (indicatorType)
             {
                 case IndicatorType.OptimalIndicator:
-                    rootGrid.Children.Remove(optimalRangeIndicator);
+                    {
+                        if((optimalRangeIndicator != null)&& (rootGrid.Children.Contains(optimalRangeIndicator)))
+                            rootGrid.Children.Remove(optimalRangeIndicator);
+                    }
+                    
                     break;
                 case IndicatorType.WarningIndicator:
-                    rootGrid.Children.Remove(warningRangeIndicator);
+                    {
+                        if((warningRangeIndicator != null) &&(rootGrid.Children.Contains(warningRangeIndicator)))
+                            rootGrid.Children.Remove(warningRangeIndicator);                        
+                    }                    
                     break;
             }
 

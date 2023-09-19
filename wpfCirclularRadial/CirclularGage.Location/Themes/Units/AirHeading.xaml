@@ -34,8 +34,7 @@
                                    FontSize="10" Padding="0 5 0 0" FontWeight="Bold"
                                    Text="{Binding HeadAngeleValue, RelativeSource={RelativeSource TemplatedParent}}"
                                    TextWrapping="Wrap" Foreground="White" TextAlignment="Center"/>
-                        </StackPanel>
-                    
+                        </StackPanel>                    
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

@@ -158,6 +158,8 @@ namespace CirclularGage.Location.UI.Units
         private void InitialVariables()
         {
             drawIndex = 0;
+            //warningRangeIndicator = new Path();
+            //optimalRangeIndicator = new Path();
             drawMajorStep = new Dictionary<int, TcasGageDrawModel>();
             drawMajorStep.Add(0, new TcasGageDrawModel
             {

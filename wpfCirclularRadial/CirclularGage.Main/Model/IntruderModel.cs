@@ -13,7 +13,7 @@ namespace CirclularGage.Main.Model
         private double _range;
         private double _altritude;
         private IntruderVerticalSenseState _intruderVerticalMoveMentState;
-        private TcasSymbol _intruderType;
+        //private TcasSymbol _intruderType;
         private DisplayMatrix _intruderDisplay;
         /// <summary>
         /// ItemModel의 X축 위치
@@ -136,7 +136,7 @@ namespace CirclularGage.Main.Model
         {
             var angle = Bearing - 90;
             var radianAngle = (angle * Math.PI) / 180;
-            return (Range * Math.Sin(radianAngle) * 1);            
+            return 97+(Range * Math.Sin(radianAngle) * 1);            
         }
         private TcasSymbol CalculateIntruderType()
         {

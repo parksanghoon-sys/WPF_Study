@@ -5,13 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CirclularGage.Main"
         xmlns:control="clr-namespace:CirclularGage.Location.UI.Units;assembly=CirclularGage.Location"
+        xmlns:view ="clr-namespace:CirclularGage.Location.Themes.Views;assembly=CirclularGage.Location"
         xmlns:convert="clr-namespace:CirclularGage.Location.Local.Converters;assembly=CirclularGage.Location"
         xmlns:enum="clr-namespace:CirclularGage.Location.Local.Enums;assembly=CirclularGage.Location"
         mc:Ignorable="d"        
         Title="MainWindow" Height="700" Width="900">
     <Window.Resources>
         <convert:RadioBoolToEnumConvert x:Key="RadioBoolToEnumConvert"/>
-        
+
         <LinearGradientBrush x:Key="TCAS.BG" StartPoint="0.5,0" EndPoint="0.5,1">
             <GradientStop Color="#181D20" Offset="0.2"/>
             <GradientStop Color="#1F1D20" Offset="0.92"/>
@@ -57,14 +58,20 @@
         </Grid.ColumnDefinitions>
 
         <Grid x:Name="circle" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Width="300" Height="285">
-            <control:AirHeading HeadAngeleValue="{Binding AirPortHeadingAngle}" 
+            <!--<control:AirHeading HeadAngeleValue="{Binding AirPortHeadingAngle}" 
                                 Panel.ZIndex="3" 
-                                Margin="0 100 0 0"/>
+                                Margin="0 100 0 0"/>-->
             <ContentControl Style="{StaticResource TCasRange}" HorizontalAlignment="Right" 
                             VerticalAlignment="Top" Margin="0 10"/>
-          
-                <control:TcasGaugeControl Radius="{Binding GaugeRadius}"                                          
-                                          Panel.ZIndex="2"
+            
+            <control:AirPortSympbolBackground Panel.ZIndex="2"
+                                              AirPortSymbolBackgroundSize="{Binding AirPortHeadingAngle, Converter={convert:RadiusToDiameterConverter},ConverterParameter=2}" 
+                                              Margin="0 70 0 0" />
+            <control:AirPortSymbol AirPortSymbolSize="14" HeadAngeleValue="{Binding AirPortHeadingAngle}" Panel.ZIndex="3"
+                                           Margin="0 97 0 0"/>
+            
+            <control:TcasGaugeControl Radius="{Binding GaugeRadius}"                                          
+                                          Panel.ZIndex="1"
                                           ScaleRadius="125" 
                                           ScaleSweepAngle="340"
                                                           
@@ -80,10 +87,12 @@
                                           OptimalRangeEndValue="{Binding EndSafeZoon}" 
                                           WarningRangeStartValue="{Binding StartWarningZoon}"
                                           WarningRangeEndValue="{Binding EndWarningZoon}">
-                <control:TcasIntruderItemsControl x:Name="TcasIntruderItems" Panel.ZIndex="160"  
+                <control:TcasIntruderItemsControl x:Name="TcasIntruderItems" Panel.ZIndex="4"  
                                                   TcasDisplayRange="{Binding TcasDisplayRangeValue}"
                                                   Radius ="{Binding GaugeRadius}"/>
+
             </control:TcasGaugeControl>
+            <!--<view:TcasControlView/>-->
             <!--<TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="VSI : 1000 FPM" VerticalAlignment="Bottom" 
                        Background="Black" Foreground="White" Height="12" Width="68" TextAlignment="Center" Margin="0,0,0,0" FontSize="8"/>-->
 

@@ -69,16 +69,15 @@
                                           ScaleRadius="125" 
                                           ScaleSweepAngle="340"
                                                           
-                                          MajorDivisionsCount="10" 
-                                          MinorDivisionsCount="4" 
-                                          CurrentValue="{Binding Score}"                                                                                
+                                          MajorDivisionsCount="10"                                           
+                                          CurrentValue="{Binding Score, RelativeSource={RelativeSource TemplatedParent}}"                                                                                
                                           RangeIndicatorThickness="5"
                                           RangeIndicatorRadius="120"
                               
                                           ScaleLabelRadius="110"                                        
                                           
-                                          OptimalRangeStartValue="{Binding StartSafeZoon}"
-                                          OptimalRangeEndValue="{Binding EndSafeZoon}" 
+                                          OptimalRangeStartValue="{Binding StartSafeZoon, RelativeSource={RelativeSource TemplatedParent}}"
+                                          OptimalRangeEndValue="{Binding EndSafeZoon, RelativeSource={RelativeSource TemplatedParent}}" 
                                           WarningRangeStartValue="{Binding StartWarningZoon}"
                                           WarningRangeEndValue="{Binding EndWarningZoon}">
                             <control:TcasIntruderItemsControl x:Name="TcasIntruderItems" Panel.ZIndex="160"  
