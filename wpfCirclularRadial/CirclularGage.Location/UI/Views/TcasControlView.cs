@@ -14,5 +14,6 @@ namespace CirclularGage.Location.Themes.Views
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(TcasControlView), new FrameworkPropertyMetadata(typeof(TcasControlView)));
         }
+
     }
 }

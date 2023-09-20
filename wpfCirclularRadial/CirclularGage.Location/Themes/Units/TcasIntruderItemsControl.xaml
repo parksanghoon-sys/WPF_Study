@@ -14,8 +14,10 @@
                 <ItemsPanelTemplate>
                     <Canvas >
                         <Canvas.Clip> 
-                            <EllipseGeometry RadiusX="{Binding Radius, RelativeSource={RelativeSource AncestorType={x:Type control:TcasIntruderItemsControl}}}"
-                                             RadiusY="{Binding Radius, RelativeSource={RelativeSource AncestorType={x:Type control:TcasIntruderItemsControl}}}"           
+                            <EllipseGeometry RadiusX="{Binding Radius, Converter={convert:RadiusToDiameterConverter}, 
+                                RelativeSource={RelativeSource AncestorType={x:Type control:TcasIntruderItemsControl}},ConverterParameter=0.66}"
+                                             RadiusY="{Binding Radius, Converter={convert:RadiusToDiameterConverter}, 
+                                RelativeSource={RelativeSource AncestorType={x:Type control:TcasIntruderItemsControl}},ConverterParameter=0.66}"           
                                              Center="0,0"/>
                             <!--<EllipseGeometry RadiusX="140"
                                              RadiusY="140"

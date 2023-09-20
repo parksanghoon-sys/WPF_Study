@@ -17,20 +17,24 @@ namespace CirclularGage.Location.UI.Units
         
         public static readonly DependencyProperty TcasDisplayRangeProperty =
             DependencyProperty.Register("TcasDisplayRange", typeof(TcasDisplayRange), typeof(TcasIntruderItemsControl), 
-                new PropertyMetadata(TcasDisplayRange.TcasDisplayRangeNone, OnTcasDisplayRangePropertyChanged));
+                new PropertyMetadata(TcasDisplayRange.TcasDisplayRangeNone,OnTcasDisplayRangePropertyChanged));
 
         // Using a DependencyProperty as the backing store for Radios.  This enables animation, styling, binding, etc...
 
         public static readonly DependencyProperty RadiusProperty =
             DependencyProperty.Register("Radius", typeof(double), typeof(TcasIntruderItemsControl), new PropertyMetadata(null));
-
-        // Tcas Display 반지름
+        
+        /// <summary>
+        /// Tcas Display 반지름 
+        /// </summary>
         public double Radius
         {
             get { return (double)GetValue(RadiusProperty); }
             set { SetValue(RadiusProperty, value); }
-        }
-        // Tcas Display Range 변화
+        }        
+        /// <summary>
+        /// Tcas Display Range 변화 
+        /// </summary>
         public TcasDisplayRange TcasDisplayRange
         {
             get { return (TcasDisplayRange)GetValue(TcasDisplayRangeProperty); }
@@ -45,6 +49,10 @@ namespace CirclularGage.Location.UI.Units
         {
             this.InitialVariables();
         }
+        public override void OnApplyTemplate()
+        {
+            int a = 1;
+        }
         protected override DependencyObject GetContainerForItemOverride()
         {
             return new TcasIntruderItem();
@@ -52,6 +60,7 @@ namespace CirclularGage.Location.UI.Units
         private static void OnTcasDisplayRangePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var tcasIntruderItems = d as TcasIntruderItemsControl;
+            var tcasRadius = tcasIntruderItems.Radius;
 
             if (e.OldValue != e.NewValue)
             {
@@ -63,26 +72,26 @@ namespace CirclularGage.Location.UI.Units
                         switch (e.NewValue)
                         {
                             case TcasDisplayRange.TcasDisplayRangeNone:
-                                ratito = 1;
+                                ratito = 1.75;
                                 break;
                             case TcasDisplayRange.TcasDisplayRange10nm:
-                                ratito = 12.7;
+                                ratito = 21;
                                 break;
                             case TcasDisplayRange.TcasDisplayRange20nm:
-                                ratito = 6.35;
+                                ratito = 10.5;
                                 break;
                             case TcasDisplayRange.TcasDisplayRange40nm:
-                                ratito = 3.175;
+                                ratito = 5.25;
                                 break;
                             case TcasDisplayRange.TcasDisplayRange80nm:
-                                ratito = 1.5;
+                                ratito = 2.62;
                                 break;
                         }
 
                         var child = tcasIntruderItems.Items[i];
 
                         var container = child.GetType();                        
-                        var itemsFild = container.GetProperty("Range");                        
+                        var itemsFild = container.GetProperty("DisplayRangeRatio");                        
                         var objjectPointX = (double)itemsFild.GetValue(child, null) / tcasIntruderItems._intruderInitialPointRatito[i];
 
                         itemsFild.SetValue(child, objjectPointX * ratito, null);                        

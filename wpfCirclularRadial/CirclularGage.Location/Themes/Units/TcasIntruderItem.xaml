@@ -85,7 +85,7 @@
                             <RowDefinition />
                         </Grid.RowDefinitions>
                         <Grid x:Name="txtUpDownLayout" Grid.Row="0" >
-                            <TextBlock x:Name="textbox" Text="{Binding Altitude, Converter={StaticResource IntruderAltitudeConverter}}"
+                            <TextBlock x:Name="textbox" Text="{Binding Range, Converter={StaticResource IntruderAltitudeConverter}}"
                                        Foreground="{Binding IntruderType, Converter={StaticResource IntruderBackgroundConverter}}" 
                                        TextAlignment="Center" FontSize="10"/>
                         </Grid>
@@ -133,6 +133,10 @@
                         <DataTrigger Binding="{Binding Altitude, Converter={StaticResource NegativePositiveConverter}}" Value="False">
                             <Setter TargetName="txtUpDownLayout" Property="Grid.Row" Value="1"/>
                             <Setter TargetName="IntruderSymbolLayout" Property="Grid.Row" Value="0"/>
+                        </DataTrigger>
+
+                        <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                            <Setter TargetName="backgorund" Property="Background" Value="{StaticResource WarningColor}"/>
                         </DataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

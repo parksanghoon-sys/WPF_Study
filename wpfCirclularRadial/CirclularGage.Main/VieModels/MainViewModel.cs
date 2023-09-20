@@ -102,11 +102,19 @@ namespace CirclularGage.Main
             get => _intruderItem;
             set
             {
-                if (_intruderItem != value)
+                if(_intruderItem != value)
                 {
+                    CancelOldIntruderChecked(_intruderItem);
                     _intruderItem = value;
+
+                    var intruderItem = IntruderItems.FirstOrDefault(number => _intruderItem.Equals(number));
+                    if (intruderItem != null)
+                    {
+                        intruderItem.IsSelected = true;
+                    }
                     Messenger.Send(nameof(TcasSettingViewModel), IntruderItem);
                 }
+                
             }
         }
         public ObservableCollection<IntruderModel> IntruderItems { get; set; }
@@ -122,11 +130,11 @@ namespace CirclularGage.Main
         public MainViewModel()
         {
             GaugeRadius = 140;
-            AirPortHeadingAngle = 12;
+            AirPortHeadingAngle = 0;
             StartSafeZoon = -1.5;
             EndSafeZoon = 1.0;
-            //StartWarningZoon = -5;
-            //EndWarningZoon = -4;
+            StartWarningZoon = -5;
+            EndWarningZoon = -4;
             TCasDisplayRange = 1;
             TcasDisplayRangeValue = TcasDisplayRange.TcasDisplayRange20nm;
             Score = 0;
@@ -165,7 +173,7 @@ namespace CirclularGage.Main
                 item.Bearing = random.Next(0, 360);
                 item.Altitude = random.Next(-127, 127);
                 item.Range = random.Next(0, 120);
-
+                
             }
         }
         #endregion
@@ -194,7 +202,16 @@ namespace CirclularGage.Main
                 IntruderItems.Add(model);
             }
        
-        } 
+        }
+        private bool CancelOldIntruderChecked(IntruderModel model)
+        {
+            if (model != null)
+            {
+                IntruderItems.Where(number => model.Equals(number)).ToList().ForEach(number => number.IsSelected = false);                
+            }
+            return true;
+                
+        }
         #endregion
 
 

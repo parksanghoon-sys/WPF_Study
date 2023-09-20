@@ -9,6 +9,7 @@ namespace CirclularGage.Main.Model
 {
     public class IntruderModel : ViewModelBase
     {
+        private readonly int _centerAdjustmentYAxis = 70;
         private double _bearing;
         private double _range;
         private double _altritude;
@@ -88,7 +89,7 @@ namespace CirclularGage.Main.Model
                 }
             }
         }
-   
+        
         /// <summary>
         /// Intruder 무전 타입?
         /// </summary>
@@ -105,13 +106,36 @@ namespace CirclularGage.Main.Model
                 }
             }
         }
-        #endregion
-        
-        #region constructor
-        public IntruderModel()
-        {
+        private double _displayRangeRatio = 1;
 
+        public double DisplayRangeRatio
+        {   
+            get { return _displayRangeRatio; }
+            set 
+            { 
+                if(_displayRangeRatio != value)
+                {
+                    _displayRangeRatio = value;
+
+                    OnPropertyChagned();
+                    OnPropertyChagned(nameof(X));
+                    OnPropertyChagned(nameof(Y));
+                }
+                    
+            }
         }
+        private bool _isSelected;
+
+        public bool IsSelected
+        {
+            get { return _isSelected; }
+            set { _isSelected = value; OnPropertyChagned(); }
+        }
+
+        #endregion
+
+        #region constructor
+
         public static IntruderModel IntruderModelFactory(int index, double rnagne, double altitude, IntruderVerticalSenseState verticalState,
          TcasSymbol symbol, DisplayMatrix matrix, double bearing = 0)
          => new IntruderModel()
@@ -130,13 +154,13 @@ namespace CirclularGage.Main.Model
         {
             var angle = Bearing - 90;
             var radianAngle = (angle * Math.PI) / 180;
-            return (Range * Math.Cos(radianAngle) * 1);            
+            return (Range * Math.Cos(radianAngle) * DisplayRangeRatio);            
         }
         private double CalculateIntruderYPoint()
         {
             var angle = Bearing - 90;
             var radianAngle = (angle * Math.PI) / 180;
-            return 97+(Range * Math.Sin(radianAngle) * 1);            
+            return (_centerAdjustmentYAxis + Range  * Math.Sin(radianAngle) * DisplayRangeRatio)  ;
         }
         private TcasSymbol CalculateIntruderType()
         {

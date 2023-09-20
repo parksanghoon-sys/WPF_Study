@@ -8,7 +8,7 @@
     <convert:GlassEffectWidthConverter x:Key="glassEffectWidthConverter"/>
 
     <Style x:Key="CircularGaugeBaseControl" TargetType="{x:Type view:CircularGaugeBaseControl}">
-        <Setter Property="ResetPointerOnStartUp" Value="True" />
+        <Setter Property="ResetPointerOnStartUp" Value="False" />
         <Setter Property="ScaleValuePrecision" Value="10" />
         <Setter Property="HorizontalAlignment" Value="Center"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
