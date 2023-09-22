@@ -7,6 +7,8 @@
     <convert:PointerCenterConverter x:Key="pointerCenterConverter"/>
     <convert:GlassEffectWidthConverter x:Key="glassEffectWidthConverter"/>
 
+    <SolidColorBrush x:Key="TcasPointerBackground" Color="#FFFFFF"/>
+    
     <Style x:Key="CircularGaugeBaseControl" TargetType="{x:Type view:CircularGaugeBaseControl}">
         <Setter Property="ResetPointerOnStartUp" Value="False" />
         <Setter Property="ScaleValuePrecision" Value="10" />
@@ -114,7 +116,7 @@
         <Setter Property="MajorTickColor" Value="#FFFFFF"/>
         <Setter Property="GaugeBackgroundColor" Value="#FF152029" />
         <!--<Setter Property="GaugePointColor" Value="#FFE91C1C"/>-->
-        <Setter Property="GaugePointColor" Value="#FFFFFF"/>
+        <Setter Property="GaugePointColor" Value="{StaticResource TcasPointerBackground}"/>
         <Setter Property="MinorTickColor" Value="#FFFFFF"/>
         <Setter Property="PointerLength" Value="100"/>
         <Setter Property="PointerThickness" Value="5"/>

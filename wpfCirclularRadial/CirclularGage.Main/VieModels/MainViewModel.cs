@@ -32,12 +32,12 @@ namespace CirclularGage.Main
         public double StartSafeZoon
         {
             get { return _startSafeZoon; }
-            set { _startSafeZoon = Convert.ToDouble(value); OnPropertyChagned(); }
+            set { _startSafeZoon = value; OnPropertyChagned(); }
         }
         public double EndSafeZoon
         {
             get { return _endtSafeZoon; }
-            set { _endtSafeZoon = Convert.ToDouble(value); OnPropertyChagned(); }
+            set { _endtSafeZoon = value; OnPropertyChagned(); }
         }
         public double Score
         {
@@ -131,10 +131,13 @@ namespace CirclularGage.Main
         {
             GaugeRadius = 140;
             AirPortHeadingAngle = 0;
-            StartSafeZoon = -1.5;
-            EndSafeZoon = 1.0;
+
+            StartSafeZoon = 0;
+            EndSafeZoon = 3;
+
             StartWarningZoon = -5;
             EndWarningZoon = -4;
+
             TCasDisplayRange = 1;
             TcasDisplayRangeValue = TcasDisplayRange.TcasDisplayRange20nm;
             Score = 0;

@@ -68,18 +68,17 @@ namespace CirclularGage.Location.UI.Units
         public static readonly DependencyProperty MinorDivisionsCountProperty =
             DependencyProperty.Register("MinorDivisionsCount", typeof(double), typeof(CircularGaugeBaseControl), new PropertyMetadata(null));
 
-        public static readonly DependencyProperty OptimalRangeEndValueProperty =
-           DependencyProperty.Register("OptimalRangeEndValue", typeof(double), typeof(CircularGaugeBaseControl),
-               new PropertyMetadata(new PropertyChangedCallback(CircularGaugeBaseControl.OnOptimalRangeEndValuePropertyChanged)));
-
         public static readonly DependencyProperty OptimalRangeStartValueProperty =
            DependencyProperty.Register("OptimalRangeStartValue", typeof(double), typeof(CircularGaugeBaseControl),
                new PropertyMetadata(new PropertyChangedCallback(CircularGaugeBaseControl.OnOptimalRangeStartValuePropertyChanged)));
 
+        public static readonly DependencyProperty OptimalRangeEndValueProperty =
+            DependencyProperty.Register("OptimalRangeEndValue", typeof(double), typeof(CircularGaugeBaseControl),
+       new PropertyMetadata(new PropertyChangedCallback(CircularGaugeBaseControl.OnOptimalRangeEndValuePropertyChanged)));
+
         public static readonly DependencyProperty WarningRangeStartValueProperty =
             DependencyProperty.Register("WarningRangeStartValue", typeof(double), typeof(CircularGaugeBaseControl),
                 new PropertyMetadata(new PropertyChangedCallback(CircularGaugeBaseControl.OnWarningRangeStartValuePropertyChanged)));
-
 
         public static readonly DependencyProperty WarningRangeEndValueProperty =
             DependencyProperty.Register("WarningRangeEndValue", typeof(double), typeof(CircularGaugeBaseControl),
@@ -484,7 +483,9 @@ namespace CirclularGage.Location.UI.Units
         /// <param name="clr">칠할 색상</param>
         /// <param name="indicatorType">Indigator 타입</param>
         protected void DrawSegment(Point p1, Point p2, Point p3, Point p4, bool reflexangle, Color clr, IndicatorType indicatorType)
-        {            
+        {
+            if (rootGrid is null)
+                return;
             switch (indicatorType)
             {
                 case IndicatorType.OptimalIndicator:

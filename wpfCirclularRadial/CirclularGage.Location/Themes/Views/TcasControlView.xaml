@@ -1,7 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:view="clr-namespace:CirclularGage.Location.Themes.Views"
-                    xmlns:control="clr-namespace:CirclularGage.Location.UI.Units">
+                    xmlns:control="clr-namespace:CirclularGage.Location.UI.Units"
+                    xmlns:convert="clr-namespace:CirclularGage.Location.Local.Converters">
     <Style x:Key="TCasRange" TargetType="{x:Type ContentControl}">
         <Setter Property="Template">
             <Setter.Value>
@@ -25,12 +26,6 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type view:TcasControlView}">
                     <Grid Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
-                        <control:AirHeading HeadAngeleValue="{Binding AirPortHeadingAngle}" 
-                                Panel.ZIndex="3" 
-                                Margin="0 100 0 0"/>
-                        <ContentControl Style="{StaticResource TCasRange}" HorizontalAlignment="Right" 
-                            VerticalAlignment="Top" Margin="0 10"/>
-
                         <!--<control:CircularGaugeBaseControl Radius="{Binding GaugeRadius}"       
                                           Panel.ZIndex="2"
                                           ScaleRadius="125" 
@@ -64,26 +59,38 @@
                                           OptimalRangeEndValue="{Binding EndSafeZoon}" 
                                           WarningRangeStartValue="{Binding StartWarningZoon}"
                                           WarningRangeEndValue="{Binding EndWarningZoon}">-->
+                        <ContentControl Style="{StaticResource TCasRange}" HorizontalAlignment="Right" 
+                            VerticalAlignment="Top" Margin="0 10 5 0"/>
+
+                        <control:AirPortSympbolBackground Panel.ZIndex="2" Margin="0,130 0 0" 
+                                              AirPortSymbolBackgroundSize="{Binding AirPortHeadingAngle, Converter={convert:RadiusToDiameterConverter},ConverterParameter=2}" />
+                        <control:AirPortSymbol AirPortSymbolSize="14" HeadAngeleValue="{Binding AirPortHeadingAngle}" Panel.ZIndex="3"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 140 0 0"/>
+
                         <control:TcasGaugeControl Radius="{Binding GaugeRadius}"                                          
-                                          Panel.ZIndex="2"
-                                          ScaleRadius="125" 
+                                          Panel.ZIndex="1"
+                                          ScaleRadius="125"
                                           ScaleSweepAngle="340"
                                                           
-                                          MajorDivisionsCount="10"                                           
-                                          CurrentValue="{Binding Score, RelativeSource={RelativeSource TemplatedParent}}"                                                                                
+                                          MajorDivisionsCount="10"
+
+                                          CurrentValue="{Binding Score}"
                                           RangeIndicatorThickness="5"
                                           RangeIndicatorRadius="120"
                               
-                                          ScaleLabelRadius="110"                                        
+                                          ScaleLabelRadius="110"               
                                           
-                                          OptimalRangeStartValue="{Binding StartSafeZoon, RelativeSource={RelativeSource TemplatedParent}}"
-                                          OptimalRangeEndValue="{Binding EndSafeZoon, RelativeSource={RelativeSource TemplatedParent}}" 
+                                          OptimalRangeStartValue="{Binding StartSafeZoon}"
+                                          OptimalRangeEndValue="{Binding EndSafeZoon}"
                                           WarningRangeStartValue="{Binding StartWarningZoon}"
                                           WarningRangeEndValue="{Binding EndWarningZoon}">
-                            <control:TcasIntruderItemsControl x:Name="TcasIntruderItems" Panel.ZIndex="160"  
+                            
+                            <control:TcasIntruderItemsControl x:Name="TcasIntruderItems" Panel.ZIndex="4"  
                                                   TcasDisplayRange="{Binding TcasDisplayRangeValue}"
-                                                  Radius ="{Binding GaugeRadius}"/>
+                                                  Radius ="{Binding GaugeRadius, Converter={convert:RadiusToDiameterConverter}, ConverterParameter=1.5}"/>
+                            
                         </control:TcasGaugeControl>
+                        
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
