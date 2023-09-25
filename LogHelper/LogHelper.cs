@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LogHelper.LogHelper
+namespace LogHelper
 {
-    public class LogHelper : IDisposable
+    public class LogHelp : IDisposable
     {
         private static readonly object _padlock = new object();
         private static Dictionary<LogHelperType, ILog> _logHelpers = new Dictionary<LogHelperType, ILog>();
@@ -16,7 +16,7 @@ namespace LogHelper.LogHelper
         public static void AddLogHelper(LogHelperType lht, string userID)
         {
             Configure.Instance.UserID = userID;
-            if (LogHelper._logHelpers.ContainsKey(lht))
+            if (LogHelp._logHelpers.ContainsKey(lht))
                 return;
             ILog log;
             switch (lht)
@@ -31,13 +31,13 @@ namespace LogHelper.LogHelper
                     log = (ILog)new DefaultLogHelper();
                     break;
             }
-            LogHelper._logHelpers.Add(lht, log);
+            LogHelp._logHelpers.Add(lht, log);
         }
 
         public static void AddLogHelper<T>(LogHelperType lht, T logMsgReturn, string userID) where T : ILogMsgReturn, new()
         {
             Configure.Instance.UserID = userID;
-            if (LogHelper._logHelpers.ContainsKey(lht))
+            if (LogHelp._logHelpers.ContainsKey(lht))
                 return;
             logMsgReturn = new T();
             ILog log;
@@ -62,14 +62,14 @@ namespace LogHelper.LogHelper
                     };
                     break;
             }
-            LogHelper._logHelpers.Add(lht, log);
+            LogHelp._logHelpers.Add(lht, log);
         }
 
         public static ILog Log(int index)
         {
             int num = 0;
             ILog log1 = (ILog)null;
-            foreach (ILog log2 in LogHelper._logHelpers.Values)
+            foreach (ILog log2 in LogHelp._logHelpers.Values)
             {
                 if (num == index)
                 {
@@ -82,11 +82,11 @@ namespace LogHelper.LogHelper
             return log1;
         }
 
-        public static ILog Log(LogHelperType lht) => LogHelper._logHelpers.ContainsKey(lht) ? LogHelper._logHelpers[lht] : (ILog)new DefaultLogHelper();
+        public static ILog Log(LogHelperType lht) => LogHelp._logHelpers.ContainsKey(lht) ? LogHelp._logHelpers[lht] : (ILog)new DefaultLogHelper();
 
         public void Dispose()
         {
-            foreach (IDisposable disposable in LogHelper._logHelpers.Values)
+            foreach (IDisposable disposable in LogHelp._logHelpers.Values)
                 disposable.Dispose();
         }
     }
