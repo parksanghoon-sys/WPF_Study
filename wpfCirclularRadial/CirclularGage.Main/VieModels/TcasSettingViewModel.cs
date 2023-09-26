@@ -13,9 +13,7 @@ using System.Windows.Navigation;
 namespace CirclularGage.Main
 {
     public class TcasSettingViewModel : ViewModelBase
-    {
-
-        
+    {        
         private IntruderModel _currentIntruder;
         private TcasSymbol _intruderType;
         #region Properties

@@ -1,0 +1,8 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:wpfPopup.Frame">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/wpfPopup.Frame;component/Themes/Units/FramePopupWindow.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>

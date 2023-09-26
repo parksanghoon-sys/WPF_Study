@@ -7,7 +7,7 @@
         xmlns:control="clr-namespace:CirclularGage.Location.UI.Units;assembly=CirclularGage.Location"
         xmlns:view ="clr-namespace:CirclularGage.Location.Themes.Views;assembly=CirclularGage.Location"
         xmlns:convert="clr-namespace:CirclularGage.Location.Local.Converters;assembly=CirclularGage.Location"
-        xmlns:enum="clr-namespace:CirclularGage.Location.Local.Enums;assembly=CirclularGage.Location"
+        xmlns:enum="clr-namespace:CirclularGage.Location.Local.Enums;assembly=CirclularGage.Location"        
         mc:Ignorable="d"        
         Title="MainWindow" Height="700" Width="900">
     <Window.Resources>

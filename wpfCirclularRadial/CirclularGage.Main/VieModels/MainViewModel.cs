@@ -1,5 +1,6 @@
 ﻿
 using CirclularGage.Location.Local.Enums;
+using CirclularGage.Main.Common;
 using CirclularGage.Main.Model;
 using System;
 using System.Collections.ObjectModel;
@@ -22,7 +23,9 @@ namespace CirclularGage.Main
         private IntruderModel _intruderItem;
         private TcasDisplayRange _tcasDisplayRange;
         private ICommand _startTcasItemsRandom;
+        private int _tCasDisplayRange;
 
+        private readonly IServiceTest _serviceTest;
         #region Properties
         public double AirPortHeadingAngle
         {
@@ -59,7 +62,7 @@ namespace CirclularGage.Main
             get { return _endWarningZoon; }
             set { _endWarningZoon = value; OnPropertyChagned(); }
         }
-        private int _tCasDisplayRange;
+        
 
         public int TCasDisplayRange
         {
@@ -127,23 +130,25 @@ namespace CirclularGage.Main
             private set { _startTcasItemsRandom = value; }
         } 
         #endregion
-        public MainViewModel()
+        public MainViewModel(IServiceTest serviceTest)
         {
             GaugeRadius = 140;
             AirPortHeadingAngle = 0;
 
-            StartSafeZoon = 0;
-            EndSafeZoon = 3;
+            //StartSafeZoon = 0;
+            //EndSafeZoon = 3;
 
-            StartWarningZoon = -5;
-            EndWarningZoon = -4;
+            //StartWarningZoon = -5;
+            //EndWarningZoon = -4;
 
-            TCasDisplayRange = 1;
-            TcasDisplayRangeValue = TcasDisplayRange.TcasDisplayRange20nm;
-            Score = 0;
+            //TCasDisplayRange = 1;
+            //TcasDisplayRangeValue = TcasDisplayRange.TcasDisplayRange20nm;
+            //Score = 0;
 
             IntruderItems = new ObservableCollection<IntruderModel>();
-            StartTcasItemsRandom = new ParameterRelayCommand(btn => StartTcasItemsRandomCommand(btn));            
+
+            StartTcasItemsRandom = new ParameterRelayCommand(btn => StartTcasItemsRandomCommand(btn));
+
             Messenger.Register<IntruderModel>(nameof(MainViewModel), OnIntruderModelMessageReceived);
                        
             for (int i = 0; i < 30; i++)
@@ -158,11 +163,12 @@ namespace CirclularGage.Main
                     random.Next(-1200, 1200), randomIntruderVerticalSenseState, TcasSymbol.ProximateTraffic, randomDisplayMatrix, 360 / 30 * (i + 1)));
                 Thread.Sleep(10);
             }
-            
+            _serviceTest = serviceTest;
         }
         #region Commands Excuate Methods
         private void StartTcasItemsRandomCommand(object _)
         {
+            _serviceTest.Test();
             Random random = new Random();
             foreach (var item in IntruderItems)
             {
