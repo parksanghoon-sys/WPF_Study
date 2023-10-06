@@ -16,14 +16,13 @@ namespace CirclularGage.Location.Themes.Views
             DefaultStyleKeyProperty.OverrideMetadata(typeof(TcasControlView), new FrameworkPropertyMetadata(typeof(TcasControlView)));
         }
         public TcasControlView()
-        {
-            int a = 0;
+        {            
             this.Loaded += TcasControlView_Loaded;
         }
-
+        
         private void TcasControlView_Loaded(object sender, RoutedEventArgs e)
         {
-            
+                
         }
     }
 }

@@ -1,13 +1,12 @@
 ﻿using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using wpfPopup.Frame.Local.ViewModels;
-using wpfPopup.Frame.UI.Units;
+
+using wpfPopup.Global.Interface;
 using wpfPopup.Local.Interface;
+using wpfPopup.Popup.Local.Services;
+using wpfPopup.Popup.Local.ViewModels;
+using wpfPopup.Popup.UI.Units;
 
 namespace wpfPopup
 {
@@ -21,11 +20,18 @@ namespace wpfPopup
         private static IServiceProvider ConfigureServices()
         {
             var services = new ServiceCollection();
-            services.AddTransient<IView, FramePopup>();
+            //services.AddTransient<IView, FramePopup>();
+
+            //// Viewmodels
+            //services.AddTransient<MainViewModel>();
+            services.AddTransient<IDialogService, DialogService>();
+
+            // Popup View
+            //services.AddTransient<MainPopupWindow>();
 
             // Viewmodels
+            services.AddTransient<MainPopupWindow>();
             services.AddTransient<MainViewModel>();
-            
 
             return services.BuildServiceProvider();
         }

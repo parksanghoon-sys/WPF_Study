@@ -1,0 +1,17 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:view="clr-namespace:wpfPopup.Popup.UI.Units"
+    xmlns:vm="clr-namespace:wpfPopup.Popup.Local.ViewModels">
+    
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/wpfPopup.Popup;component/Themes/Units/MainPopupWindow.xaml"/>
+        <ResourceDictionary Source="/wpfPopup.Popup;component/Themes/Units/Popup1View.xaml"/>
+        <ResourceDictionary Source="/wpfPopup.Popup;component/Themes/View/MainWindow.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+    <DataTemplate DataType="{x:Type vm:Popup1ViewModel}">
+        <view:Popup1View/>
+    </DataTemplate>
+
+</ResourceDictionary>

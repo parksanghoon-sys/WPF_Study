@@ -18,7 +18,7 @@
             <GradientStop Color="#1F1D20" Offset="0.92"/>
         </LinearGradientBrush>
         
-        <Style TargetType="{x:Type TextBlock}">
+        <Style x:Name="tbWhite" TargetType="{x:Type TextBlock}">
             <Setter Property="Foreground" Value="#FFFFFF"/>
         </Style>
 
@@ -57,42 +57,37 @@
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
 
-        <Grid x:Name="circle" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Width="300" Height="285">
-          
-            <!--<ContentControl Style="{StaticResource TCasRange}" HorizontalAlignment="Right" 
-                            VerticalAlignment="Top" Margin="0 10 5 0"/>
+        <Grid x:Name="circle" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" 
+              Width="300" Height="285"
+              Background="#FF31363B">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
 
-            <control:AirPortSympbolBackground Panel.ZIndex="2" Margin="0,130 0 0" 
-                                              AirPortSymbolBackgroundSize="{Binding AirPortHeadingAngle, Converter={convert:RadiusToDiameterConverter},ConverterParameter=2}" />
-            <control:AirPortSymbol AirPortSymbolSize="14" HeadAngeleValue="{Binding AirPortHeadingAngle}" Panel.ZIndex="3"
-                                   HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 140 0 0"/>
+            <view:TcasControlView VerticalAlignment="Top" Grid.Row="0" Margin="0 5 0 0"/>
             
-            <control:TcasGaugeControl Radius="{Binding GaugeRadius}"                                          
-                                          Panel.ZIndex="1"
-                                          ScaleRadius="125" 
-                                          ScaleSweepAngle="340"
-                                                          
-                                          MajorDivisionsCount="10" 
-                                          MinorDivisionsCount="4" 
-                                          CurrentValue="{Binding Score}"                                                                                
-                                          RangeIndicatorThickness="5"
-                                          RangeIndicatorRadius="120"
-                              
-                                          ScaleLabelRadius="110"                                        
-                                          
-                                          OptimalRangeStartValue="{Binding StartSafeZoon}"
-                                          OptimalRangeEndValue="{Binding EndSafeZoon}" 
-                                          WarningRangeStartValue="{Binding StartWarningZoon}"
-                                          WarningRangeEndValue="{Binding EndWarningZoon}">
-                <control:TcasIntruderItemsControl x:Name="TcasIntruderItems" Panel.ZIndex="4"  
-                                                  TcasDisplayRange="{Binding TcasDisplayRangeValue}"
-                                                  Radius ="{Binding GaugeRadius, Converter={convert:RadiusToDiameterConverter}, ConverterParameter=1.5}"/>
+            <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0 5 0 0">
+                <StackPanel  Margin="12 0 10 0">
+                    <ComboBox ItemsSource="{Binding TcasDisplayAboveBelows}" Template="{StaticResource ComboBoxTemplate1}"
+                              SelectedItem="{Binding TcasDisplayAboveBelow, Mode=TwoWay}"  Width="80" Height="20"/>
+                    <TextBlock Text="Display" FontSize="13" HorizontalAlignment="Center"/>
+                </StackPanel>
+                <StackPanel  Margin="12 0 10 0">
+                    <ComboBox ItemsSource="{Binding TcasAltitudeTypes}" Template="{StaticResource ComboBoxTemplate1}"
+                              SelectedItem="{Binding TcasAltitudeType, Mode=TwoWay}"  Width="80" Height="20"/>
+                    <TextBlock Text="ALT SRC" FontSize="13" HorizontalAlignment="Center"/>
+                </StackPanel>
+                <StackPanel  Margin="12 0 10 0">
+                    <ComboBox ItemsSource="{Binding TcasDisplayRanges}" Template="{StaticResource ComboBoxTemplate1}"
+                              SelectedItem="{Binding TcasDisplayRange, Mode=TwoWay}"  Width="80" Height="20"/>
+                    <TextBlock Text="RANGE" FontSize="13" HorizontalAlignment="Center"/>
+                </StackPanel>
 
-            </control:TcasGaugeControl>-->
-            
-            <view:TcasControlView/>
-            <!--<TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="VSI : 1000 FPM" VerticalAlignment="Bottom" 
-                       Background="Black" Foreground="White" Height="12" Width="68" TextAlignment="Center" Margin="0,0,0,0" FontSize="8"/>-->
+            </StackPanel>
+
+            <!--<TextBlock Grid.Row="1" HorizontalAlignment="Center" TextWrapping="Wrap" Text="VSI : 1000 FPM" VerticalAlignment="Bottom" 
+                       Background="Black" Foreground="White" TextAlignment="Center" Margin="0,0,0,0" FontSize="10"/>-->
 
         </Grid>
         <Grid Grid.Column="1" Grid.Row="0" Margin="3">
@@ -155,25 +150,25 @@
             </Grid>
             <Grid Grid.Row="4" Margin="3">
                 <StackPanel Orientation="Horizontal">
-                    <RadioButton Content="None" IsChecked="{Binding Path=TcasDisplayRangeValue, 
+                    <RadioButton Content="None" IsChecked="{Binding Path=TcasDisplayRange, 
                         Converter={StaticResource RadioBoolToEnumConvert},  
-                        ConverterParameter={x:Static enum:TcasDisplayRange.TcasDisplayRangeNone}, 
+                        ConverterParameter={x:Static enum:TcasDisplayRange.RangeNone}, 
                         Mode=TwoWay}"/>
-                    <RadioButton Content="80nm" IsChecked="{Binding Path=TcasDisplayRangeValue, 
+                    <RadioButton Content="80nm" IsChecked="{Binding Path=TcasDisplayRange, 
                         Converter={StaticResource RadioBoolToEnumConvert}, 
-                        ConverterParameter={x:Static enum:TcasDisplayRange.TcasDisplayRange80nm},
+                        ConverterParameter={x:Static enum:TcasDisplayRange.Range80nm},
                         Mode=TwoWay}"/>
-                    <RadioButton Content="40nm" IsChecked="{Binding Path=TcasDisplayRangeValue, 
+                    <RadioButton Content="40nm" IsChecked="{Binding Path=TcasDisplayRange, 
                         Converter={StaticResource RadioBoolToEnumConvert}, 
-                        ConverterParameter={x:Static enum:TcasDisplayRange.TcasDisplayRange40nm},
+                        ConverterParameter={x:Static enum:TcasDisplayRange.Range40nm},
                         Mode=TwoWay}"/>
-                    <RadioButton Content="20nm" IsChecked="{Binding Path=TcasDisplayRangeValue, 
+                    <RadioButton Content="20nm" IsChecked="{Binding Path=TcasDisplayRange, 
                         Converter={StaticResource RadioBoolToEnumConvert}, 
-                        ConverterParameter={x:Static enum:TcasDisplayRange.TcasDisplayRange20nm},
+                        ConverterParameter={x:Static enum:TcasDisplayRange.Range20nm},
                         Mode=TwoWay}"/>
-                    <RadioButton Content="10nm" IsChecked="{Binding Path=TcasDisplayRangeValue, 
+                    <RadioButton Content="10nm" IsChecked="{Binding Path=TcasDisplayRange, 
                         Converter={StaticResource RadioBoolToEnumConvert},  
-                        ConverterParameter={x:Static enum:TcasDisplayRange.TcasDisplayRange10nm}, 
+                        ConverterParameter={x:Static enum:TcasDisplayRange.Range10nm}, 
                         Mode=TwoWay}"/>
 
                 </StackPanel>
@@ -189,9 +184,11 @@
                         Style="{StaticResource CustomSliderStyle}" Maximum="6" Minimum="-6" 
                         TickFrequency="0.1" IsSnapToTickEnabled="True" Value="{Binding Score}"/>
             </Grid>
-            <Grid Grid.Row="6" Margin="10">
-                <Button Content="Random Test" Command="{Binding StartTcasItemsRandom}"/>
-            </Grid>
+            <StackPanel Grid.Row="6" Margin="10" Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Content="Random Test" Command="{Binding StartTcasItemsRandom}" Width="100" Margin="10"/>
+                <Button Content="Clear" Command="{Binding ClearTcasItems}" Width="100" Margin="10"/>
+                <Button Content="Create" Command="{Binding CreateTcasItems}" Width="100" Margin="10"/>
+            </StackPanel>
         </Grid>
         <Grid Grid.Column="1" Grid.Row="1" Margin="3">
             <Border BorderBrush="White" BorderThickness="1">

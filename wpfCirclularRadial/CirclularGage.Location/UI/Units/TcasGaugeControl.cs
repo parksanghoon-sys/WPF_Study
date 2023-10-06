@@ -33,7 +33,14 @@ namespace CirclularGage.Location.UI.Units
         public TcasGaugeControl()
         {
             InitialVariables();
+            this.Loaded += TcasGaugeControl_Loaded;            
         }
+
+        private void TcasGaugeControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
         protected override TextBlock DrawMajorLabel(double majorTicksUnitValue)
         {
             TextBlock textBlock = base.DrawMajorLabel(majorTicksUnitValue);

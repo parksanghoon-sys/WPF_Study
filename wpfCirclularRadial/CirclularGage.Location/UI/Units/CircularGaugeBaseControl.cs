@@ -39,10 +39,10 @@ namespace CirclularGage.Location.UI.Units
             DependencyProperty.Register("CurrentValue", typeof(double), typeof(CircularGaugeBaseControl),
                 new PropertyMetadata(double.MinValue, new PropertyChangedCallback(CircularGaugeBaseControl.OnCurrentValuePropertyChanged)));
 
-        public static readonly DependencyProperty MinValuePropertyProperty =
+        public static readonly DependencyProperty MinValueProperty =
             DependencyProperty.Register("MinValue", typeof(double), typeof(CircularGaugeBaseControl), new PropertyMetadata(null));
 
-        public static readonly DependencyProperty MaxValuePropertyProperty =
+        public static readonly DependencyProperty MaxValueProperty =
             DependencyProperty.Register("MaxValue", typeof(double), typeof(CircularGaugeBaseControl), new PropertyMetadata(null));
 
         public static readonly DependencyProperty RadiusProperty =
@@ -157,16 +157,16 @@ namespace CirclularGage.Location.UI.Units
         /// </summary>
         public double MinValue
         {
-            get { return (double)GetValue(MinValuePropertyProperty); }
-            set { SetValue(MinValuePropertyProperty, value); }
+            get { return (double)GetValue(MinValueProperty); }
+            set { SetValue(MinValueProperty, value); }
         }
         /// <summary>
         /// Gauage Max 값
         /// </summary>
         public double MaxValue
         {
-            get { return (double)GetValue(MaxValuePropertyProperty); }
-            set { SetValue(MaxValuePropertyProperty, value); }
+            get { return (double)GetValue(MaxValueProperty); }
+            set { SetValue(MaxValueProperty, value); }
         }
         /// <summary>
         /// Guasge 반지름 값

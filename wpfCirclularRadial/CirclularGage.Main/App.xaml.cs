@@ -25,9 +25,9 @@ namespace CirclularGage.Main
         {
             base.OnStartup(e);
             MainViewModel mainViewmodel = Service.GetService<MainViewModel>();
-            //var window = new MainWindow();
-            //window.DataContext = mainViewmodel;
-            //window.ShowDialog();
+            var window = new MainWindow();
+            window.DataContext = mainViewmodel;
+            window.ShowDialog();
             ExTrace.Print("Window Start");
         }
         protected override void OnExit(ExitEventArgs e)
@@ -40,7 +40,7 @@ namespace CirclularGage.Main
             var services = new ServiceCollection();
 
             // Viewmodels
-            services.AddTransient<MainViewModel>();
+            services.AddSingleton<MainViewModel>();
             services.AddTransient<IServiceTest, ServiceTest>();
 
             return services.BuildServiceProvider();

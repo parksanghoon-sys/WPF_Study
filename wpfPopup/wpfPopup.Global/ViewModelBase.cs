@@ -6,7 +6,10 @@ namespace wpfPopup.Global
     public abstract class ViewModelBase : ObservableObject
     {
         private readonly IView _view;
-
+        public ViewModelBase()
+        {
+            
+        }
         public ViewModelBase(IView view)
         {
             _view = view;

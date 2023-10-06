@@ -1,24 +1,46 @@
-﻿using CommunityToolkit.Mvvm.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Automation.Peers;
-using wpfPopup.Frame.Local.ViewModels;
-using wpfPopup.Frame.UI.View;
+
+using wpfPopup.Global.Interface;
+using wpfPopup.Popup.Local.Services;
+using wpfPopup.Popup.Local.ViewModels;
+using wpfPopup.Popup.UI.Units;
+using wpfPopup.Popup.UI.View;
 
 namespace wpfPopup
 {
-    internal class App : Window
+    internal class App : Application
     {
+        public new static App Current => (App)Application.Current;
+
+        public IServiceProvider Services { get; }
         public App()
-        {            
-            MainWindow window = new();
+        {
+            //Services = ConfigureServices();
             new Bootstrapper();
-            //window.DataContext = Ioc.Default.GetService<MainViewModel>();
+
+        }
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+            MainWindow window = new();
+
             window.ShowDialog();
+        }
+        private static IServiceProvider ConfigureServices()
+        {
+            ServiceCollection services = new ServiceCollection();
+            // Services
+            services.AddTransient<IDialogService, DialogService>();
+
+            // Popup View
+            //services.AddTransient<MainPopupWindow>();
+
+            // Viewmodels
+            services.AddTransient<MainPopupWindow>();
+            services.AddTransient<MainViewModel>();
+            return services.BuildServiceProvider();
         }
 
     }

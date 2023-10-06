@@ -25,60 +25,26 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type view:TcasControlView}">
-                    <Grid Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
-                        <!--<control:CircularGaugeBaseControl Radius="{Binding GaugeRadius}"       
-                                          Panel.ZIndex="2"
-                                          ScaleRadius="125" 
-                                          ScaleStartAngle="30" 
-                                          ScaleSweepAngle="300"
-                                                                                                                      
-                                          MinValue="-6" 
-                                          MaxValue="6"                                         
-                                          MajorDivisionsCount="12" 
-                                          MinorDivisionsCount="10" 
-                                          CurrentValue="{Binding Score}"                                                                                
-                                          RangeIndicatorThickness="5"
-                                          RangeIndicatorRadius="120"
-                              
-                                          ScaleLabelRadius="110"
-                                          ScaleLabelSize="40,20"
-                                          ScaleLabelFontSize="10"
-                                          ScaleLabelForeground="LightGray"
-                                          ScaleValuePrecision="1"
-                                          MajorTickSize="10,3"
-                                          MinorTickSize="3,1"
-                                          MajorTickColor="LightGray"
-                                          MinorTickColor="LightGray"
-                                        
-                                          GaugeBackgroundColor="Black"
-                                          
-                                          PointerLength="100"                                             
-                                          PointerThickness ="5"
-                                          
-                                          OptimalRangeStartValue="{Binding StartSafeZoon}"
-                                          OptimalRangeEndValue="{Binding EndSafeZoon}" 
-                                          WarningRangeStartValue="{Binding StartWarningZoon}"
-                                          WarningRangeEndValue="{Binding EndWarningZoon}">-->
-                        <ContentControl Style="{StaticResource TCasRange}" HorizontalAlignment="Right" 
-                            VerticalAlignment="Top" Margin="0 10 5 0"/>
+                    <Grid Width="{Binding GaugeRadius, Converter={convert:RadiusToDiameterConverter}, ConverterParameter=2}" 
+                          Height="{Binding GaugeRadius, Converter={convert:RadiusToDiameterConverter}, ConverterParameter=2.1}">
 
-                        <control:AirPortSympbolBackground Panel.ZIndex="2" Margin="0,130 0 0" 
+                        <control:AirPortSympbolBackground Panel.ZIndex="2" Margin="0 100 0 0" 
                                               AirPortSymbolBackgroundSize="{Binding AirPortHeadingAngle, Converter={convert:RadiusToDiameterConverter},ConverterParameter=2}" />
-                        <control:AirPortSymbol AirPortSymbolSize="14" HeadAngeleValue="{Binding AirPortHeadingAngle}" Panel.ZIndex="3"
-                                   HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 140 0 0"/>
+                        <control:AirPortSymbol AirPortSymbolSize="11" HeadAngeleValue="{Binding AirPortHeadingAngle}" Panel.ZIndex="3"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 110 0 0"/>
 
                         <control:TcasGaugeControl Radius="{Binding GaugeRadius}"                                          
                                           Panel.ZIndex="1"
-                                          ScaleRadius="125"
+                                          ScaleRadius="85"
                                           ScaleSweepAngle="340"
                                                           
                                           MajorDivisionsCount="10"
 
                                           CurrentValue="{Binding Score}"
                                           RangeIndicatorThickness="5"
-                                          RangeIndicatorRadius="120"
+                                          RangeIndicatorRadius="80"
                               
-                                          ScaleLabelRadius="110"               
+                                          ScaleLabelRadius="98"               
                                           
                                           OptimalRangeStartValue="{Binding StartSafeZoon}"
                                           OptimalRangeEndValue="{Binding EndSafeZoon}"
@@ -86,7 +52,7 @@
                                           WarningRangeEndValue="{Binding EndWarningZoon}">
                             
                             <control:TcasIntruderItemsControl x:Name="TcasIntruderItems" Panel.ZIndex="4"  
-                                                  TcasDisplayRange="{Binding TcasDisplayRangeValue}"
+                                                  TcasDisplayRange="{Binding TcasDisplayRange}"
                                                   Radius ="{Binding GaugeRadius, Converter={convert:RadiusToDiameterConverter}, ConverterParameter=1.5}"/>
                             
                         </control:TcasGaugeControl>

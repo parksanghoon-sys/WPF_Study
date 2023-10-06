@@ -63,6 +63,8 @@
     <Compile Include="Local\Converters\IntruderBackgroundConverter.cs" />
     <Compile Include="Local\Converters\RadioBoolToEnumConverter.cs" />
     <Compile Include="Local\Converters\TcasIntruderItemXAxsisConverter.cs" />
+    <Compile Include="Local\Enums\TcasAltitudeType.cs" />
+    <Compile Include="Local\Enums\TcasDisplayAboveBelow.cs" />
     <Compile Include="Local\Enums\TcasDisplayRange.cs" />
     <Compile Include="UI\Units\AirPortSymbol.cs" />
     <Compile Include="UI\Units\AirPortSympbolBackground.cs" />

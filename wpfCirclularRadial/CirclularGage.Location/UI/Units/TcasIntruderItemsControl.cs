@@ -17,7 +17,7 @@ namespace CirclularGage.Location.UI.Units
         
         public static readonly DependencyProperty TcasDisplayRangeProperty =
             DependencyProperty.Register("TcasDisplayRange", typeof(TcasDisplayRange), typeof(TcasIntruderItemsControl), 
-                new PropertyMetadata(TcasDisplayRange.TcasDisplayRangeNone,OnTcasDisplayRangePropertyChanged));
+                new PropertyMetadata(TcasDisplayRange.RangeNone,OnTcasDisplayRangePropertyChanged));
 
         // Using a DependencyProperty as the backing store for Radios.  This enables animation, styling, binding, etc...
 
@@ -48,19 +48,14 @@ namespace CirclularGage.Location.UI.Units
         public TcasIntruderItemsControl()
         {
             this.InitialVariables();
-        }
-        public override void OnApplyTemplate()
-        {
-            int a = 1;
-        }
+        }       
         protected override DependencyObject GetContainerForItemOverride()
         {
             return new TcasIntruderItem();
         }
         private static void OnTcasDisplayRangePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var tcasIntruderItems = d as TcasIntruderItemsControl;
-            var tcasRadius = tcasIntruderItems.Radius;
+            var tcasIntruderItems = d as TcasIntruderItemsControl;            
 
             if (e.OldValue != e.NewValue)
             {
@@ -71,20 +66,20 @@ namespace CirclularGage.Location.UI.Units
                     {
                         switch (e.NewValue)
                         {
-                            case TcasDisplayRange.TcasDisplayRangeNone:
-                                ratito = 1.75;
+                            case TcasDisplayRange.RangeNone:
+                                ratito = 1.35;
                                 break;
-                            case TcasDisplayRange.TcasDisplayRange10nm:
-                                ratito = 21;
+                            case TcasDisplayRange.Range10nm:
+                                ratito = 16.5;
                                 break;
-                            case TcasDisplayRange.TcasDisplayRange20nm:
-                                ratito = 10.5;
+                            case TcasDisplayRange.Range20nm:
+                                ratito = 8.25;
                                 break;
-                            case TcasDisplayRange.TcasDisplayRange40nm:
-                                ratito = 5.25;
+                            case TcasDisplayRange.Range40nm:
+                                ratito = 4.125;
                                 break;
-                            case TcasDisplayRange.TcasDisplayRange80nm:
-                                ratito = 2.62;
+                            case TcasDisplayRange.Range80nm:
+                                ratito = 2.0625;
                                 break;
                         }
 
@@ -107,7 +102,6 @@ namespace CirclularGage.Location.UI.Units
 
             _intruderInitialPointRatito = Enumerable.Repeat<double>(1, 30).ToArray<double>();
         }
-
        
     }
 }

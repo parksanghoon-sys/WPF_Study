@@ -8,15 +8,15 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type view:MainWindow}">
-                    <Grid>
+                    <Grid Background="White">
                         <Button HorizontalAlignment="Center"
                             Width="100"
                             Height="80"
-                            Background="White"
+                            Background="Gray"
                             VerticalAlignment="Center"
                             Content="Test"
-                            Command="{Binding ShowPopupWindow}"/>
-                        <!--<ContentPresenter/>-->
+                            Command="{Binding PopUpCommand}"/>
+                        <ContentPresenter/>
                     </Grid>
 
                 </ControlTemplate>

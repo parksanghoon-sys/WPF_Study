@@ -88,7 +88,7 @@ namespace CirclularGage.Main
             IntruderItemSendCommand = new ParameterRelayCommand(obj => OnIntruderItemSend(obj), obj => NotIntruderItemSend(obj));
             IntruderItemUpdateCommand = new ParameterRelayCommand(obj => OnIntruderItemUpdate(obj));
 
-            Messenger.Register<IntruderModel>( nameof(TcasSettingViewModel), OnViewModelMessageReceived);
+            Messenger.Register<IntruderModel>( nameof(TcasSettingViewModel), OnViewModelMessageReceived);            
             _currentIntruder = new IntruderModel();
         }
         #region Commands Excute Method

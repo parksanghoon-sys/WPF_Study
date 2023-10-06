@@ -460,7 +460,7 @@ namespace CirclularGage.Location.Local.Common
         /// the control is expanded to fill the MinWidth value while the width of the
 		/// UpDown buttons are auto sized.
         /// </summary>
-        public virtual double MinWidth
+        public double MinWidth
         {
             get { return (double)GetValue(MinWidthProperty); }
             set { SetValue(MinWidthProperty, value); }
@@ -717,7 +717,7 @@ namespace CirclularGage.Location.Local.Common
                             if (System.Windows.Input.Keyboard.Modifiers == this.MouseWheelAccelaratorKey)
                             {
                                 if (IsLargeStepEnabled)
-                                    OnIncrement(LargeStepSize);
+                                      OnIncrement(LargeStepSize);
                             }
                             else
                                 OnIncrease();

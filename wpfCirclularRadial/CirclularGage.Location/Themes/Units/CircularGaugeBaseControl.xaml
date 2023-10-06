@@ -68,6 +68,7 @@
                                 </LinearGradientBrush>
                             </Path.Fill>
                         </Path>-->
+                        
                         <Path x:Name="Pointer" Stroke="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=GaugePointColor}" StrokeThickness="2" 
                               Width="{TemplateBinding PointerLength}" 
                               Height="{TemplateBinding PointerThickness}" HorizontalAlignment="Center"
@@ -108,17 +109,19 @@
         <Setter Property="ScaleStartAngle" Value="10"/>
         <Setter Property="MinValue" Value="-6"/>
         <Setter Property="MaxValue" Value="6"/>
-        <Setter Property="ScaleLabelSize" Value="40,20"/>
+        <Setter Property="ScaleLabelSize" Value="30,15"/>
         <Setter Property="ScaleLabelFontSize" Value="10"/>
         <Setter Property="ScaleLabelForeground" Value="#FFFFFF"/>
-        <Setter Property="MajorTickSize" Value="10,3"/>
-        <Setter Property="MinorTickSize" Value="3,1"/>
+        <Setter Property="MajorTickSize" Value="7,2"/>
+        <Setter Property="MinorTickSize" Value="2,1"/>
         <Setter Property="MajorTickColor" Value="#FFFFFF"/>
         <Setter Property="GaugeBackgroundColor" Value="#FF152029" />
         <!--<Setter Property="GaugePointColor" Value="#FFE91C1C"/>-->
         <Setter Property="GaugePointColor" Value="{StaticResource TcasPointerBackground}"/>
         <Setter Property="MinorTickColor" Value="#FFFFFF"/>
-        <Setter Property="PointerLength" Value="100"/>
+        <Setter Property="PointerLength" Value="60"/>
         <Setter Property="PointerThickness" Value="5"/>
+        <Setter Property="VerticalAlignment" Value="Top"/>
+        <Setter Property="Margin" Value="0 5 0 0"/>
     </Style>
 </ResourceDictionary>

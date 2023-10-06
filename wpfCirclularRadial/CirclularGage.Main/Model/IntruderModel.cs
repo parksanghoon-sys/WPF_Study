@@ -9,7 +9,7 @@ namespace CirclularGage.Main.Model
 {
     public class IntruderModel : ViewModelBase
     {
-        private readonly int _centerAdjustmentYAxis = 70;
+        private readonly int _centerAdjustmentYAxis = 50;
         private double _bearing;
         private double _range;
         private double _altritude;
@@ -48,11 +48,10 @@ namespace CirclularGage.Main.Model
             {
                 if (_range != value)
                 {
-                    _range = value;
-                    OnPropertyChagned(nameof(X));
-                    OnPropertyChagned(nameof(Y));
-                    OnPropertyChagned(nameof(IntruderType));
+                    _range = value;                    
                     OnPropertyChagned();
+                    MovePointIntruder();
+                    ChangeIntruderType();
                 }
             }
         }
@@ -62,7 +61,7 @@ namespace CirclularGage.Main.Model
         public double Altitude
         {
             get { return _altritude; }
-            set { _altritude = value; OnPropertyChagned(); OnPropertyChagned(nameof(IntruderType)); }
+            set { _altritude = value; OnPropertyChagned(); ChangeIntruderType(); }
         }
         /// <summary>
         /// Intruder 수직 상태 이동
@@ -82,10 +81,9 @@ namespace CirclularGage.Main.Model
             {
                 if (_bearing != value)
                 {
-                    _bearing = value;
-                    OnPropertyChagned(nameof(X));
-                    OnPropertyChagned(nameof(Y));
+                    _bearing = value;                    
                     OnPropertyChagned();
+                    MovePointIntruder();
                 }
             }
         }
@@ -118,8 +116,7 @@ namespace CirclularGage.Main.Model
                     _displayRangeRatio = value;
 
                     OnPropertyChagned();
-                    OnPropertyChagned(nameof(X));
-                    OnPropertyChagned(nameof(Y));
+                    MovePointIntruder();
                 }
                     
             }
@@ -160,7 +157,7 @@ namespace CirclularGage.Main.Model
         {
             var angle = Bearing - 90;
             var radianAngle = (angle * Math.PI) / 180;
-            return (_centerAdjustmentYAxis + Range  * Math.Sin(radianAngle) * DisplayRangeRatio)  ;
+            return (_centerAdjustmentYAxis + Range  * Math.Sin(radianAngle) * DisplayRangeRatio);
         }
         private TcasSymbol CalculateIntruderType()
         {
@@ -177,6 +174,15 @@ namespace CirclularGage.Main.Model
                 return TcasSymbol.ProximateTraffic;
 
             return TcasSymbol.OtherTraffic;
+        }
+        private void MovePointIntruder()
+        {
+            OnPropertyChagned(nameof(X));
+            OnPropertyChagned(nameof(Y));
+        }
+        private void ChangeIntruderType()
+        {
+            OnPropertyChagned(nameof(IntruderType));
         }
         #endregion
 

@@ -19,11 +19,14 @@ namespace CirclularGage.Main
         private double _startWarningZoon;
         private double _score;
         private double _gaugeRadius;
-        private double _endWarningZoon;
+        private double _endWarningZoon;        
         private IntruderModel _intruderItem;
         private TcasDisplayRange _tcasDisplayRange;
+        private TcasAltitudeType _tcasAltitudeType;
+        private TcasDisplayAboveBelow _tcasDisplayAboveBelow;     
         private ICommand _startTcasItemsRandom;
-        private int _tCasDisplayRange;
+        private ICommand _clearTcasItems;
+        private ICommand _createTcasItems;
 
         private readonly IServiceTest _serviceTest;
         #region Properties
@@ -61,44 +64,29 @@ namespace CirclularGage.Main
         {
             get { return _endWarningZoon; }
             set { _endWarningZoon = value; OnPropertyChagned(); }
-        }
-        
-
-        public int TCasDisplayRange
-        {
-            get { return _tCasDisplayRange; }
-            set { _tCasDisplayRange = value; OnPropertyChagned(); }
         }        
-        public TcasDisplayRange TcasDisplayRangeValue
+        public TcasDisplayRange TcasDisplayRange
         {
             get { return _tcasDisplayRange; }
             set
             {
                 if (_tcasDisplayRange != value)
                 {
-                    _tcasDisplayRange = value;
-                    switch (value)
-                    {
-                        case TcasDisplayRange.TcasDisplayRangeNone:
-                            TCasDisplayRange = 1;
-                            break;
-                        case TcasDisplayRange.TcasDisplayRange10nm:
-                            TCasDisplayRange = 10;
-                            break;
-                        case TcasDisplayRange.TcasDisplayRange20nm:
-                            TCasDisplayRange = 20;
-                            break;
-                        case TcasDisplayRange.TcasDisplayRange40nm:
-                            TCasDisplayRange = 40;
-                            break;
-                        case TcasDisplayRange.TcasDisplayRange80nm:
-                            TCasDisplayRange = 80;
-                            break;
-                    }
+                    _tcasDisplayRange = value;                 
                     OnPropertyChagned();
                 }
 
             }
+        }
+        public TcasAltitudeType TcasAltitudeType
+        {
+            get { return _tcasAltitudeType; }
+            set { _tcasAltitudeType = value; OnPropertyChagned(); }
+        }
+        public TcasDisplayAboveBelow TcasDisplayAboveBelow
+        {
+            get { return _tcasDisplayAboveBelow; }
+            set { _tcasDisplayAboveBelow = value; OnPropertyChagned(); }
         }
         public IntruderModel IntruderItem
         {
@@ -120,6 +108,18 @@ namespace CirclularGage.Main
                 
             }
         }
+        public Array TcasAltitudeTypes
+        {
+            get { return Enum.GetValues(typeof(TcasAltitudeType)); }
+        }
+        public Array TcasDisplayAboveBelows
+        {
+            get { return Enum.GetValues(typeof(TcasDisplayAboveBelow)); }
+        }
+        public Array TcasDisplayRanges
+        {
+            get { return Enum.GetValues(typeof(TcasDisplayRange)); }
+        }
         public ObservableCollection<IntruderModel> IntruderItems { get; set; }
         #endregion
         #region Commands
@@ -128,44 +128,35 @@ namespace CirclularGage.Main
         {
             get { return _startTcasItemsRandom; }
             private set { _startTcasItemsRandom = value; }
-        } 
+        }
+        public ICommand ClearTcasItems
+        {
+            get { return _clearTcasItems; }
+            private set { _clearTcasItems = value; }
+        }
+        public ICommand CreateTcasItems
+        {
+            get { return _createTcasItems; }
+            private set { _createTcasItems = value; }
+        }
+        
+
         #endregion
         public MainViewModel(IServiceTest serviceTest)
         {
-            GaugeRadius = 140;
-            AirPortHeadingAngle = 0;
-
-            //StartSafeZoon = 0;
-            //EndSafeZoon = 3;
-
-            //StartWarningZoon = -5;
-            //EndWarningZoon = -4;
-
-            //TCasDisplayRange = 1;
-            //TcasDisplayRangeValue = TcasDisplayRange.TcasDisplayRange20nm;
-            //Score = 0;
-
-            IntruderItems = new ObservableCollection<IntruderModel>();
-
-            StartTcasItemsRandom = new ParameterRelayCommand(btn => StartTcasItemsRandomCommand(btn));
+            InitVariables();
+            InitCommands();
+            CreateMaxIntruderItems();
 
             Messenger.Register<IntruderModel>(nameof(MainViewModel), OnIntruderModelMessageReceived);
-                       
-            for (int i = 0; i < 30; i++)
-            {
-                var random = new Random();
-                Array values2 = Enum.GetValues(typeof(IntruderVerticalSenseState));
-                var randomIntruderVerticalSenseState = (IntruderVerticalSenseState)values2.GetValue(random.Next(values2.Length));
-                Array values3 = Enum.GetValues(typeof(DisplayMatrix));
-                var randomDisplayMatrix = (DisplayMatrix)values3.GetValue(random.Next(values3.Length));
-
-                OnIntruderModelMessageReceived(IntruderModel.IntruderModelFactory(i + 1, 120,
-                    random.Next(-1200, 1200), randomIntruderVerticalSenseState, TcasSymbol.ProximateTraffic, randomDisplayMatrix, 360 / 30 * (i + 1)));
-                Thread.Sleep(10);
-            }
+            Messenger.Register<TcasDisplayRange>(nameof(MainViewModel), OnTcasDisplayRangeMessageReceived);
             _serviceTest = serviceTest;
         }
+
+   
+
         #region Commands Excuate Methods
+
         private void StartTcasItemsRandomCommand(object _)
         {
             _serviceTest.Test();
@@ -185,9 +176,49 @@ namespace CirclularGage.Main
                 
             }
         }
+        private void ClearItemsRandom(object _)
+        {
+            if (IntruderItems.Count != 0)
+                IntruderItems.Clear();
+        }
+        private void CreateItemsRandom(object _)
+        {
+            CreateMaxIntruderItems();
+        }
         #endregion
 
         #region Methods
+        private void InitVariables()
+        {
+            GaugeRadius = 110;
+            AirPortHeadingAngle = 0;
+         
+            TcasDisplayRange = TcasDisplayRange.RangeNone;
+            Score = double.MinValue;
+
+            IntruderItems = new ObservableCollection<IntruderModel>();
+        }
+        private void InitCommands()
+        {
+            StartTcasItemsRandom = new ParameterRelayCommand(btn => StartTcasItemsRandomCommand(btn));
+            ClearTcasItems = new ParameterRelayCommand(btn => ClearItemsRandom(btn));
+            CreateTcasItems = new ParameterRelayCommand(btn => CreateItemsRandom(btn));
+        }
+        private void CreateMaxIntruderItems()
+        {
+            for (int i = 0; i < 30; i++)
+            {
+                var random = new Random();
+                Array values2 = Enum.GetValues(typeof(IntruderVerticalSenseState));
+                var randomIntruderVerticalSenseState = (IntruderVerticalSenseState)values2.GetValue(random.Next(values2.Length));
+                Array values3 = Enum.GetValues(typeof(DisplayMatrix));
+                var randomDisplayMatrix = (DisplayMatrix)values3.GetValue(random.Next(values3.Length));
+
+                OnIntruderModelMessageReceived(IntruderModel.IntruderModelFactory(i + 1, 120,
+                    random.Next(-1200, 1200), randomIntruderVerticalSenseState, TcasSymbol.ProximateTraffic, randomDisplayMatrix, 360 / 30 * (i + 1)));
+                Thread.Sleep(10);
+            }
+        }
         private void OnIntruderModelMessageReceived(IntruderModel model)
         {
             if (IntruderItems.Count > 30)
@@ -212,6 +243,10 @@ namespace CirclularGage.Main
             }
        
         }
+        private void OnTcasDisplayRangeMessageReceived(TcasDisplayRange range)
+        {
+            TcasDisplayRange = range;
+        }
         private bool CancelOldIntruderChecked(IntruderModel model)
         {
             if (model != null)
@@ -219,7 +254,6 @@ namespace CirclularGage.Main
                 IntruderItems.Where(number => model.Equals(number)).ToList().ForEach(number => number.IsSelected = false);                
             }
             return true;
-                
         }
         #endregion
 
