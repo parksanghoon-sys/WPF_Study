@@ -20,7 +20,8 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ContentControl}">
                     <ed:RegularPolygon Width="14" Height="14" InnerRadius="1" PointCount="4" 
-                                       Fill="Transparent" Stroke="{Binding IntruderType, Converter={StaticResource IntruderBackgroundConverter}}" 
+                                       Fill="Transparent" 
+                                       Stroke="{Binding IntruderType, Converter={StaticResource IntruderBackgroundConverter}}"                                       
                                        StrokeThickness="1"/>
                 </ControlTemplate>
 
@@ -85,7 +86,7 @@
                             <RowDefinition />
                         </Grid.RowDefinitions>
                         <Grid x:Name="txtUpDownLayout" Grid.Row="0" >
-                            <TextBlock x:Name="textbox" Text="{Binding Range, Converter={StaticResource IntruderAltitudeConverter}}"
+                            <TextBlock x:Name="textbox" Text="{Binding Altitude, Converter={StaticResource IntruderAltitudeConverter}}"
                                        Foreground="{Binding IntruderType, Converter={StaticResource IntruderBackgroundConverter}}" 
                                        TextAlignment="Center" FontSize="10"/>
                         </Grid>

@@ -19,7 +19,8 @@ namespace CirclularGage.Main
         private double _startWarningZoon;
         private double _score;
         private double _gaugeRadius;
-        private double _endWarningZoon;        
+        private double _endWarningZoon;
+        private double _airPortSymbolBackgroundSize;
         private IntruderModel _intruderItem;
         private TcasDisplayRange _tcasDisplayRange;
         private TcasAltitudeType _tcasAltitudeType;
@@ -34,6 +35,11 @@ namespace CirclularGage.Main
         {
             get { return _airPortHeadingAngle; }
             set { _airPortHeadingAngle = value % 360; OnPropertyChagned(); }
+        }
+        public double AirPortSymbolBackgroundSize
+        {
+            get { return _airPortSymbolBackgroundSize; }
+            set { _airPortSymbolBackgroundSize = value; OnPropertyChagned(); }
         }
         public double StartSafeZoon
         {
@@ -72,7 +78,25 @@ namespace CirclularGage.Main
             {
                 if (_tcasDisplayRange != value)
                 {
-                    _tcasDisplayRange = value;                 
+                    _tcasDisplayRange = value;
+                    switch(_tcasDisplayRange)
+                    {
+                        case TcasDisplayRange.RangeNone:
+                            AirPortSymbolBackgroundSize = 0;
+                            break;
+                        case TcasDisplayRange.Range10nm:
+                            AirPortSymbolBackgroundSize = 56;
+                            break;
+                        case TcasDisplayRange.Range20nm:
+                            AirPortSymbolBackgroundSize = 28;
+                            break;
+                        case TcasDisplayRange.Range40nm:
+                            AirPortSymbolBackgroundSize = 0;
+                            break;
+                        case TcasDisplayRange.Range80nm:
+                            AirPortSymbolBackgroundSize = 0;
+                            break;
+                    }
                     OnPropertyChagned();
                 }
 
@@ -192,7 +216,7 @@ namespace CirclularGage.Main
         {
             GaugeRadius = 110;
             AirPortHeadingAngle = 0;
-         
+            AirPortSymbolBackgroundSize = 0;
             TcasDisplayRange = TcasDisplayRange.RangeNone;
             Score = double.MinValue;
 

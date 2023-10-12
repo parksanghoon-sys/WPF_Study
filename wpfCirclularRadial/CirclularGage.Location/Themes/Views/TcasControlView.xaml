@@ -29,7 +29,7 @@
                           Height="{Binding GaugeRadius, Converter={convert:RadiusToDiameterConverter}, ConverterParameter=2.1}">
 
                         <control:AirPortSympbolBackground Panel.ZIndex="2" Margin="0 100 0 0" 
-                                              AirPortSymbolBackgroundSize="{Binding AirPortHeadingAngle, Converter={convert:RadiusToDiameterConverter},ConverterParameter=2}" />
+                                              AirPortSymbolBackgroundSize="{Binding AirPortSymbolBackgroundSize}" />
                         <control:AirPortSymbol AirPortSymbolSize="11" HeadAngeleValue="{Binding AirPortHeadingAngle}" Panel.ZIndex="3"
                                    HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 110 0 0"/>
 
@@ -41,7 +41,7 @@
                                           MajorDivisionsCount="10"
 
                                           CurrentValue="{Binding Score}"
-                                          RangeIndicatorThickness="5"
+                                          RangeIndicatorThickness="10"
                                           RangeIndicatorRadius="80"
                               
                                           ScaleLabelRadius="98"               

@@ -121,7 +121,5 @@
         <Setter Property="MinorTickColor" Value="#FFFFFF"/>
         <Setter Property="PointerLength" Value="60"/>
         <Setter Property="PointerThickness" Value="5"/>
-        <Setter Property="VerticalAlignment" Value="Top"/>
-        <Setter Property="Margin" Value="0 5 0 0"/>
     </Style>
 </ResourceDictionary>
