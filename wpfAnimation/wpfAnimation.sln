@@ -3,7 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Animation_Rotating_PathGeometry", "wpfAnimation\Animation_Rotating_PathGeometry.csproj", "{5B6E20EF-A5A0-44A3-A9C8-92CDF9E93DB7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Animation_Rotating_PathGeometry", "wpfAnimation\Animation_Rotating_PathGeometry.csproj", "{5B6E20EF-A5A0-44A3-A9C8-92CDF9E93DB7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "wpfControlBiggerAnimation", "wpfControlBiggerAnimation\wpfControlBiggerAnimation.csproj", "{C4A53292-EA54-47CF-A651-F27C7EFF83F3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "wpfControlOpacityAnimation", "wpfControlOpacityAnimation\wpfControlOpacityAnimation.csproj", "{66826F9B-2B86-4458-9D0F-6C14E9B07AB4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "wpfChageColorButton", "wpfChageColorButton\wpfChageColorButton.csproj", "{8527B5B6-5EC8-4211-90D3-9C88A01CEA62}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wpfSVGTest", "wpfSVGTest\wpfSVGTest.csproj", "{695981A4-26E6-4368-8992-C12682EB4654}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +23,22 @@ Global
 		{5B6E20EF-A5A0-44A3-A9C8-92CDF9E93DB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5B6E20EF-A5A0-44A3-A9C8-92CDF9E93DB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5B6E20EF-A5A0-44A3-A9C8-92CDF9E93DB7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4A53292-EA54-47CF-A651-F27C7EFF83F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4A53292-EA54-47CF-A651-F27C7EFF83F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4A53292-EA54-47CF-A651-F27C7EFF83F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4A53292-EA54-47CF-A651-F27C7EFF83F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66826F9B-2B86-4458-9D0F-6C14E9B07AB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66826F9B-2B86-4458-9D0F-6C14E9B07AB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66826F9B-2B86-4458-9D0F-6C14E9B07AB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66826F9B-2B86-4458-9D0F-6C14E9B07AB4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8527B5B6-5EC8-4211-90D3-9C88A01CEA62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8527B5B6-5EC8-4211-90D3-9C88A01CEA62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8527B5B6-5EC8-4211-90D3-9C88A01CEA62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8527B5B6-5EC8-4211-90D3-9C88A01CEA62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{695981A4-26E6-4368-8992-C12682EB4654}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{695981A4-26E6-4368-8992-C12682EB4654}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{695981A4-26E6-4368-8992-C12682EB4654}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{695981A4-26E6-4368-8992-C12682EB4654}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

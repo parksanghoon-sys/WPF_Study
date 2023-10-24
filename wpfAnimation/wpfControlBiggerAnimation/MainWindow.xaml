@@ -1,0 +1,32 @@
+﻿<Window x:Class="wpfControlBiggerAnimation.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:wpfControlBiggerAnimation"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Button Name="MyButton" Content="Press Me!" Width="100" Height="100">
+            <Button.Triggers>
+                <EventTrigger RoutedEvent="Button.Loaded">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <!-- 초기 크기를 0으로 설정하고, 2초 동안 크기를 1로 확대 -->
+                            <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
+                                             From="0.1" To="1.0" Duration="0:0:2" BeginTime="0:0:0"/>
+                            <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                                             From="0.1" To="1.0" Duration= "0:0:2" BeginTime="0:0:0"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Button.Triggers>
+
+            <!-- Scale Transform 추가 -->
+            <Button.RenderTransform>
+                <ScaleTransform ScaleX ="1" ScaleY ="1"/>
+            </Button.RenderTransform>
+
+        </Button>
+    </Grid>
+</Window>
