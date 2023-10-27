@@ -5,8 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:wpfIffUI"
         mc:Ignorable="d"
+        Background="White"
         Title="MainWindow" Height="755" Width="641">
     <Window.Resources>
+        <LinearGradientBrush x:Key="ButtonNormalBorder" EndPoint="0,1" StartPoint="0,0">
+            <GradientStop Color="#CCC" Offset="0.0"/>
+            <GradientStop Color="#444" Offset="1.0"/>
+        </LinearGradientBrush>
         <LinearGradientBrush x:Key="columContent" StartPoint="0,0" EndPoint="0,1">
             <GradientStop Color="#596769" Offset="0.01"/>
             <GradientStop Color="#FF41464D" Offset="0.05" />
@@ -73,8 +78,9 @@
             </Setter>
         </Style>
 
-        <LinearGradientBrush x:Key="btnIffCaution" StartPoint="0, 0.2" EndPoint="0,1">
-            <GradientStop Color="#FF5E6166" Offset="0.1"/>
+        <LinearGradientBrush x:Key="btnIffCaution" StartPoint="0, 0" EndPoint="0,1">
+            <GradientStop Color="#FFF0F0F0" Offset="0.01"/>
+            <GradientStop Color="#FF5E6166" Offset="0.04"/>
             <GradientStop Color="#FF4A4D51" Offset="0.5"/>
             <GradientStop Color="#FF3C3F43" Offset="0.9"/>
             <GradientStop Color="#FF141415" Offset="1.0"/>
@@ -120,9 +126,9 @@
         <Style x:Key="ToggleButtonStyle2" TargetType="{x:Type ToggleButton}">
             <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
             <Setter Property="Background" Value="{StaticResource btnIffCaution}"/>
-            <Setter Property="BorderBrush" Value="{StaticResource btnIffCaution}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource ButtonNormalBorder}"/>
             <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
-            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="Padding" Value="1"/>
@@ -219,9 +225,8 @@
             </Grid>
 
         </Grid>
-        <StackPanel Orientation="Horizontal" Margin="5"> 
-            <ToggleButton Style="{StaticResource BsixToggleButtonStyle}" Width="200" Height="40" BorderBrush="#FF476E5E" Background="#FF4B5057" Content="Testerwrwer123" Foreground="White"/>
-            <ToggleButton Style="{DynamicResource ToggleButtonStyle2}" Width="200" Height="40" Content="하하하하하하"/>
+        <StackPanel Orientation="Horizontal" Margin="5">             
+            <ToggleButton Style="{DynamicResource ToggleButtonStyle2}" Width="200" Height="40" Content="하하하하하하" IsEnabled="False"/>
         </StackPanel>
         <Grid>
             
