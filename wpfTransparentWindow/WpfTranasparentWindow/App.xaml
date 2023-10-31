@@ -1,7 +1,7 @@
-﻿<Application x:Class="wpfNotifyIcon.App"
+﻿<Application x:Class="WpfTranasparentWindow.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:wpfNotifyIcon"
+             xmlns:local="clr-namespace:WpfTranasparentWindow"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
          
