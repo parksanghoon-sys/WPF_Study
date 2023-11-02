@@ -1,0 +1,104 @@
+﻿<Window x:Class="wpfMouseTrackBitEarthworm.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:wpfMouseTrackBitEarthworm"
+        xmlns:control="clr-namespace:Custom.Wpf.Global.Controls;assembly=Custom.Wpf"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <Style x:Key="Section" TargetType="{x:Type ContentControl}">
+            <Setter Property="Width" Value="30"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="UseLayoutRounding" Value="True"/>
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ContentControl}">
+                        <ControlTemplate.Resources>
+                            <Storyboard x:Key="background">
+                                <control:ColorItem
+                                    Mode="EaseIn"
+                                    TargetName="border"
+                                    Property="(Background).(SolidColorBrush.Color)"
+                                    From="#00fe02"
+                                    To="#232323"
+                                    Duration="0:0:0.5"/>
+                            </Storyboard>
+                        </ControlTemplate.Resources>
+                        <Grid Background="Transparent">
+                            <Border x:Name="border"
+                                    Margin="1"
+                                    Background="#232323"
+                                    BorderBrush="Transparent"/>
+                            <Border
+                                BorderBrush="Black"
+                                BorderThickness="1"
+                                Opacity=".5"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard Storyboard="{StaticResource background}"/>
+                                </Trigger.EnterActions>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="BakcgroundGrid" TargetType="{x:Type ListBox}">
+            <Setter Property="ItemContainerStyle" Value="{StaticResource Section}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListBox}">
+                        <ControlTemplate.Resources>
+                            <Storyboard x:Key="background" RepeatBehavior="Forever">
+                                <control:ThickItem 
+                                    BeginTime="0:0:3"
+                                    Mode="EaseIn"
+                                    TargetName="WaveGreen"
+                                    Property="Margin"
+                                    To="0 0 0 -900"
+                                    Duration="0:0:10"/>
+                            </Storyboard>
+                        </ControlTemplate.Resources>
+                        <Grid>
+                            <Grid x:Name="WaveGreen"
+                                  Width="{TemplateBinding Width}"
+                                  Height="150"
+                                  Margin="0 0 0 850">
+                                <Grid.Background>
+                                    <LinearGradientBrush StartPoint="0.5,0"
+                                                         EndPoint="0.5, 1">
+                                        <GradientStop Offset="0" Color="#232323" />
+                                        <GradientStop Offset="0.5" Color="#00fe02" />
+                                        <GradientStop Offset="1" Color="#232323" />
+                                    </LinearGradientBrush>
+                                </Grid.Background>
+                            </Grid>
+                            <ItemsPresenter />
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <EventTrigger RoutedEvent="Window.Loaded">
+                                <BeginStoryboard Storyboard="{StaticResource background}"/>
+                            </EventTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="ItemsPanel">
+                <Setter.Value>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="30" Rows="30" />
+                    </ItemsPanelTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid Background="#232323">
+        <ListBox Style="{StaticResource BakcgroundGrid}" x:Name="aa" />
+    </Grid>
+</Window>

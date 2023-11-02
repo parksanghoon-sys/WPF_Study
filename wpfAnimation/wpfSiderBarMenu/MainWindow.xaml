@@ -1,0 +1,27 @@
+﻿<Window x:Class="wpfSiderBarMenu.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:units="clr-namespace:wpfSiderBarMenu.UI.Units"
+        xmlns:local="clr-namespace:wpfSiderBarMenu"
+        xmlns:control="clr-namespace:Custom.Wpf.Global.Controls;assembly=Custom.Wpf"
+        mc:Ignorable="d"
+        Background="#615f5f"    
+        Width="600"
+        Height="800">
+    <control:CustomGrid Columns="Auto, *" Rows="*">
+        <units:SidebarMenu
+            Background="#322f30"
+            Foreground="#FFFFFF"
+            ItemSource="{Binding SampleDatas}"
+            SelectedItemColor="#6dbddd"
+            SelectedItem="{Binding TabItemSelectedCommand}"/>
+        <Grid>
+            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center"
+                       FontSize="50"
+                       FontWeight="Bold"
+                       Text="{Binding ContentName}"/>
+        </Grid>
+    </control:CustomGrid>
+</Window>

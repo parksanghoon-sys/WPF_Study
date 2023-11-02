@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,6 +9,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
+using System.Windows.Media;
+using wpfNotifyIcon.Interop;
 
 namespace wpfNotifyIcon
 {
@@ -19,6 +22,84 @@ namespace wpfNotifyIcon
         public const string CategoryName = "NotifyIcon";
 
         //POPUP CONTROLS
+        #region Icon property / IconSource dependency property
+
+        private Icon icon;
+
+        /// <summary>
+        /// Gets or sets the icon to be displayed. This is not a
+        /// dependency property - if you want to assign the property
+        /// through XAML, please use the <see cref="IconSource"/>
+        /// dependency property.
+        /// </summary>
+        [Browsable(false)]
+        public Icon Icon
+        {
+            get { return icon; }
+            set
+            {
+                icon = value;
+                _iconData.IconHandle = value == null ? IntPtr.Zero : icon.Handle;
+
+                Util.WriteIconData(ref _iconData, NotifyCommand.Modify, IconDataMembers.Icon);
+            }
+        }
+
+
+        /// <summary>
+        /// Resolves an image source and updates the <see cref="Icon" /> property accordingly.
+        /// </summary>
+        public static readonly DependencyProperty IconSourceProperty =
+            DependencyProperty.Register(nameof(IconSource),
+                typeof(ImageSource),
+                typeof(TaskbarIcon),
+                new FrameworkPropertyMetadata(null, IconSourcePropertyChanged));
+
+        /// <summary>
+        /// A property wrapper for the <see cref="IconSourceProperty"/>
+        /// dependency property:<br/>
+        /// Resolves an image source and updates the <see cref="Icon" /> property accordingly.
+        /// </summary>
+        [Category(CategoryName)]
+        [Description("Sets the displayed taskbar icon.")]
+        public ImageSource IconSource
+        {
+            get { return (ImageSource)GetValue(IconSourceProperty); }
+            set { SetValue(IconSourceProperty, value); }
+        }
+
+
+        /// <summary>
+        /// A static callback listener which is being invoked if the
+        /// <see cref="IconSourceProperty"/> dependency property has
+        /// been changed. Invokes the <see cref="OnIconSourcePropertyChanged"/>
+        /// instance method of the changed instance.
+        /// </summary>
+        /// <param name="d">The currently processed owner of the property.</param>
+        /// <param name="e">Provides information about the updated property.</param>
+        private static void IconSourcePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            TaskbarIcon owner = (TaskbarIcon)d;
+            owner.OnIconSourcePropertyChanged(e);
+        }
+
+
+        /// <summary>
+        /// Handles changes of the <see cref="IconSourceProperty"/> dependency property. As
+        /// WPF internally uses the dependency property system and bypasses the
+        /// <see cref="IconSource"/> property wrapper, updates of the property's value
+        /// should be handled here.
+        /// </summary>
+        /// <param name="e">Provides information about the updated property.</param>
+        private void OnIconSourcePropertyChanged(DependencyPropertyChangedEventArgs e)
+        {
+            ImageSource newValue = (ImageSource)e.NewValue;
+
+            //resolving the ImageSource at design time is unlikely to work
+            if (!Util.IsDesignMode) Icon = newValue.ToIcon();
+        }
+
+        #endregion
 
         #region TrayPopupResolved
 
@@ -199,6 +280,32 @@ namespace wpfNotifyIcon
 
         #endregion
 
+        #region DoubleClickCommandTarget dependency property
+
+        /// <summary>
+        /// The target of the command that is fired if the notify icon is double clicked.
+        /// </summary>
+        public static readonly DependencyProperty DoubleClickCommandTargetProperty =
+            DependencyProperty.Register(nameof(DoubleClickCommandTarget),
+                typeof(IInputElement),
+                typeof(TaskbarIcon),
+                new FrameworkPropertyMetadata(null));
+
+        /// <summary>
+        /// A property wrapper for the <see cref="DoubleClickCommandTargetProperty"/>
+        /// dependency property:<br/>
+        /// The target of the command that is fired if the notify icon is double clicked.
+        /// </summary>
+        [Category(CategoryName)]
+        [Description("The target of the command that is fired if the notify icon is double clicked.")]
+        public IInputElement DoubleClickCommandTarget
+        {
+            get { return (IInputElement)GetValue(DoubleClickCommandTargetProperty); }
+            set { SetValue(DoubleClickCommandTargetProperty, value); }
+        }
+
+        #endregion
+
         #region TrayPopup dependency property
 
         /// <summary>
@@ -297,6 +404,50 @@ namespace wpfNotifyIcon
         public static void SetParentTaskbarIcon(DependencyObject d, TaskbarIcon value)
         {
             d.SetValue(ParentTaskbarIconProperty, value);
+        }
+
+        #endregion
+
+        #region BalloonShowing
+
+        /// <summary>
+        /// BalloonShowing Attached Routed Event
+        /// </summary>
+        public static readonly RoutedEvent BalloonShowingEvent = EventManager.RegisterRoutedEvent("BalloonShowing",
+            RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(TaskbarIcon));
+
+        /// <summary>
+        /// Adds a handler for the BalloonShowing attached event
+        /// </summary>
+        /// <param name="element">UIElement or ContentElement that listens to the event</param>
+        /// <param name="handler">Event handler to be added</param>
+        public static void AddBalloonShowingHandler(DependencyObject element, RoutedEventHandler handler)
+        {
+            RoutedEventHelper.AddHandler(element, BalloonShowingEvent, handler);
+        }
+
+        /// <summary>
+        /// Removes a handler for the BalloonShowing attached event
+        /// </summary>
+        /// <param name="element">UIElement or ContentElement that listens to the event</param>
+        /// <param name="handler">Event handler to be removed</param>
+        public static void RemoveBalloonShowingHandler(DependencyObject element, RoutedEventHandler handler)
+        {
+            RoutedEventHelper.RemoveHandler(element, BalloonShowingEvent, handler);
+        }
+
+        /// <summary>
+        /// A static helper method to raise the BalloonShowing event on a target element.
+        /// </summary>
+        /// <param name="target">UIElement or ContentElement on which to raise the event</param>
+        /// <param name="source">The <see cref="TaskbarIcon"/> instance that manages the balloon.</param>
+        internal static RoutedEventArgs RaiseBalloonShowingEvent(DependencyObject target, TaskbarIcon source)
+        {
+            if (target == null) return null;
+
+            RoutedEventArgs args = new RoutedEventArgs(BalloonShowingEvent, source);
+            RoutedEventHelper.RaiseEvent(target, args);
+            return args;
         }
 
         #endregion
@@ -622,6 +773,226 @@ namespace wpfNotifyIcon
             RoutedEventHelper.RaiseEvent(target, args);
             return args;
         }
+        #endregion
+
+        #region TrayRightMouseUp
+
+        /// <summary>
+        /// TrayRightMouseUp Routed Event
+        /// </summary>
+        public static readonly RoutedEvent TrayRightMouseUpEvent = EventManager.RegisterRoutedEvent("TrayRightMouseUp",
+            RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(TaskbarIcon));
+
+        /// <summary>
+        /// Occurs when the user releases the right mouse button.
+        /// </summary>
+        public event RoutedEventHandler TrayRightMouseUp
+        {
+            add { AddHandler(TrayRightMouseUpEvent, value); }
+            remove { RemoveHandler(TrayRightMouseUpEvent, value); }
+        }
+
+        /// <summary>
+        /// A helper method to raise the TrayRightMouseUp event.
+        /// </summary>
+        protected RoutedEventArgs RaiseTrayRightMouseUpEvent()
+        {
+            return RaiseTrayRightMouseUpEvent(this);
+        }
+
+        /// <summary>
+        /// A static helper method to raise the TrayRightMouseUp event on a target element.
+        /// </summary>
+        /// <param name="target">UIElement or ContentElement on which to raise the event</param>
+        internal static RoutedEventArgs RaiseTrayRightMouseUpEvent(DependencyObject target)
+        {
+            if (target == null) return null;
+
+            RoutedEventArgs args = new RoutedEventArgs(TrayRightMouseUpEvent);
+            RoutedEventHelper.RaiseEvent(target, args);
+            return args;
+        }
+
+        #endregion
+
+        #region TrayLeftMouseDown
+
+        /// <summary>
+        /// TrayLeftMouseDown Routed Event
+        /// </summary>
+        public static readonly RoutedEvent TrayLeftMouseDownEvent = EventManager.RegisterRoutedEvent(
+            "TrayLeftMouseDown",
+            RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(TaskbarIcon));
+
+        /// <summary>
+        /// Occurs when the user presses the left mouse button.
+        /// </summary>
+        [Category(CategoryName)]
+        public event RoutedEventHandler TrayLeftMouseDown
+        {
+            add { AddHandler(TrayLeftMouseDownEvent, value); }
+            remove { RemoveHandler(TrayLeftMouseDownEvent, value); }
+        }
+
+        /// <summary>
+        /// A helper method to raise the TrayLeftMouseDown event.
+        /// </summary>
+        protected RoutedEventArgs RaiseTrayLeftMouseDownEvent()
+        {
+            RoutedEventArgs args = RaiseTrayLeftMouseDownEvent(this);
+            return args;
+        }
+
+        /// <summary>
+        /// A static helper method to raise the TrayLeftMouseDown event on a target element.
+        /// </summary>
+        /// <param name="target">UIElement or ContentElement on which to raise the event</param>
+        internal static RoutedEventArgs RaiseTrayLeftMouseDownEvent(DependencyObject target)
+        {
+            if (target == null) return null;
+
+            RoutedEventArgs args = new RoutedEventArgs(TrayLeftMouseDownEvent);
+            RoutedEventHelper.RaiseEvent(target, args);
+            return args;
+        }
+
+        #endregion
+
+        #region TrayLeftMouseUp
+
+        /// <summary>
+        /// TrayLeftMouseUp Routed Event
+        /// </summary>
+        public static readonly RoutedEvent TrayLeftMouseUpEvent = EventManager.RegisterRoutedEvent("TrayLeftMouseUp",
+            RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(TaskbarIcon));
+
+        /// <summary>
+        /// Occurs when the user releases the left mouse button.
+        /// </summary>
+        public event RoutedEventHandler TrayLeftMouseUp
+        {
+            add { AddHandler(TrayLeftMouseUpEvent, value); }
+            remove { RemoveHandler(TrayLeftMouseUpEvent, value); }
+        }
+
+        /// <summary>
+        /// A helper method to raise the TrayLeftMouseUp event.
+        /// </summary>
+        protected RoutedEventArgs RaiseTrayLeftMouseUpEvent()
+        {
+            return RaiseTrayLeftMouseUpEvent(this);
+        }
+
+        /// <summary>
+        /// A static helper method to raise the TrayLeftMouseUp event on a target element.
+        /// </summary>
+        /// <param name="target">UIElement or ContentElement on which to raise the event</param>
+        internal static RoutedEventArgs RaiseTrayLeftMouseUpEvent(DependencyObject target)
+        {
+            if (target == null) return null;
+
+            RoutedEventArgs args = new RoutedEventArgs(TrayLeftMouseUpEvent);
+            RoutedEventHelper.RaiseEvent(target, args);
+            return args;
+        }
+
+        #endregion
+
+        #region TrayMouseDoubleClick
+
+        /// <summary>
+        /// TrayMouseDoubleClick Routed Event
+        /// </summary>
+        public static readonly RoutedEvent TrayMouseDoubleClickEvent =
+            EventManager.RegisterRoutedEvent("TrayMouseDoubleClick",
+                RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(TaskbarIcon));
+
+        /// <summary>
+        /// Occurs when the user double-clicks the taskbar icon.
+        /// </summary>
+        public event RoutedEventHandler TrayMouseDoubleClick
+        {
+            add { AddHandler(TrayMouseDoubleClickEvent, value); }
+            remove { RemoveHandler(TrayMouseDoubleClickEvent, value); }
+        }
+
+        /// <summary>
+        /// A helper method to raise the TrayMouseDoubleClick event.
+        /// </summary>
+        protected RoutedEventArgs RaiseTrayMouseDoubleClickEvent()
+        {
+            RoutedEventArgs args = RaiseTrayMouseDoubleClickEvent(this);
+            DoubleClickCommand.ExecuteIfEnabled(DoubleClickCommandParameter, DoubleClickCommandTarget ?? this);
+            return args;
+        }
+
+        /// <summary>
+        /// A static helper method to raise the TrayMouseDoubleClick event on a target element.
+        /// </summary>
+        /// <param name="target">UIElement or ContentElement on which to raise the event</param>
+        internal static RoutedEventArgs RaiseTrayMouseDoubleClickEvent(DependencyObject target)
+        {
+            if (target == null) return null;
+
+            RoutedEventArgs args = new RoutedEventArgs(TrayMouseDoubleClickEvent);
+            RoutedEventHelper.RaiseEvent(target, args);
+            return args;
+        }
+
+        #endregion
+
+        #region DoubleClickCommand dependency property
+
+        /// <summary>
+        /// Associates a command that is being executed if the tray icon is being
+        /// double clicked.
+        /// </summary>
+        public static readonly DependencyProperty DoubleClickCommandProperty =
+            DependencyProperty.Register(nameof(DoubleClickCommand),
+                typeof(ICommand),
+                typeof(TaskbarIcon),
+                new FrameworkPropertyMetadata(null));
+
+        /// <summary>
+        /// A property wrapper for the <see cref="DoubleClickCommandProperty"/>
+        /// dependency property:<br/>
+        /// Associates a command that is being executed if the tray icon is being
+        /// double clicked.
+        /// </summary>
+        [Category(CategoryName)]
+        [Description("A command that is being executed if the tray icon is being double-clicked.")]
+        public ICommand DoubleClickCommand
+        {
+            get { return (ICommand)GetValue(DoubleClickCommandProperty); }
+            set { SetValue(DoubleClickCommandProperty, value); }
+        }
+
+        #endregion
+
+        #region DoubleClickCommandParameter dependency property
+
+        /// <summary>
+        /// Command parameter for the <see cref="DoubleClickCommand"/>.
+        /// </summary>
+        public static readonly DependencyProperty DoubleClickCommandParameterProperty =
+            DependencyProperty.Register(nameof(DoubleClickCommandParameter),
+                typeof(object),
+                typeof(TaskbarIcon),
+                new FrameworkPropertyMetadata(null));
+
+        /// <summary>
+        /// A property wrapper for the <see cref="DoubleClickCommandParameterProperty"/>
+        /// dependency property:<br/>
+        /// Command parameter for the <see cref="DoubleClickCommand"/>.
+        /// </summary>
+        [Category(CategoryName)]
+        [Description("Parameter to submit to the DoubleClickCommand when the user double clicks on the NotifyIcon.")]
+        public object DoubleClickCommandParameter
+        {
+            get { return GetValue(DoubleClickCommandParameterProperty); }
+            set { SetValue(DoubleClickCommandParameterProperty, value); }
+        }
+
         #endregion
 
         #region TrayContextMenuOpen (and PreviewTrayContextMenuOpen)
@@ -993,6 +1364,50 @@ namespace wpfNotifyIcon
             if (target == null) return null;
 
             RoutedEventArgs args = new RoutedEventArgs(ToolTipCloseEvent);
+            RoutedEventHelper.RaiseEvent(target, args);
+            return args;
+        }
+
+        #endregion
+
+        #region BalloonClosing
+
+        /// <summary>
+        /// BalloonClosing Attached Routed Event
+        /// </summary>
+        public static readonly RoutedEvent BalloonClosingEvent = EventManager.RegisterRoutedEvent("BalloonClosing",
+            RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(TaskbarIcon));
+
+        /// <summary>
+        /// Adds a handler for the BalloonClosing attached event
+        /// </summary>
+        /// <param name="element">UIElement or ContentElement that listens to the event</param>
+        /// <param name="handler">Event handler to be added</param>
+        public static void AddBalloonClosingHandler(DependencyObject element, RoutedEventHandler handler)
+        {
+            RoutedEventHelper.AddHandler(element, BalloonClosingEvent, handler);
+        }
+
+        /// <summary>
+        /// Removes a handler for the BalloonClosing attached event
+        /// </summary>
+        /// <param name="element">UIElement or ContentElement that listens to the event</param>
+        /// <param name="handler">Event handler to be removed</param>
+        public static void RemoveBalloonClosingHandler(DependencyObject element, RoutedEventHandler handler)
+        {
+            RoutedEventHelper.RemoveHandler(element, BalloonClosingEvent, handler);
+        }
+
+        /// <summary>
+        /// A static helper method to raise the BalloonClosing event on a target element.
+        /// </summary>
+        /// <param name="target">UIElement or ContentElement on which to raise the event</param>
+        /// <param name="source">The <see cref="TaskbarIcon"/> instance that manages the balloon.</param>
+        internal static RoutedEventArgs RaiseBalloonClosingEvent(DependencyObject target, TaskbarIcon source)
+        {
+            if (target == null) return null;
+
+            RoutedEventArgs args = new RoutedEventArgs(BalloonClosingEvent, source);
             RoutedEventHelper.RaiseEvent(target, args);
             return args;
         }

@@ -10,7 +10,9 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Interop;
+using System.Windows.Threading;
 using wpfNotifyIcon.Interop;
+using Point = wpfNotifyIcon.Interop.Point;
 
 namespace wpfNotifyIcon
 {
@@ -28,6 +30,7 @@ namespace wpfNotifyIcon
         private readonly Timer _singleClickTimer;
         private readonly Timer _balloonCloseTimer;
         private int DoubleClickWaitTime => NoLeftClickDelay ? 0 : WinApi.GetDoubleClickTime();
+        
 
         /// <summary>
         /// Checks whether a non-tooltip popup is currently opened.
@@ -47,6 +50,16 @@ namespace wpfNotifyIcon
         }
         #endregion
         public bool IsTaskbarIconCreated { get; private set; }
+        public delegate Point GetCustomPopupPosition();
+        public GetCustomPopupPosition CustomPopupPosition { get; set; }
+        /// <summary>
+        /// Returns the location of the system tray
+        /// </summary>
+        /// <returns>Point</returns>
+        public Point GetPopupTrayPosition()
+        {
+            return TrayInfo.GetTrayLocation();
+        }
         /// <summary>
         /// Set to true as soon as <c>Dispose</c> has been invoked.
         /// </summary>
@@ -73,15 +86,164 @@ namespace wpfNotifyIcon
                 Application.Current.Exit += OnExit;
             }
         }
+        public void ShowCustomBalloon(UIElement balloon, PopupAnimation animation, int? timeout)
+        {
+            var dispatcher = this.GetDispatcher();
+            if (!dispatcher.CheckAccess())
+            {
+                var action = new Action(() => ShowCustomBalloon(balloon, animation, timeout));
+                dispatcher.Invoke(DispatcherPriority.Normal, action);
+                return;
+            }
+            if (balloon == null) throw new ArgumentNullException(nameof(balloon));
+            if (timeout.HasValue && timeout < 500)
+            {
+                string msg = "Invalid timeout of {0} milliseconds. Timeout must be at least 500 ms";
+                msg = string.Format(msg, timeout);
+                throw new ArgumentOutOfRangeException(nameof(timeout), msg);
+            }
 
+            EnsureNotDisposed();
+
+            // make sure we don't have an open balloon
+            lock (lockObject)
+            {
+                CloseBalloon();
+            }
+
+            // create an invisible popup that hosts the UIElement
+            Popup popup = new Popup
+            {
+                AllowsTransparency = true
+            };
+
+            // provide the popup with the taskbar icon's data context
+            UpdateDataContext(popup, null, DataContext);
+
+            // don't animate by default - developers can use attached events or override
+            popup.PopupAnimation = animation;
+
+            // in case the balloon is cleaned up through routed events, the
+            // control didn't remove the balloon from its parent popup when
+            // if was closed the last time - just make sure it doesn't have
+            // a parent that is a popup
+            var parent = LogicalTreeHelper.GetParent(balloon) as Popup;
+            if (parent != null) parent.Child = null;
+
+            if (parent != null)
+            {
+                string msg = "Cannot display control [{0}] in a new balloon popup - that control already has a parent. You may consider creating new balloons every time you want to show one.";
+                msg = string.Format(msg, balloon);
+                throw new InvalidOperationException(msg);
+            }
+
+            popup.Child = balloon;
+
+            //don't set the PlacementTarget as it causes the popup to become hidden if the
+            //TaskbarIcon's parent is hidden, too...
+            //popup.PlacementTarget = this;
+
+            popup.Placement = PopupPlacement;
+            popup.StaysOpen = true;
+
+
+            Point position = CustomPopupPosition != null ? CustomPopupPosition() : GetPopupTrayPosition();
+            popup.HorizontalOffset = position.X - 1;
+            popup.VerticalOffset = position.Y - 1;
+
+            //store reference
+            lock (lockObject)
+            {
+                SetCustomBalloon(popup);
+            }
+
+            // assign this instance as an attached property
+            SetParentTaskbarIcon(balloon, this);
+
+            // fire attached event
+            RaiseBalloonShowingEvent(balloon, this);
+
+            // display item
+            popup.IsOpen = true;
+
+            if (timeout.HasValue)
+            {
+                // register timer to close the popup
+                _balloonCloseTimer.Change(timeout.Value, Timeout.Infinite);
+            }
+        }
+        /// <summary>
+        /// Hides a balloon ToolTip, if any is displayed.
+        /// </summary>
+        public void HideBalloonTip()
+        {
+            EnsureNotDisposed();
+
+            // reset balloon by just setting the info to an empty string
+            _iconData.BalloonText = _iconData.BalloonTitle = string.Empty;
+            Util.WriteIconData(ref _iconData, NotifyCommand.Modify, IconDataMembers.Info);
+        }
+        public void ShowTrayPopup()
+        {
+            if (IsDisposed) return;
+
+            var args = RaisePreviewTrayPopupOpenEvent();
+            if (args.Handled) return;
+
+            if (TrayPopup == null) return;
+
+        }
         private void CloseBalloonCallback(object? state)
         {
-            throw new NotImplementedException();
-        }
+            if (IsDisposed) return;
 
+            // switch to UI thread
+            Action action = CloseBalloon;
+            this.GetDispatcher().Invoke(action);
+        }
+        public void CloseBalloon()
+        {
+            if(IsDisposed ) return;
+
+            Dispatcher dispatcher = this.GetDispatcher();
+            if(dispatcher.CheckAccess() == false)
+            {
+                Action action = CloseBalloon;
+                dispatcher.Invoke(DispatcherPriority.Normal, action);
+            }
+            lock(lockObject)
+            {
+                _balloonCloseTimer.Change(Timeout.Infinite, Timeout.Infinite);
+
+                Popup popup = CustomBalloon;
+                if (popup == null) return;
+
+                UIElement element = popup.Child;
+
+                RoutedEventArgs eventArgs = RaiseBalloonClosingEvent(element, this);
+                if (!eventArgs.Handled)
+                {
+                    popup.IsOpen = false;
+                    popup.Child = null;
+                    if (element != null) SetParentTaskbarIcon(element, null);
+                }
+                SetCustomBalloon(null);
+            }
+        }
         private void DoSingleClickAction(object? state)
         {
-            throw new NotImplementedException();
+            if (IsDisposed) return;
+
+            // run action
+            Action action = _singleClickTimerAction;
+            if (action != null)
+            {
+                // cleanup action
+                _singleClickTimerAction = null;
+
+                // switch to UI thread
+                this.GetDispatcher().Invoke(action);
+            }
         }
 
         //private void OnBalloonToolTipChanged(bool visible)
@@ -153,16 +315,7 @@ namespace wpfNotifyIcon
             }
         }
 
-        public void ShowTrayPopup()
-        {
-            if(IsDisposed) return;
-
-            var args = RaisePreviewTrayPopupOpenEvent();
-            if (args.Handled) return;
-
-            if (TrayPopup == null) return;
-
-        }
+      
         private void ShowContextMenu(Interop.Point point)
         {
             if(IsDisposed) return;
@@ -196,12 +349,27 @@ namespace wpfNotifyIcon
             if (IsDisposed) return;
 
             switch (me)
-            {
-               
+            {               
                 case MouseEvent.IconRightMouseDown:
                     RaiseTrayRightMouseDownEvent();
                     break;
-           
+                case MouseEvent.IconLeftMouseDown:
+                    RaiseTrayLeftMouseDownEvent();
+                    break;
+                case MouseEvent.IconRightMouseUp:
+                    RaiseTrayRightMouseUpEvent();
+                    break;
+                case MouseEvent.IconLeftMouseUp:
+                    RaiseTrayLeftMouseUpEvent();
+                    break;
+                case MouseEvent.IconDoubleClick:
+                    // cancel single click timer
+                    _singleClickTimer.Change(Timeout.Infinite, Timeout.Infinite);
+                    // bubble event
+                    RaiseTrayMouseDoubleClickEvent();
+                    break;
+                case MouseEvent.MouseMove:
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(me), "Missing handler for mouse event flag: " + me);
             }

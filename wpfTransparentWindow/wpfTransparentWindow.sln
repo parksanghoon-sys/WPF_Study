@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "wpfNotifyIcon", "wpfNotifyI
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfTranasparentWindow", "WpfTranasparentWindow\WpfTranasparentWindow.csproj", "{99AFF447-0E56-4CCD-9DD9-4D4433E2B3D4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wpfNotifyIconTest", "wpfNotifyIconTest\wpfNotifyIconTest.csproj", "{C6412929-3114-4E2D-B0D2-287B9C018907}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{99AFF447-0E56-4CCD-9DD9-4D4433E2B3D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{99AFF447-0E56-4CCD-9DD9-4D4433E2B3D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{99AFF447-0E56-4CCD-9DD9-4D4433E2B3D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6412929-3114-4E2D-B0D2-287B9C018907}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6412929-3114-4E2D-B0D2-287B9C018907}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6412929-3114-4E2D-B0D2-287B9C018907}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6412929-3114-4E2D-B0D2-287B9C018907}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

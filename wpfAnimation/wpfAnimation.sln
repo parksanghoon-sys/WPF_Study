@@ -11,7 +11,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "wpfControlOpacityAnimation"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "wpfChageColorButton", "wpfChageColorButton\wpfChageColorButton.csproj", "{8527B5B6-5EC8-4211-90D3-9C88A01CEA62}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wpfSVGTest", "wpfSVGTest\wpfSVGTest.csproj", "{695981A4-26E6-4368-8992-C12682EB4654}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "wpfSVGTest", "wpfSVGTest\wpfSVGTest.csproj", "{695981A4-26E6-4368-8992-C12682EB4654}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wpfMouseTrackBitEarthworm", "wpfMouseTrackBitEarthworm\wpfMouseTrackBitEarthworm.csproj", "{335D588B-E254-4563-B34D-E4E4FFF4A716}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Custom.Wpf", "..\wpfCustom.Lib\Custom.Wpf\Custom.Wpf.csproj", "{E2A306D1-D11C-443B-B85E-D7C0FCEE91B0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Design", "..\wpfCustom.Lib\wpfDesign\Design.csproj", "{9BFA1425-8D74-4DC6-8C9C-73B4B26BBE80}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wpfSiderBarMenu", "wpfSiderBarMenu\wpfSiderBarMenu.csproj", "{876922D3-482E-4F46-9673-4DF021D6653B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +47,22 @@ Global
 		{695981A4-26E6-4368-8992-C12682EB4654}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{695981A4-26E6-4368-8992-C12682EB4654}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{695981A4-26E6-4368-8992-C12682EB4654}.Release|Any CPU.Build.0 = Release|Any CPU
+		{335D588B-E254-4563-B34D-E4E4FFF4A716}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{335D588B-E254-4563-B34D-E4E4FFF4A716}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{335D588B-E254-4563-B34D-E4E4FFF4A716}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{335D588B-E254-4563-B34D-E4E4FFF4A716}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2A306D1-D11C-443B-B85E-D7C0FCEE91B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2A306D1-D11C-443B-B85E-D7C0FCEE91B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2A306D1-D11C-443B-B85E-D7C0FCEE91B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2A306D1-D11C-443B-B85E-D7C0FCEE91B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9BFA1425-8D74-4DC6-8C9C-73B4B26BBE80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BFA1425-8D74-4DC6-8C9C-73B4B26BBE80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BFA1425-8D74-4DC6-8C9C-73B4B26BBE80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BFA1425-8D74-4DC6-8C9C-73B4B26BBE80}.Release|Any CPU.Build.0 = Release|Any CPU
+		{876922D3-482E-4F46-9673-4DF021D6653B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{876922D3-482E-4F46-9673-4DF021D6653B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{876922D3-482E-4F46-9673-4DF021D6653B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{876922D3-482E-4F46-9673-4DF021D6653B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
