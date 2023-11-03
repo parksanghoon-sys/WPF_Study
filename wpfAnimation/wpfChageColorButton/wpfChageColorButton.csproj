@@ -7,4 +7,12 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="PresentationTheme.Aero" Version="0.6.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\wpfCustom.Lib\Custom.Wpf\Custom.Wpf.csproj" />
+  </ItemGroup>
+
 </Project>

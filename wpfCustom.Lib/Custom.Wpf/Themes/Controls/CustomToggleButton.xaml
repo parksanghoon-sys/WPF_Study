@@ -1,0 +1,153 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:control="clr-namespace:Custom.Wpf.Global.Controls" >
+
+    <Style x:Key="ButtonFocusVisual">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle Margin="2" SnapsToDevicePixels="true" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <LinearGradientBrush x:Key="ButtonNormalBackground" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Color="#EEEEEE" Offset="0"/>
+        <GradientStop Color="#CCCCCC" Offset="1"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="ButtonNormalBorderBlack" EndPoint="0,1" StartPoint="0,0">
+        <GradientStop Color="#CCC" Offset="0.0"/>
+        <GradientStop Color="#444" Offset="1.0"/>
+    </LinearGradientBrush>
+
+    <Style TargetType="{x:Type control:RepeatColorChangeToggleButton}">
+        <Setter Property="FocusVisualStyle" Value="{StaticResource ButtonFocusVisual}"/>
+        <Setter Property="Background" Value="{StaticResource ButtonNormalBackground}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ButtonNormalBorderBlack}"/>
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="1"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type control:RepeatColorChangeToggleButton}">
+                    <ControlTemplate.Resources>
+                        <Storyboard x:Key="BlinkStoryboard" AutoReverse="True" RepeatBehavior="Forever" >
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="SelectColor">
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+                            </ObjectAnimationUsingKeyFrames>
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="SelectColor">
+                                <EasingDoubleKeyFrame KeyTime="0" Value="0">
+                                    <EasingDoubleKeyFrame.EasingFunction>
+                                        <BackEase EasingMode="EaseInOut" Amplitude="3"/>
+                                    </EasingDoubleKeyFrame.EasingFunction>
+                                </EasingDoubleKeyFrame>
+                                <EasingDoubleKeyFrame KeyTime="0:0:0.8" Value="1">
+                                    <EasingDoubleKeyFrame.EasingFunction>
+                                        <BackEase EasingMode="EaseInOut" Amplitude="3"/>
+                                    </EasingDoubleKeyFrame.EasingFunction>
+                                </EasingDoubleKeyFrame>
+                            </DoubleAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </ControlTemplate.Resources>
+                    <Grid Height="Auto" VerticalAlignment="Stretch" Width="Auto">
+                        <Grid Margin="0,0,0,1">
+                            <!--Background-->
+                            <Grid x:Name="Background">
+                                <Rectangle Height="Auto" Stroke="{x:Null}" VerticalAlignment="Stretch" Width="Auto" RadiusX="2" RadiusY="2">
+                                    <Rectangle.Fill>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#7F303339" Offset="0"/>
+                                            <GradientStop Color="#336B6E73" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Rectangle.Fill>
+                                </Rectangle>
+                                <Rectangle Height="Auto" Stroke="#FF282A30" VerticalAlignment="Stretch" Width="Auto" Opacity="1" Margin="2" RadiusX="2" RadiusY="2">
+                                    <Rectangle.Fill>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#FF56585C" Offset="1"/>
+                                            <GradientStop Color="#FF65676A"/>
+                                        </LinearGradientBrush>
+                                    </Rectangle.Fill>
+                                </Rectangle>
+                                <Rectangle Height="Auto" Stroke="#35CACFD5" VerticalAlignment="Stretch" Width="Auto" Opacity="1" Margin="3" RadiusX="1" RadiusY="1" StrokeThickness="1"/>
+                                <Rectangle Height="3" Stroke="{x:Null}" VerticalAlignment="Bottom" Width="Auto" Opacity="0.7" Margin="3" RadiusX="0" RadiusY="0" Fill="#FF36393D"/>
+                            </Grid>
+
+                            <!--녹색-->
+                            <Grid x:Name="PressColor" Visibility="Collapsed">
+                                <Rectangle Margin="2" RadiusY="2" RadiusX="2" Stroke="#FF282A30">
+                                    <Rectangle.Fill>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#FF476E5E" Offset="1"/>
+                                            <GradientStop Color="#FF50896C"/>
+                                        </LinearGradientBrush>
+                                    </Rectangle.Fill>
+                                </Rectangle>
+                                <Rectangle Height="Auto" Stroke="#35CACFD5" VerticalAlignment="Stretch" Width="Auto" Opacity="1" Margin="3" RadiusX="1" RadiusY="1" StrokeThickness="1"/>
+                                <Rectangle Height="3" Stroke="{x:Null}" VerticalAlignment="Bottom" Width="Auto" Opacity="0.7" Margin="3" RadiusX="0" RadiusY="0" Fill="#FF36393D"/>
+                            </Grid>
+
+                            <!--오렌지-->
+                            <Grid x:Name="SelectColor" Visibility="Collapsed">
+                                <Rectangle Margin="2" RadiusX="2" RadiusY="2" Stroke="#FF282A30" StrokeThickness="1">
+                                    <Rectangle.Fill>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#FFA85636" Offset="1"/>
+                                            <GradientStop Color="#FFC97951"/>
+                                        </LinearGradientBrush>
+                                    </Rectangle.Fill>
+                                </Rectangle>
+                                <Rectangle Height="Auto" Stroke="#35CACFD5" VerticalAlignment="Stretch" Width="Auto" Opacity="1" Margin="3" RadiusX="1" RadiusY="1" StrokeThickness="1"/>
+                                <Rectangle Height="3" Stroke="{x:Null}" VerticalAlignment="Bottom" Width="Auto" Opacity="0.7" Margin="3" RadiusX="0" RadiusY="0" Fill="#FF63412B"/>
+                            </Grid>
+                            <Rectangle x:Name="OverRec" Margin="0" RadiusY="2" RadiusX="2" Stroke="Black" StrokeThickness="1" Fill="#14FFFFFF" Visibility="Collapsed"/>
+                            <Rectangle x:Name="DisableRec" Margin="0" RadiusY="2" RadiusX="2" Stroke="Black" StrokeThickness="1" Fill="#66000000" Visibility="Collapsed"/>
+                            <Rectangle x:Name="InnerLineOver" Fill="{x:Null}" Margin="0" RadiusX="2" RadiusY="2" StrokeThickness="2" RenderTransformOrigin="0.5,0.5" Visibility="Collapsed" Stroke="#66FFFFFF"/>
+
+                            <!--마우스 클릭-->
+                            <Grid x:Name="PressGrid" HorizontalAlignment="Stretch" Width="Auto" Visibility="Collapsed">
+                                <Rectangle Height="Auto" Stroke="#FF282A30" VerticalAlignment="Stretch" Width="Auto" Opacity="1" Margin="2" RadiusX="2" RadiusY="2">
+                                    <Rectangle.Fill>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#FF484A4E" Offset="0"/>
+                                            <GradientStop Color="#FF68696B" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Rectangle.Fill>
+                                </Rectangle>
+                            </Grid>
+                        </Grid>
+                        <TextBlock x:Name="textBlock1" TextWrapping="Wrap" Text="{TemplateBinding Content}" Margin="0,0,0,2" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#66FFFFFF" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="False">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard x:Name="BlinkStoryboard_BeginStoryboard" Storyboard="{StaticResource BlinkStoryboard}"/>
+                            </Trigger.EnterActions>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="true">
+                            <Trigger.EnterActions>
+                                <StopStoryboard BeginStoryboardName="BlinkStoryboard_BeginStoryboard"/>
+                            </Trigger.EnterActions>
+                            <Setter Property="Visibility" TargetName="PressColor" Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Visibility" TargetName="OverRec" Value="Visible"/>
+                            <Setter Property="Visibility" TargetName="InnerLineOver" Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Visibility" TargetName="OverRec" Value="Collapsed"/>
+                            <Setter Property="Visibility" TargetName="PressGrid" Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Visibility" TargetName="textBlock1" Value="Visible"/>
+                            <Setter Property="Visibility" TargetName="DisableRec" Value="Visible"/>
+                        </Trigger>
+
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>
