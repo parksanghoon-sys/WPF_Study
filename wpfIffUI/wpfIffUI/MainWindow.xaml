@@ -226,7 +226,7 @@
 
         </Grid>
         <StackPanel Orientation="Horizontal" Margin="5">             
-            <ToggleButton Style="{DynamicResource ToggleButtonStyle2}" Width="200" Height="40" Content="하하하하하하" IsEnabled="False"/>
+            <ToggleButton Style="{DynamicResource ToggleButtonStyle2}" Width="200" Height="40" Content="하하하하하하" IsEnabled="True"/>
         </StackPanel>
         <Grid>
             

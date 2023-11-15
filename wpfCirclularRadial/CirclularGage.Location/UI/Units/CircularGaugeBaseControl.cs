@@ -559,7 +559,7 @@ namespace CirclularGage.Location.UI.Units
                     }
                 };
 
-                optimalRangeIndicator.SetValue(Canvas.ZIndexProperty, 150);
+                optimalRangeIndicator.SetValue(Canvas.ZIndexProperty, 155);
                 rootGrid.Children.Add(optimalRangeIndicator);
             }
             else

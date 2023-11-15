@@ -1,0 +1,142 @@
+﻿<Window x:Class="wpfLockButton.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:wpfLockButton"
+        xmlns:control="clr-namespace:Custom.Wpf.Global.Controls;assembly=Custom.Wpf"
+        mc:Ignorable="d"
+        Background="#FF4E545E"
+        Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        
+        <BitmapImage x:Key="lockButtonImg" UriSource="/wpfLockButton;component/Lock/btn_emergency_red.png"/>
+        <BitmapImage x:Key="greenButtonImg" UriSource="/wpfLockButton;component/Lock/btn_emergency_light_grey.png"/>
+        <BitmapImage x:Key="grayButtonImg" UriSource="/wpfLockButton;component/Lock/btn_emergency_disabled.png"/>
+        <BitmapImage x:Key="unlockButtonImg" UriSource="/wpfLockButton;component/Lock/btn_emergency_light_grey.png"/>
+        
+        <Style x:Key="StSafetyButtonStyle" TargetType="{x:Type local:StSafetyButton}">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Height" Value="100"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type local:StSafetyButton}">
+                        <ControlTemplate.Resources>
+                            <Storyboard x:Key="UnLockPlay">
+                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="rectangle">
+                                    <DiscreteObjectKeyFrame KeyTime="0">
+                                        <DiscreteObjectKeyFrame.Value>
+                                            <Visibility>Visible</Visibility>
+                                        </DiscreteObjectKeyFrame.Value>
+                                    </DiscreteObjectKeyFrame>
+                                    <DiscreteObjectKeyFrame KeyTime="0:0:0.3">
+                                        <DiscreteObjectKeyFrame.Value>
+                                            <Visibility>Collapsed</Visibility>
+                                        </DiscreteObjectKeyFrame.Value>
+                                    </DiscreteObjectKeyFrame>
+                                </ObjectAnimationUsingKeyFrames>
+                                <PointAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransformOrigin)" Storyboard.TargetName="image">
+                                    <EasingPointKeyFrame KeyTime="0" Value="0.5,0"/>
+                                    <EasingPointKeyFrame KeyTime="0:0:0.3" Value="0.5,0"/>
+                                </PointAnimationUsingKeyFrames>
+                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)" Storyboard.TargetName="image">
+                                    <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0"/>
+                                </DoubleAnimationUsingKeyFrames>
+                            </Storyboard>
+                            <Storyboard x:Key="LockPlay">
+                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="rectangle">
+                                    <DiscreteObjectKeyFrame KeyTime="0">
+                                        <DiscreteObjectKeyFrame.Value>
+                                            <Visibility>Visible</Visibility>
+                                        </DiscreteObjectKeyFrame.Value>
+                                    </DiscreteObjectKeyFrame>
+                                </ObjectAnimationUsingKeyFrames>
+                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)" Storyboard.TargetName="image">
+                                    <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                                    <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="1"/>
+                                </DoubleAnimationUsingKeyFrames>
+                                <PointAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransformOrigin)" Storyboard.TargetName="image">
+                                    <EasingPointKeyFrame KeyTime="0" Value="0.5,0"/>
+                                </PointAnimationUsingKeyFrames>
+                            </Storyboard>
+                        </ControlTemplate.Resources>
+                        <Grid>
+                            <Grid x:Name="LockButton" Margin="0 3 4 0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="28" Height="28" Panel.ZIndex="4" >
+                                <Border x:Name="border" BorderBrush="#000000" BorderThickness="1" Background="Transparent">
+                                    <Image x:Name="imgLock" Source="{StaticResource unlockButtonImg}" Stretch="Fill" />
+                                </Border>
+                            </Grid>
+
+                            <ContentPresenter x:Name="content"  ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}"  ContentStringFormat="{TemplateBinding ContentStringFormat}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+                            <Rectangle x:Name="rectangle"  Fill="#00F4F4F5" Margin="0" Opacity="1" RadiusY="0" RadiusX="0" Stroke="Black" StrokeThickness="1"/>
+                            <Image x:Name="image" Grid.ColumnSpan="1" Margin="0" Source="/wpfLockButton;component/Lock/cover_130_75_2.png" Stretch="Fill"  RenderTransformOrigin="0.5,0.5" Panel.ZIndex="2">
+                                <Image.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform/>
+                                        <SkewTransform/>
+                                        <RotateTransform/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Image.RenderTransform>
+                            </Image>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <!--<Setter Property="Source" TargetName="imgLock" Value="{StaticResource greenButtonImg}"/>-->                               
+                                <!--<Setter Property="Panel.ZIndex" TargetName="content" Value="2"/>-->
+                                <!--<Setter Property="Visibility" TargetName="imgGreen" Value="Visible"/>-->
+                                <Setter Property="BorderBrush" TargetName="border" Value="#FFFFFF"/>
+                            </Trigger>
+                            <Trigger Property="LockStatus" Value="True">
+                                <Trigger.EnterActions>
+                                    <RemoveStoryboard BeginStoryboardName="UnLockPlay_BeginStoryboard"/>
+                                    <BeginStoryboard x:Name="LockPlay_BeginStoryboard" Storyboard="{StaticResource LockPlay}"/>
+                                </Trigger.EnterActions>
+
+                                <!--<Setter Property="Source" TargetName="imgLock" Value="{StaticResource lockButtonImg}"/>-->
+                            </Trigger>
+                            <Trigger Property="LockStatus" Value="False">
+                                <Trigger.EnterActions>
+                                    <RemoveStoryboard BeginStoryboardName="LockPlay_BeginStoryboard"/>
+                                    <BeginStoryboard x:Name="UnLockPlay_BeginStoryboard" Storyboard="{StaticResource UnLockPlay}"/>
+                                </Trigger.EnterActions>
+                                
+                                <!--<Setter Property="Source" TargetName="imgLock" Value="{StaticResource unlockButtonImg}"/>-->
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <!--<Setter Property="Visibility" TargetName="imgDisabled" Value="Visible"/>-->
+                                <Setter Property="Source" TargetName="imgLock" Value="{StaticResource grayButtonImg}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="True">
+                                <!--<Setter Property="Visibility" TargetName="imgDisabled" Value="Collapsed"/>-->
+                                <Setter Property="Source" TargetName="imgLock" Value="{StaticResource lockButtonImg}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid Margin="5">
+            <Border BorderBrush="#FF3D4045" Width="200" Height="70">
+                <local:StSafetyButton Style="{StaticResource StSafetyButtonStyle}" Width="200" Height="65"  IsEnabled="True">
+                    <StackPanel Orientation="Vertical" Background="#FF646669" >
+                        <Border Background="{StaticResource columContent}" Width="auto" Height="30" Margin="2">
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="1" ShadowDepth="1" Color="#FF4E535D" Opacity=".6"/>
+                            </Border.Effect>
+                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Master Switch" Foreground="#FFFFFF"/>
+                        </Border>
+                        <control:CustomStack Orientation="Horizontal" HorizontalAlignment="Center" ChildSpacing="10">
+                            <ToggleButton Style="{StaticResource toggelbutton.Basic}" Height="30" Content="정상" Foreground="#FFFFFF" Width="70"/>
+                            <ToggleButton Style="{StaticResource toggelbutton.Basic}" Height="30" Content="정상" Foreground="#FFFFFF" Width="70"/>
+                        </control:CustomStack>
+                    </StackPanel>
+                </local:StSafetyButton>
+            </Border>
+        </Grid>
+
+
+    </Grid>
+</Window>

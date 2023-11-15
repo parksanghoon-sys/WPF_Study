@@ -1,0 +1,98 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Lock\btn_emergency_disabled.png" />
+    <None Remove="Lock\btn_emergency_disabled_41x59.png" />
+    <None Remove="Lock\btn_emergency_disable_41x90.png" />
+    <None Remove="Lock\btn_emergency_disable_open_41x90.png" />
+    <None Remove="Lock\btn_emergency_green.png" />
+    <None Remove="Lock\btn_emergency_green_41x59.png" />
+    <None Remove="Lock\btn_emergency_green_41x90.png" />
+    <None Remove="Lock\btn_emergency_light_grey.png" />
+    <None Remove="Lock\btn_emergency_light_grey_41x59.png" />
+    <None Remove="Lock\btn_emergency_light_grey_41x90.png" />
+    <None Remove="Lock\btn_emergency_red.png" />
+    <None Remove="Lock\btn_emergency_red_41x59.png" />
+    <None Remove="Lock\btn_emergency_red_41x90.png" />
+    <None Remove="Lock\BT_Lock-Cover.png" />
+    <None Remove="Lock\BT_Lock_1.png" />
+    <None Remove="Lock\BT_Lock_2.png" />
+    <None Remove="Lock\BT_ubLock_1.png" />
+    <None Remove="Lock\BT_ubLock_2.png" />
+    <None Remove="Lock\cover_130_75.png" />
+    <None Remove="Lock\cover_130_75_2.png" />
+    <None Remove="Lock\cover_130_75_3.png" />
+    <None Remove="Lock\icon_16_16_Lock.png" />
+    <None Remove="Lock\icon_16_16_Unlock.png" />
+    <None Remove="Lock\icon_lock17_27.png" />
+    <None Remove="Lock\icon_unlock17_27.png" />
+    <None Remove="Lock\LockBtn_concave_off_100_103.png" />
+    <None Remove="Lock\LockBtn_concave_off_100_103_blue.png" />
+    <None Remove="Lock\LockBtn_concave_on_100_103.png" />
+    <None Remove="Lock\LockBtn_concave_on_100_103_blue.png" />
+    <None Remove="Lock\LockBtn_convex_off_100_103.png" />
+    <None Remove="Lock\LockBtn_convex_off_100_103_blue.png" />
+    <None Remove="Lock\LockBtn_convex_on_100_103.png" />
+    <None Remove="Lock\LockBtn_convex_on_100_103_blue.png" />
+    <None Remove="Lock\Lock_1_30_3.png" />
+    <None Remove="Lock\Lock_2_30_68.png" />
+    <None Remove="Lock\Lock_3_30_4.png" />
+    <None Remove="Lock\lock_569_85.png" />
+    <None Remove="Lock\lock_bg_278_132.png" />
+    <None Remove="Lock\unlock_bg_288_175.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\wpfCustom.Lib\Custom.Wpf\Custom.Wpf.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Lock\btn_emergency_disabled.png" />
+    <Resource Include="Lock\btn_emergency_disabled_41x59.png" />
+    <Resource Include="Lock\btn_emergency_disable_41x90.png" />
+    <Resource Include="Lock\btn_emergency_disable_open_41x90.png" />
+    <Resource Include="Lock\btn_emergency_green.png" />
+    <Resource Include="Lock\btn_emergency_green_41x59.png" />
+    <Resource Include="Lock\btn_emergency_green_41x90.png" />
+    <Resource Include="Lock\btn_emergency_light_grey.png" />
+    <Resource Include="Lock\btn_emergency_light_grey_41x59.png" />
+    <Resource Include="Lock\btn_emergency_light_grey_41x90.png" />
+    <Resource Include="Lock\btn_emergency_red.png" />
+    <Resource Include="Lock\btn_emergency_red_41x59.png" />
+    <Resource Include="Lock\btn_emergency_red_41x90.png" />
+    <Resource Include="Lock\BT_Lock-Cover.png" />
+    <Resource Include="Lock\BT_Lock_1.png" />
+    <Resource Include="Lock\BT_Lock_2.png" />
+    <Resource Include="Lock\BT_ubLock_1.png" />
+    <Resource Include="Lock\BT_ubLock_2.png" />
+    <Resource Include="Lock\cover_130_75.png" />
+    <Resource Include="Lock\cover_130_75_2.png" />
+    <Resource Include="Lock\cover_130_75_3.png" />
+    <Resource Include="Lock\icon_16_16_Lock.png" />
+    <Resource Include="Lock\icon_16_16_Unlock.png" />
+    <Resource Include="Lock\icon_lock17_27.png" />
+    <Resource Include="Lock\icon_unlock17_27.png" />
+    <Resource Include="Lock\LockBtn_concave_off_100_103.png" />
+    <Resource Include="Lock\LockBtn_concave_off_100_103_blue.png" />
+    <Resource Include="Lock\LockBtn_concave_on_100_103.png" />
+    <Resource Include="Lock\LockBtn_concave_on_100_103_blue.png" />
+    <Resource Include="Lock\LockBtn_convex_off_100_103.png" />
+    <Resource Include="Lock\LockBtn_convex_off_100_103_blue.png" />
+    <Resource Include="Lock\LockBtn_convex_on_100_103.png" />
+    <Resource Include="Lock\LockBtn_convex_on_100_103_blue.png" />
+    <Resource Include="Lock\Lock_1_30_3.png" />
+    <Resource Include="Lock\Lock_2_30_68.png" />
+    <Resource Include="Lock\Lock_3_30_4.png" />
+    <Resource Include="Lock\lock_569_85.png" />
+    <Resource Include="Lock\lock_bg_278_132.png" />
+    <Resource Include="Lock\unlock_bg_288_175.png" />
+  </ItemGroup>
+
+</Project>
