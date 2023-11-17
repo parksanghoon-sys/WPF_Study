@@ -43,25 +43,25 @@ namespace wpfSiderBarMenu
         private void TabItemSelected(DataModel model)
         {
             //this.ContentName = model.Name;
-
+            
             switch (model.IconType)
             {
                 case IconType.Home:
                     {
 
-                        Contentobj = new Navigation1ViewModel();
+                    Contentobj = new Navigation1ViewModel();
                     }
                     break;
                 case IconType.Account:
                     {
                         Contentobj = new Navigation2ViewModel();
                     }
-
+                    
                     break;
                 case IconType.Comment:
                     {
 
-                        Contentobj = new Navigation3ViewModel();
+                    Contentobj = new Navigation3ViewModel();
                     }
                     break;
             }
