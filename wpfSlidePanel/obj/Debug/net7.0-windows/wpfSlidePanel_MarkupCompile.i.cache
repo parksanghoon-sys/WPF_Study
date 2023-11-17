@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-E:\Project\03.WPF_Study\wpfSlidePanel\obj\Debug\net7.0-windows\
+D:\WPF_Study\wpfSlidePanel\obj\Debug\net7.0-windows\
 wpfSlidePanel
 none
 false
 TRACE;DEBUG;NET;NET7_0;NETCOREAPP
-E:\Project\03.WPF_Study\wpfSlidePanel\App.xaml
+D:\WPF_Study\wpfSlidePanel\App.xaml
 2-716024018
 
 9941316265
-199973336585
+199-302848845
 Controls\SignupControl.xaml;MainWindow.xaml;
 
-True
+False
 

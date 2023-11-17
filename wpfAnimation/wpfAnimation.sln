@@ -21,7 +21,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Design", "..\wpfCustom.Lib\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "wpfSiderBarMenu", "wpfSiderBarMenu\wpfSiderBarMenu.csproj", "{876922D3-482E-4F46-9673-4DF021D6653B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wpfLockButton", "wpfLockButton\wpfLockButton.csproj", "{556B729C-CE82-4980-99EE-678D5672C39F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "wpfLockButton", "wpfLockButton\wpfLockButton.csproj", "{556B729C-CE82-4980-99EE-678D5672C39F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wpfVerticalTabControl", "wpfVerticalTabControl\wpfVerticalTabControl.csproj", "{C968610C-1D08-4BB4-BFE9-567AA4209670}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +71,10 @@ Global
 		{556B729C-CE82-4980-99EE-678D5672C39F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{556B729C-CE82-4980-99EE-678D5672C39F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{556B729C-CE82-4980-99EE-678D5672C39F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C968610C-1D08-4BB4-BFE9-567AA4209670}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C968610C-1D08-4BB4-BFE9-567AA4209670}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C968610C-1D08-4BB4-BFE9-567AA4209670}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C968610C-1D08-4BB4-BFE9-567AA4209670}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

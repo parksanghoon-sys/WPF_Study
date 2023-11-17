@@ -4,7 +4,7 @@
 library
 C#
 .cs
-E:\Project\03.WPF_Study\wpfControls\obj\Debug\net7.0-windows\
+D:\WPF_Study\wpfControls\obj\Debug\net7.0-windows\
 wpfControls
 none
 false
@@ -13,7 +13,7 @@ TRACE;DEBUG;NET;NET7_0;NETCOREAPP
 2801261012
 
 9959392888
-1981827736222
+198-651932399
 Controls\Modal_\Modal.xaml;Controls\SliderPanel_\SlidePanel.xaml;
 
 False

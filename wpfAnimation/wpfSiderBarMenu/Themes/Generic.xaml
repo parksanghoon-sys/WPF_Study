@@ -2,5 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/wpfSiderBarMenu;component/Themes/Units/SidebarMenu.xaml" />
+        <ResourceDictionary Source="/wpfSiderBarMenu;component/Themes/Units/Navigation1.xaml" />
+        <ResourceDictionary Source="/wpfSiderBarMenu;component/Themes/Units/Navigation2.xaml" />
+        <ResourceDictionary Source="/wpfSiderBarMenu;component/Themes/Units/Navigation3.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

@@ -1,14 +1,17 @@
 ﻿// See https://aka.ms/new-console-template for more information
+using ftpServerTest;
 using System.Net;
 
 public class Program
 {
-    private string id = "shpark";
-    private string pwd = "3333";
+    private static string id = "test001";
+    private static string pwd = "1111";
+    private static string file = @"D:\TestProject\TDD\xUnitTest.py";
+    private static string serverUrl = "ftp://127.0.0.1/ftp/xUnitTest.py";
     public Program()
     {
         // 로컬의 파일을 업로드하는 함수 호출
-        UploadFileList("ftp://localhost", @"d:\ftptest\upload");
+        UploadFileList("ftp://localhost:21", @"d:\ftptest\upload");
         // FTP에서 파일을 다운로드 함수 호출
         DownloadFileList("ftp://localhost", @"d:\ftptest\download");
     }
@@ -138,10 +141,12 @@ public class Program
     }
     static void Main(string[] args)
     {
-        // 프로그램 실행
-        new Program();
-        // 아무 키나 누르면 종료.
-        Console.WriteLine("Press any key...");
-        Console.ReadKey();
+        //// 프로그램 실행
+        //new Program();
+        //// 아무 키나 누르면 종료.
+        //Console.WriteLine("Press any key...");
+        //Console.ReadKey();
+        FtpUploader ftpUploader = new FtpUploader();
+        ftpUploader.UploadFile(file, serverUrl, id, pwd);
     }
 }

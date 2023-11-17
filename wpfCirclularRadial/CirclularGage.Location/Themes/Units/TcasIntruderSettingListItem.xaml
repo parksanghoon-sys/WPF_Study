@@ -17,6 +17,16 @@
         <Setter Property="TextWrapping" Value="NoWrap"/>
         <Setter Property="Margin" Value="8 0 8 0"/>
     </Style>
+
+    <!--<Style  TargetType="{x:Type TextBox}" x:Key="NumberTextBlockStyle">
+        <Setter Property="Grid.Column" Value="0"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Foreground" Value="#FFFFFF"/>
+        <Setter Property="Cursor" Value="Pen"/>
+        <Setter Property="Text" Value="{Binding Number, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+    </Style>-->
     <Style  TargetType="{x:Type TextBlock}" x:Key="NumberTextBlockStyle" BasedOn="{StaticResource TextBlockStyle}">
         <Setter Property="Grid.Column" Value="0"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>

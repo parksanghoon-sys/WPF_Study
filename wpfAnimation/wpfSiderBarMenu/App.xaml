@@ -7,6 +7,8 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/wpfSiderBarMenu;component/Themes/Generic.xaml"/>
+                <ResourceDictionary Source="/wpfSiderBarMenu;component/Mapping.xaml"/>
+    
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
