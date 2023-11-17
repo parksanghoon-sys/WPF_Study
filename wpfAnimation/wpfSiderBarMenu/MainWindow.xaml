@@ -6,8 +6,10 @@
         xmlns:units="clr-namespace:wpfSiderBarMenu.UI.Units"
         xmlns:local="clr-namespace:wpfSiderBarMenu"
         xmlns:control="clr-namespace:Custom.Wpf.Global.Controls;assembly=Custom.Wpf"
+        xmlns:untis="clr-namespace:wpfSiderBarMenu.UI.Units"
+        xmlns:testuntis="clr-namespace:wpfSiderBarMenu.Themes.Units"
         mc:Ignorable="d"
-        Background="#615f5f"    
+        Background="White"    
         Width="600"
         Height="800">
     <control:CustomGrid Columns="Auto, *" Rows="*">
@@ -18,10 +20,12 @@
             SelectedItemColor="#6dbddd"
             SelectedItem="{Binding TabItemSelectedCommand}"/>
         <Grid>
-            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center"
+            <ContentControl Content="{Binding Contentobj}" Panel.ZIndex="-1"/>
+            <!--<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center"
                        FontSize="50"
                        FontWeight="Bold"
-                       Text="{Binding ContentName}"/>
+                       Text="{Binding ContentName}"/>-->
+            <!--<units:Navigation2 Width="100"/>-->
         </Grid>
     </control:CustomGrid>
 </Window>

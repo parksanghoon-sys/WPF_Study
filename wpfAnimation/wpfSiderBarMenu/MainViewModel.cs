@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using wpfSiderBarMenu.Local.ViewModels;
 
 namespace wpfSiderBarMenu
 {
@@ -25,6 +26,7 @@ namespace wpfSiderBarMenu
     {
         [ObservableProperty] List<DataModel> _sampleDatas;
         [ObservableProperty] string _contentName;
+        [ObservableProperty] object _contentobj;
 
         public MainViewModel()
         {
@@ -40,7 +42,29 @@ namespace wpfSiderBarMenu
         [RelayCommand]
         private void TabItemSelected(DataModel model)
         {
-            this.ContentName = model.Name;
+            //this.ContentName = model.Name;
+            
+            switch (model.IconType)
+            {
+                case IconType.Home:
+                    {
+
+                    Contentobj = new Navigation1ViewModel();
+                    }
+                    break;
+                case IconType.Account:
+                    {
+                        Contentobj = new Navigation2ViewModel();
+                    }
+                    
+                    break;
+                case IconType.Comment:
+                    {
+
+                    Contentobj = new Navigation3ViewModel();
+                    }
+                    break;
+            }
         }
     }
 }

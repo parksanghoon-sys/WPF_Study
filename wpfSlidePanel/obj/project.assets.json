@@ -30,40 +30,36 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\User\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\shpark\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\Project\\03.WPF_Study\\wpfSlidePanel\\wpfSlidePanel.csproj",
+      "projectUniqueName": "D:\\WPF_Study\\wpfSlidePanel\\wpfSlidePanel.csproj",
       "projectName": "wpfSlidePanel",
-      "projectPath": "E:\\Project\\03.WPF_Study\\wpfSlidePanel\\wpfSlidePanel.csproj",
-      "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-      "outputPath": "E:\\Project\\03.WPF_Study\\wpfSlidePanel\\obj\\",
+      "projectPath": "D:\\WPF_Study\\wpfSlidePanel\\wpfSlidePanel.csproj",
+      "packagesPath": "C:\\Users\\shpark\\.nuget\\packages\\",
+      "outputPath": "D:\\WPF_Study\\wpfSlidePanel\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\shpark\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 18.2.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net7.0-windows"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\DevExpress 18.2\\Components\\System\\Components\\Packages": {},
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net7.0-windows7.0": {
           "targetAlias": "net7.0-windows",
           "projectReferences": {
-            "E:\\Project\\03.WPF_Study\\wpfControls\\wpfControls.csproj": {
-              "projectPath": "E:\\Project\\03.WPF_Study\\wpfControls\\wpfControls.csproj"
+            "D:\\WPF_Study\\wpfControls\\wpfControls.csproj": {
+              "projectPath": "D:\\WPF_Study\\wpfControls\\wpfControls.csproj"
             }
           }
         }
@@ -96,7 +92,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.306\\RuntimeIdentifierGraph.json"
       }
     }
   }

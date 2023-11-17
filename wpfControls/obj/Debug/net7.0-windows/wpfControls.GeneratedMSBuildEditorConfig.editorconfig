@@ -8,4 +8,4 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = wpfControls
-build_property.ProjectDir = E:\Project\03.WPF_Study\wpfControls\
+build_property.ProjectDir = D:\WPF_Study\wpfControls\
