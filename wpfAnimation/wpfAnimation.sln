@@ -25,7 +25,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "wpfLockButton", "wpfLockBut
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "wpfVerticalTabControl", "wpfVerticalTabControl\wpfVerticalTabControl.csproj", "{C968610C-1D08-4BB4-BFE9-567AA4209670}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wpfHintTextBox", "wpfHintTextBox\wpfHintTextBox.csproj", "{B596D714-C682-4527-B0F4-53044B823C4F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "wpfHintTextBox", "wpfHintTextBox\wpfHintTextBox.csproj", "{B596D714-C682-4527-B0F4-53044B823C4F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wpfCautionTextbox", "wpfCautionTextbox\wpfCautionTextbox.csproj", "{75299DB7-91F5-4318-BC97-049757C0E237}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -81,6 +83,10 @@ Global
 		{B596D714-C682-4527-B0F4-53044B823C4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B596D714-C682-4527-B0F4-53044B823C4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B596D714-C682-4527-B0F4-53044B823C4F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75299DB7-91F5-4318-BC97-049757C0E237}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75299DB7-91F5-4318-BC97-049757C0E237}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75299DB7-91F5-4318-BC97-049757C0E237}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75299DB7-91F5-4318-BC97-049757C0E237}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

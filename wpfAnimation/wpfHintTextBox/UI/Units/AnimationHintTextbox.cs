@@ -10,8 +10,6 @@ namespace wpfHintTextBox.UI.Units
 {
     public class AnimationHintTextbox : TextBox
     {
-
-
         public bool IsNotAcceptValue
         {
             get { return (bool)GetValue(IsNotAcceptValueProperty); }
@@ -20,19 +18,8 @@ namespace wpfHintTextBox.UI.Units
 
         // Using a DependencyProperty as the backing store for IsNotAcceptValue.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty IsNotAcceptValueProperty =
-            DependencyProperty.Register("IsNotAcceptValue", typeof(bool), typeof(AnimationHintTextbox), new PropertyMetadata(false, new PropertyChangedCallback(OnChanged)));
-
-        private static void OnChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var root = d as AnimationHintTextbox;
-            if (root != null)
-            {
-                if(e.NewValue == e.OldValue)
-                {
-                    
-                }
-            }
-        }
+            DependencyProperty.Register("IsNotAcceptValue", typeof(bool), typeof(AnimationHintTextbox));
+        
 
         public SolidColorBrush HintTextColor
         {
