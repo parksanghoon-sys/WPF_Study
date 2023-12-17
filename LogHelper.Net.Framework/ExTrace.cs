@@ -29,6 +29,23 @@ namespace LogHelper.Net.Framework
         /// <param name="format">Message format</param>
         /// <param name="messages">Messages</param>
         public static void Print(string format, params object[] messages) => ExPrint(format, messages);
+        public static void PrintDDS(byte[] bytes)
+        {
+            var binaryString = "Binary :" + ByteToBinaryString(bytes);
+            var hexString = "Hex :" + ByteToHexString(bytes);
+            ExPrint(binaryString);
+            ExPrint(hexString);
+        }
+        private static string ByteToBinaryString(byte[] bytes)
+        {
+            return string.Join(" ", bytes.Select(b => Convert.ToString(b, 2).PadLeft(8, '0')));
+        }
+
+        
+        private static string ByteToHexString(byte[] bytes)
+        {
+            return string.Join(" ", bytes.Select(b => b.ToString("X2")));
+        }
 
         /// <summary>Prints logs, if the condition is <c>true</c>.</summary>
         /// <param name="condition">Condition.</param>

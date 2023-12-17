@@ -5,10 +5,8 @@
     <Style x:Name="root" TargetType="{x:Type control:AnimationHintTextbox}">
         <Setter Property="Height" Value="100"/>
         <Setter Property="FontSize" Value="11" />
-        <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="BorderBrush" Value="White"/>
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="Foreground" Value="#FFD1D7E2"/>
+        <Setter Property="IsNotAcceptValue" Value="{Binding IsNotAcceptValue, Mode=TwoWay}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type control:AnimationHintTextbox}">
@@ -32,16 +30,17 @@
                                                IsHitTestVisible="False"
                                                Text="{TemplateBinding HintText}"/>
                                     </Border>
+
                                 </Viewbox>
                             </Canvas>
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <DataTrigger Binding="{Binding IsNotAcceptValue}" Value="false">
-                            <Setter TargetName="PART_BDR" Property="Background" Value="White"/>
+                        <DataTrigger Binding="IsNotAcceptValue" Value="False">
+                            <Setter TargetName="PART_BDR" Property="BorderBrush" Value="White"/>
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding IsNotAcceptValue}" Value="true">
-                            <Setter TargetName="PART_BDR" Property="Background" Value="Red"/>
+                        <DataTrigger Binding="IsNotAcceptValue" Value="True">
+                            <Setter TargetName="PART_BDR" Property="BorderBrush" Value="Red"/>
                         </DataTrigger>
                     </ControlTemplate.Triggers>
                     
