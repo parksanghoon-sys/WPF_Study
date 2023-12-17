@@ -12,8 +12,8 @@
                 <ControlTemplate TargetType="{x:Type control:AnimationHintTextbox}">
                     <Border x:Name="PART_BDR"
                             Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}">
+                            BorderBrush="Black"
+                            BorderThickness="1">
                         <Grid>
                             <ScrollViewer x:Name="PART_ContentHost"
                                           Margin="5"
@@ -36,11 +36,11 @@
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <DataTrigger Binding="IsNotAcceptValue" Value="False">
-                            <Setter TargetName="PART_BDR" Property="BorderBrush" Value="White"/>
+                        <DataTrigger Binding="{Binding IsNotAcceptValue}" Value="false">
+                            <Setter TargetName="PART_BDR" Property="Background" Value="White"/>
                         </DataTrigger>
-                        <DataTrigger Binding="IsNotAcceptValue" Value="True">
-                            <Setter TargetName="PART_BDR" Property="BorderBrush" Value="Red"/>
+                        <DataTrigger Binding="{Binding IsNotAcceptValue}" Value="true">
+                            <Setter TargetName="PART_BDR" Property="Background" Value="Red"/>
                         </DataTrigger>
                     </ControlTemplate.Triggers>
                     
