@@ -19,8 +19,8 @@
                                 <Setter TargetName="border" Property="BorderBrush" Value="Red" />
                                 <Setter Property="ToolTip">
                                     <Setter.Value>
-                                        <ToolTip>
-                                            <TextBlock Text="IsHighlighted is true. This is a tooltip explanation." />
+                                        <ToolTip DataContext="{Binding Path=PlacementTarget, RelativeSource={RelativeSource Self}}">
+                                            <TextBlock Text="{Binding CautionText}" />
                                         </ToolTip>
                                     </Setter.Value>
                                 </Setter>
@@ -30,8 +30,13 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
     </Window.Resources>
     <Grid>
-        <local:YourCustomTextBox Width="100" Height="50" IsHighlighted="False" />
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+
+            <local:YourCustomTextBox x:Name="tbCution" Width="100" Height="50" CautionText="{Binding CautionText}" IsHighlighted="{Binding IsCaution}"  />
+            <Button Width="100" Height="30" Content="Test" Command="{Binding SaveCommand}"/>
+        </StackPanel>
     </Grid>
 </Window>
