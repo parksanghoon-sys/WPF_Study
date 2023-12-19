@@ -19,6 +19,31 @@ namespace WpfLogTest
             base.OnStartup(e);
             LogBase.AddFileListener();
             ExTrace.Print("Start");
+            ExTrace.Print("Start");
+            ExTrace.Print("Start");
+            ExTrace.Print("Start");
+            ExTrace.Print("Start");
+            ExTrace.Print("Start");
+            ExTrace.Print("Start");
+            ExTrace.Print("Start");
+            ExTrace.Print("Start");
+            ExTrace.Print("Start");
+            ExTrace.Print("Start");
+            ExTrace.Print("Start");
+            ExTrace.Print("Start");
+            ExTrace.Print("Start");
+            ExTrace.Print("Start");
+            ExTrace.Print("Start");
+            ExTrace.Print("Start");
+            ExTrace.Print("Start");
+            ExTrace.Print("Start");
+            ExTrace.Print("Start");
+            ExTrace.Print("Start");
+            ExTrace.Print("Start");
+            ExTrace.Print("Start");
+            ExTrace.Print("Start");
+            ExTrace.Print("Start");
+            ExTrace.Print("Start");
         }
     }
 }

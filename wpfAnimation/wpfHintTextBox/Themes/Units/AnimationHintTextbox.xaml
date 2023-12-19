@@ -20,7 +20,8 @@
                             <ScrollViewer x:Name="PART_ContentHost"
                                           Margin="5"
                                           VerticalAlignment="Center"
-                                          Background="{TemplateBinding Background}"/>
+                                          Background="{TemplateBinding Background}">
+                            </ScrollViewer>
                             <Canvas x:Name="PART_cvs">
                                 <Viewbox x:Name="PART_HintArea"                                
                                      Height="{TemplateBinding Height}"

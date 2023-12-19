@@ -31,6 +31,40 @@ namespace WpfLogTest
 
             ExDebug.Print(test1);
             ExTrace.Print(test2);
+            ExTrace.Print(test2);
+            ExTrace.Print(test2);
+            ExTrace.Print(test2);
+            ExTrace.Print(test2);
+            ExTrace.Print(test2);
+            ExTrace.Print(test2);
+            ExTrace.Print(test2);
+            ExTrace.Print(test2);
+            ExTrace.Print(test2);
+            ExTrace.Print(test2);
+            ExTrace.Print(test2);
+            ExTrace.Print(test2);
+            ExTrace.Print(test2);
+            ExTrace.Print(test2);
+            ExTrace.Print(test2);
+            ExTrace.Print(test2);
+            ExTrace.Print(test2);
+            ExTrace.Print(test2);
+            ExTrace.Print(test2);
+            ExTrace.Print(test2);
+            ExTrace.Print(test2);
+            ExTrace.Print(test2);
+            ExTrace.Print(test2);
+            ExTrace.Print(test2);
+            ExTrace.Print(test2);
+            ExTrace.Print(test2);
+            ExTrace.Print(test2);
+            ExTrace.Print(test2);
+            ExTrace.Print(test2);
+            ExTrace.Print(test2);
+            ExTrace.Print(test2);
+            ExTrace.Print(test2);
+            ExTrace.Print(test2);
+            ExTrace.Print(test2);
 
         }
         private string ByteToBinaryString(byte[] bytes)

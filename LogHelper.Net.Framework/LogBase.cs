@@ -13,9 +13,14 @@ namespace LogHelper.Net.Framework
         private const string _fileExtension = ".log";
         private static readonly string _lineIndent = $"{Environment.NewLine}\t\t\t\t\t";
         private static string _fileName;
-
+        
+        
         private static int _logStackFrame;
         private static int _callerStackFrame;
+
+        private static readonly object _syncRoot = new Object();
+        private static Queue<string> _logQueue = new Queue<string>();
+        private static bool _isExecuting = false;
         public static FileMode FileMode { get; set; } = FileMode.Create;
         public static string LogLineHeaderFormat { get; set; } = "{0:yy-MM-dd HH:mm:ss.ffff}\t{1}\t{2}\t{3}\t{4}()\t";
         public static void AddFileListener(string fileName = null)
@@ -39,8 +44,8 @@ namespace LogHelper.Net.Framework
         /// <summary>Displays a message box, prints logs and exits.</summary>
         /// <param name="format">Message format</param>
         /// <param name="messages">Messages</param>
-        protected static void ExFail(string format, params object[] messages)
-            => Trace.Fail(PrintLog(format, messages));
+        protected static async Task ExFail(string format, params object[] messages)
+            => Trace.Fail( await PrintLog(format, messages));
 
         /// <summary>Output logs.</summary>
         /// <param name="format">Message format</param>
@@ -48,7 +53,7 @@ namespace LogHelper.Net.Framework
         protected static void ExPrint(string format, params object[] messages)
             => Trace.WriteLine(PrintLog(format, messages));
 
-        private static string PrintLog(string format, params object[] messages)
+        private static async Task<string> PrintLog(string format, params object[] messages)
         {
             var stackTrace = new StackTrace();
             if (_logStackFrame == 0)
@@ -71,9 +76,48 @@ namespace LogHelper.Net.Framework
                     log?.DeclaringType?.Name, log?.Name, caller?.DeclaringType?.Name, caller?.Name)
                 .AppendFormat(format, messages).Replace(Environment.NewLine, _lineIndent);
 
-            if (_fileName is null == false) 
-                File.AppendAllText(_fileName, text.ToString() + Environment.NewLine);
+            if (_fileName is null == false)
+            {
+                _logQueue.Enqueue(text.ToString());
+                if (!_isExecuting)
+                {
+                    _isExecuting = true;
+                    _ = await WriteToFileAsync();
+                }
+                //File.AppendAllText(_fileName, text.ToString() + Environment.NewLine);
+            }
+
             return text.ToString();
+        }
+
+        private static async Task WriteToFileAsync()
+        {
+            while (_logQueue.Count > 0)
+            {
+                string item;
+                lock (_syncRoot)
+                {
+                    item = _logQueue.Dequeue();
+                }
+
+                using (StreamWriter logWriter = File.AppendText(_fileName))
+                {
+                    await logWriter.WriteLineAsync($"{item}");
+                }               
+
+            }
+            lock (_syncRoot)
+            {
+                if (_logQueue.Count > 0)
+                {
+                    _ = WriteToFileAsync();
+                    return;
+                }
+                else
+                {
+                    _isExecuting = false;
+                }
+            }
         }
     }
 }
