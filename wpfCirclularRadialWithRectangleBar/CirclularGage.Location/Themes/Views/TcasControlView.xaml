@@ -31,26 +31,11 @@
                         <control:AirPortSympbolBackground Panel.ZIndex="2" Margin="0 100 0 0" 
                                               AirPortSymbolBackgroundSize="{Binding AirPortSymbolBackgroundSize}" />
                         <control:AirPortSymbol AirPortSymbolSize="11" HeadAngeleValue="{Binding AirPortHeadingAngle}" Panel.ZIndex="3"
-                                   HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 110 0 0"/>
+                                  Margin="0 110 0 0"/>
 
                         <control:TcasGaugeControl Radius="{Binding GaugeRadius}"                                          
-                                          Panel.ZIndex="1"
-                                          ScaleRadius="85"
-                                          ScaleSweepAngle="340"
-                                                          
-                                          MajorDivisionsCount="10"
+                                          Panel.ZIndex="1">
 
-                                          CurrentValue="{Binding Score}"
-                                          RangeIndicatorThickness="10"
-                                          RangeIndicatorRadius="80"
-                              
-                                          ScaleLabelRadius="98"               
-                                          
-                                          OptimalRangeStartValue="{Binding StartSafeZoon}"
-                                          OptimalRangeEndValue="{Binding EndSafeZoon}"
-                                          WarningRangeStartValue="{Binding StartWarningZoon}"
-                                          WarningRangeEndValue="{Binding EndWarningZoon}">
-                            
                             <control:TcasIntruderItemsControl x:Name="TcasIntruderItems" Panel.ZIndex="4"  
                                                   TcasDisplayRange="{Binding TcasDisplayRange}"
                                                   Radius ="{Binding GaugeRadius, Converter={convert:RadiusToDiameterConverter}, ConverterParameter=1.5}"/>

@@ -8,7 +8,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type control:AirPortSymbol}">
-                    <StackPanel>
+                    <StackPanel >
                         <Path x:Name="uavPath" Height="{TemplateBinding AirPortSymbolSize}" Width="{TemplateBinding AirPortSymbolSize}"
                               Data="M 14,0 L 16,0     16,0 16,5 30,5 30,7 16,7     16,10 20,10 20,12 16,12    10,12 10,10 14,10      14,7 0,7 0,5 14,5 Z" 
                               Fill="White" Stretch="Fill" RenderTransformOrigin="0.5,0.5">
@@ -22,9 +22,9 @@
                                 </TransformGroup>
                             </Path.RenderTransform>
                         </Path>
-                        <TextBlock HorizontalAlignment="Center" FontSize="9" Padding="0 2 0 0" FontWeight="Bold"
+                        <TextBlock TextAlignment="Center" FontSize="9" Padding="0 2 0 0" FontWeight="Bold"
                                    Text="{Binding HeadAngeleValue, RelativeSource={RelativeSource TemplatedParent}}"
-                                   TextWrapping="Wrap" Foreground="White" TextAlignment="Center"/>
+                                   TextWrapping="Wrap" Foreground="White"/>
                     </StackPanel>
                 </ControlTemplate>
             </Setter.Value>

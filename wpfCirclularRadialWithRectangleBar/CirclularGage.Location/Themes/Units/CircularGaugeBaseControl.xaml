@@ -7,7 +7,7 @@
     <convert:PointerCenterConverter x:Key="pointerCenterConverter"/>
     <convert:GlassEffectWidthConverter x:Key="glassEffectWidthConverter"/>
 
-    <SolidColorBrush x:Key="TcasPointerBackground" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="TcasPointerBackground" Color="Transparent"/>
     
     <Style x:Key="CircularGaugeBaseControl" TargetType="{x:Type view:CircularGaugeBaseControl}">
         <Setter Property="ResetPointerOnStartUp" Value="False" />

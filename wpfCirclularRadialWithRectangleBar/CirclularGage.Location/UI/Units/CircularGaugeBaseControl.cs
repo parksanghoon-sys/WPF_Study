@@ -396,7 +396,7 @@ namespace CirclularGage.Location.UI.Units
             rootGrid = GetTemplateChild("LayoutRoot") as Grid;
             pointer = GetTemplateChild("Pointer") as Path;
 
-            DrawScale();
+            //DrawScale();
             DrawRangeIndicator(OptimalRangeStartValue, OptimalRangeEndValue, IndicatorType.OptimalIndicator);
             DrawRangeIndicator(WarningRangeStartValue, WarningRangeEndValue, IndicatorType.WarningIndicator);
 

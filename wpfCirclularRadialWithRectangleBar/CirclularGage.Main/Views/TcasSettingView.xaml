@@ -132,6 +132,7 @@
                     </StackPanel>
                     
                 </Grid>
+                <Path Data="M 0,0 L 20,14 L 20,74 L 0,88 Z" Fill="White" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 <!--<TextBox x:Name="txtValue" Text="{Binding Score, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="50"/>
                 <Button Content="전송" CommandParameter="{Binding Text, ElementName=txtValue}" Width="50"/>-->
             </Grid>
