@@ -6,13 +6,9 @@ using System.Threading.Tasks;
 
 namespace CirclularGage.Location.Local.Enums
 {
-    public enum TcasDisplayRange
+    public enum TcasAltitudeType
     {
-        RangeNone,
-        Range5nm,
-        Range10nm,
-        Range20nm, // default
-        Range40nm,
-        Range80nm        
+        Relative,
+        Absolute
     }
 }

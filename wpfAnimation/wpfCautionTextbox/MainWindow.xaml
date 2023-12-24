@@ -11,7 +11,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type local:YourCustomTextBox}">
-                        <Border x:Name="border" BorderBrush="Black" BorderThickness="1">
+                        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1">
                             <ScrollViewer x:Name="PART_ContentHost" />
                         </Border>
                         <ControlTemplate.Triggers>
@@ -35,7 +35,7 @@
     <Grid>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
 
-            <local:YourCustomTextBox x:Name="tbCution" Width="100" Height="50" CautionText="{Binding CautionText}" IsHighlighted="{Binding IsCaution}"  />
+            <local:YourCustomTextBox x:Name="tbCution" Width="100" Height="50" BorderBrush="Yellow" CautionText="{Binding CautionText}" IsHighlighted="{Binding IsCaution}"  />
             <Button Width="100" Height="30" Content="Test" Command="{Binding SaveCommand}"/>
         </StackPanel>
     </Grid>

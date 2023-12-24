@@ -6,13 +6,11 @@ using System.Threading.Tasks;
 
 namespace CirclularGage.Location.Local.Enums
 {
-    public enum TcasDisplayRange
+    public enum TcasDisplayAboveBelow
     {
-        RangeNone,
-        Range5nm,
-        Range10nm,
-        Range20nm, // default
-        Range40nm,
-        Range80nm        
+        NORM,
+        BLW,
+        ABV,
+        Reserved
     }
 }
