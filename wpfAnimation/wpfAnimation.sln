@@ -27,7 +27,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "wpfVerticalTabControl", "wp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "wpfHintTextBox", "wpfHintTextBox\wpfHintTextBox.csproj", "{B596D714-C682-4527-B0F4-53044B823C4F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wpfCautionTextbox", "wpfCautionTextbox\wpfCautionTextbox.csproj", "{75299DB7-91F5-4318-BC97-049757C0E237}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "wpfCautionTextbox", "wpfCautionTextbox\wpfCautionTextbox.csproj", "{75299DB7-91F5-4318-BC97-049757C0E237}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wpfBarGaugeBar", "wpfBarGaugeBar\wpfBarGaugeBar.csproj", "{C400C96C-6DF0-4FD3-AE08-E118C18AC9E4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -87,6 +89,10 @@ Global
 		{75299DB7-91F5-4318-BC97-049757C0E237}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{75299DB7-91F5-4318-BC97-049757C0E237}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{75299DB7-91F5-4318-BC97-049757C0E237}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C400C96C-6DF0-4FD3-AE08-E118C18AC9E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C400C96C-6DF0-4FD3-AE08-E118C18AC9E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C400C96C-6DF0-4FD3-AE08-E118C18AC9E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C400C96C-6DF0-4FD3-AE08-E118C18AC9E4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
