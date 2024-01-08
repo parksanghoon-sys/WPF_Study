@@ -1,0 +1,24 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/CirclularGage.Location;component/Themes/Units/CircularGaugeBaseControl.xaml"/>
+        <ResourceDictionary Source="/CirclularGage.Location;component/Themes/Units/AirHeading.xaml"/>
+        <ResourceDictionary Source="/CirclularGage.Location;component/Themes/Units/TcasIntruderItemsControl.xaml"/>
+        <ResourceDictionary Source="/CirclularGage.Location;component/Themes/Units/TcasIntruderItem.xaml"/>
+
+        <ResourceDictionary Source="/CirclularGage.Location;component/Themes/Units/TcasIntruderSettingListBox.xaml"/>
+        <ResourceDictionary Source="/CirclularGage.Location;component/Themes/Units/TcasIntruderSettingListItem.xaml"/>
+
+        <ResourceDictionary Source="/CirclularGage.Location;component/Themes/Units/AirPortSympbolBackground.xaml"/>
+        <ResourceDictionary Source="/CirclularGage.Location;component/Themes/Units/AirPortSymbol.xaml"/>
+        
+        <ResourceDictionary Source="/CirclularGage.Location;component/Themes/Units/InputBaseUpDown.xaml"/>
+        <ResourceDictionary Source="/CirclularGage.Location;component/Themes/Units/NumericRepeatButtonControl.xaml"/>
+
+        <ResourceDictionary Source="/CirclularGage.Location;component/Themes/Views/TcasControlView.xaml"/>
+
+    </ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>
+ 

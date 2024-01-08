@@ -20,7 +20,7 @@ namespace wpfDependencyProperty
         {
             Value1 = 10;
             Value2 = 20;
-            Operator = "+";
+            Operator = "*";
 
             var timer = new DispatcherTimer()
             {

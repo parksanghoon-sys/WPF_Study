@@ -19,6 +19,7 @@ namespace wpfCautionTextbox
         public MainWindow()
         {
             InitializeComponent();
+            this.DataContext = new MainVIewModel();
         }
     }
 

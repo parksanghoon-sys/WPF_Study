@@ -15,8 +15,6 @@
                     <Setter Property="Height" Value="17" />
                     <Setter Property="FontSize" Value="9" />
                     <Setter Property="HintTextColor" Value="#FFFFF0"/>
-                    <Setter Property="BorderBrush" Value="White"/>
-                    
                 </Style>
             </StackPanel.Resources>
             <unit:AnimationHintTextbox x:Name="name" Margin="0,30" HintText="NAME" IsNotAcceptValue="{Binding IsNameAccept}"/>
