@@ -44,7 +44,7 @@ namespace simpleIoc
             var arg = Expression.Parameter(typeof(ILifetime));
 
             return (Func<ILifetime, object>)Expression.Lambda(
-           Expression.New(constructor, constructor.GetParameters().Select(
+                    Expression.New(constructor, constructor.GetParameters().Select(
                param =>
                {
                    var resolve = new Func<ILifetime, object>(
