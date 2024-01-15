@@ -7,8 +7,149 @@
         xmlns:control="clr-namespace:wpfBarGaugeBar.UI.Units"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <SolidColorBrush x:Key="CustomSliderBackgroundSolidColorBrush" Color="#1E211B"/>
+        <LinearGradientBrush x:Key="CustomSliderForegroundBrush" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#65351F" Offset="0.2" />
+            <GradientStop Color="#9B5B2B" Offset="0.5" />
+            <GradientStop Color="#65351F" Offset="0.8" />
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="CustomSliderThumBrush" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#3B3C39" Offset="0.2" />
+            <GradientStop Color="#454543" Offset="0.5" />
+            <GradientStop Color="#3B3C39" Offset="0.8" />
+        </LinearGradientBrush>
+
+        <Style x:Key="CustomSliderThumbStyle" TargetType="{x:Type Thumb}">
+            <Setter Property="Focusable" Value="false"/>
+            <Setter Property="SnapsToDevicePixels" Value="true"/>
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="Height" Value="20"/>
+            <Setter Property="Width" Value="30"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Thumb}">
+                        <Canvas SnapsToDevicePixels="true">
+                            <Grid Height="20" Width="30">
+                                <Rectangle x:Name="Background"
+                            Fill="{StaticResource CustomSliderThumBrush}" Stroke="#FFDADADA"
+                            Height="20" Width="30"
+                            RadiusX="3" RadiusY="3"/>
+                                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                            Foreground="White" FontSize="10"
+                            Text="{Binding Value, RelativeSource={RelativeSource AncestorType={x:Type Slider}}}"/>
+                            </Grid>
+                        </Canvas>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Fill" TargetName="Background" Value="Orange"/>
+                            </Trigger>
+                            <Trigger Property="IsDragging" Value="true">
+                                <Setter Property="Fill" TargetName="Background" Value="{StaticResource CustomSliderThumBrush}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Fill" TargetName="Background"  Value="Gray"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <ControlTemplate x:Key="CustomSliderControlTemplate" TargetType="{x:Type Slider}">
+            <Border Background="Transparent" SnapsToDevicePixels="True">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="{TemplateBinding MinHeight}" />
+                    </Grid.RowDefinitions>
+
+                    <DockPanel LastChildFill="True">
+                        <Border x:Name="PART_SelectionRange" Height="5" ClipToBounds="True" Visibility="Visible">
+                            <Rectangle Margin="0 0 -10 0" RadiusX="2" RadiusY="2" Fill="{StaticResource CustomSliderForegroundBrush}" />
+                        </Border>
+                        <Border ClipToBounds="True" Height="5" Visibility="Visible">
+                            <Rectangle Margin="0 0 0 0" RadiusX="2" RadiusY="2" Fill="{StaticResource CustomSliderBackgroundSolidColorBrush}" />
+                        </Border>
+                    </DockPanel>
+
+                    <Track x:Name="PART_Track">
+                        <Track.Thumb>
+                            <Thumb Style="{StaticResource CustomSliderThumbStyle}" VerticalAlignment="Center"
+                            Width="{TemplateBinding MinWidth}" Height="{TemplateBinding MinHeight}" OverridesDefaultStyle="True" Focusable="False" />
+                        </Track.Thumb>
+                    </Track>
+                </Grid>
+            </Border>
+        </ControlTemplate>
+
+        <Style x:Key="CustomSliderStyle" TargetType="{x:Type Slider}">
+            <Setter Property="Template" Value="{StaticResource CustomSliderControlTemplate}" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="MinWidth" Value="30" />
+            <Setter Property="MinHeight" Value="20" />
+            <Setter Property="Height" Value="20" />
+            <Setter Property="MaxHeight" Value="20" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="AutoToolTipPlacement" Value="None" />
+            <Setter Property="IsMoveToPointEnabled" Value="True" />
+            <Setter Property="SelectionStart" Value="{Binding Path=Minimum, RelativeSource={RelativeSource Self}}" />
+            <Setter Property="SelectionEnd" Value="{Binding Path=Value, RelativeSource={RelativeSource Self}}" />
+            <Setter Property="Stylus.IsPressAndHoldEnabled" Value="false" />
+        </Style>
+    </Window.Resources>
     <Grid Width="300" Height="285" Background="#FF31363B">
-        <control:BarGage Width="60" Height="200" MajorDivisionsCount="5" MaxValue="2" MinValue="-2" MajorTickSize="7,2">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <control:BarGage Grid.Column="0" Width="30" Height="200" MajorDivisionsCount="4" MaxValue="2" MinValue="-2" MajorTickSize="10,2" 
+                         MinorTickSize="5,1" MinorDivisionsCount="4"
+                         MajorTickColor="#000000"
+                         MinorTickColor="#000000"
+                         ScaleLabelForeground="White"
+                         CurrentValue="{Binding Score}"
+                         HorizontalAlignment="Left" Margin="30 0 0 0">
         </control:BarGage>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Margin="3" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="Value   : "/>
+                <Slider Grid.Column="1" Width="130"
+                        Style="{StaticResource CustomSliderStyle}" Maximum="2" Minimum="-2" 
+                        TickFrequency="0.1" IsSnapToTickEnabled="True" Value="{Binding Score}"/>
+            </Grid>
+            <Grid Grid.Row="1" Margin="3" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="Heading   : "/>
+                <Slider Grid.Column="1" Width="130"
+                        Style="{StaticResource CustomSliderStyle}" Maximum="360" Minimum="0" 
+                        TickFrequency="0.1" IsSnapToTickEnabled="True" Value="{Binding AirPortHeadingAngle}"/>
+            </Grid>
+            <Grid Grid.Row="2" Margin="3" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="Heading   : "/>
+                <Slider Grid.Column="1" Width="130"
+                        Style="{StaticResource CustomSliderStyle}" Maximum="360" Minimum="0" 
+                        TickFrequency="0.1" IsSnapToTickEnabled="True" Value="{Binding AirPortHeadingAngle}"/>
+            </Grid>
+        </Grid>
     </Grid>
 </Window>

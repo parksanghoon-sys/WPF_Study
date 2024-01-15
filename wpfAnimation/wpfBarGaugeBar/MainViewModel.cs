@@ -10,7 +10,13 @@ namespace wpfBarGaugeBar
 {
     public class MainViewModel : INotifyPropertyChanged
     {
+        private double _score;
 
+        public double Score
+        {
+            get { return _score; }
+            set { _score = value;  OnPropertyChanged(); }
+        }
         public MainViewModel()
         {
             

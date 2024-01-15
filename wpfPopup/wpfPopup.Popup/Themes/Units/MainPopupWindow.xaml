@@ -5,6 +5,7 @@
     <Style TargetType="{x:Type view:MainPopupWindow}">
         <Setter Property="Height" Value="400"/>
         <Setter Property="Width" Value="400"/>
+        <Setter Property="WindowStyle" Value="None"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type view:MainPopupWindow}">
