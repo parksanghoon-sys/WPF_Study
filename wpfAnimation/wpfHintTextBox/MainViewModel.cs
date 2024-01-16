@@ -33,7 +33,7 @@ namespace wpfHintTextBox
             IsNameAccept = false;
             IsPswAccept = false;
         }
-        public ICommand OnClickCommand => _onClickCommand ?? new RelayCommand(OnClick);        
+        public ICommand OnClickCommand => _onClickCommand ?? new RelayCommand(OnClick);   
         private void OnClick()
         {
             IsNameAccept = !IsNameAccept;

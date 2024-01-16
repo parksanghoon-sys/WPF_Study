@@ -213,7 +213,21 @@ namespace wpfBarGaugeBar.UI.Units
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(BarGage), new FrameworkPropertyMetadata(typeof(BarGage)));
         }
+        public override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+            rootGrid = GetTemplateChild("LayoutRoot") as Grid;
+            pointer = GetTemplateChild("Pointer") as Path;
+            optimalRangeIndicator = new Path();
+            warningRangeIndicator = new Path();
+        }
 
+        protected override void OnRender(DrawingContext drawingContext)
+        {
+            base.OnRender(drawingContext);
+            DrawScale();
+            RefreshScale();
+        }
         private static void OnCurrentValuePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             BarGage gauge = d as BarGage;
@@ -283,7 +297,7 @@ namespace wpfBarGaugeBar.UI.Units
         }
 
         private void RefreshScale()
-        {
+        {            
             rootGrid = GetTemplateChild("LayoutRoot") as Grid;
             if (rootGrid != null)
             {
@@ -299,8 +313,8 @@ namespace wpfBarGaugeBar.UI.Units
 
         private void DrawRangIndigator()
         {
-            DrawRangeIndicator(OptimalRangeStartValue, OptimalRangeEndValue, IndicatorType.OptimalIndicator);
-            DrawRangeIndicator(WarningRangeStartValue, WarningRangeEndValue, IndicatorType.WarningIndicator);
+            DrawRangeIndicator(-2, 1, IndicatorType.WarningIndicator);
+            DrawRangeIndicator(1, 2, IndicatorType.OptimalIndicator);
         }
 
         private void DrawRangeIndicator(double startRange, double endRange, IndicatorType indicatorType)
@@ -419,14 +433,6 @@ namespace wpfBarGaugeBar.UI.Units
 
             return p;
         }
-        public override void OnApplyTemplate()
-        {
-            base.OnApplyTemplate();
-            rootGrid = GetTemplateChild("LayoutRoot") as Grid;
-            pointer = GetTemplateChild("Pointer") as Path;
-            optimalRangeIndicator = new Path();
-            warningRangeIndicator = new Path();
-        }
 
         private void DrawScale()
         {
@@ -526,14 +532,7 @@ namespace wpfBarGaugeBar.UI.Units
                 mr.RenderTransform = minorticktt;
                 rootGrid.Children.Add(mr);
             }
-        }
-
-        protected override void OnRender(DrawingContext drawingContext)
-        {
-            base.OnRender(drawingContext);
-            DrawScale();
-            RefreshScale();
-        }
+        }       
        
     }
 }

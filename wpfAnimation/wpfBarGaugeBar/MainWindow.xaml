@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:wpfBarGaugeBar"
         xmlns:control="clr-namespace:wpfBarGaugeBar.UI.Units"
+        
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Window.Resources>
@@ -105,16 +106,33 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
-        <control:BarGage Grid.Column="0" Width="30" Height="200" MajorDivisionsCount="4" MaxValue="2" MinValue="-2" MajorTickSize="10,2" 
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <control:RiseAndFallLedControl Grid.Row="0" Width="20" Height="25"  Margin="24 10 0 10"
+                                           TriangleLedColor="#FFFFFF" 
+                                           IsTryangleLedOn="{Binding Led1Status}"
+                                           TryangleLedAngle="180" />
+            <control:BarGage Grid.Row="1" Width="20" Height="180" MajorDivisionsCount="4" MaxValue="2" MinValue="-2" MajorTickSize="10,2" 
                          MinorTickSize="5,1" MinorDivisionsCount="4"
                          MajorTickColor="#000000"
                          MinorTickColor="#000000"
                          ScaleLabelForeground="White"
                          CurrentValue="{Binding Score}"
                          HorizontalAlignment="Left" Margin="30 0 0 0">
-        </control:BarGage>
+            </control:BarGage>
+            <control:RiseAndFallLedControl Width="20" Height="20"  Grid.Row="2" Margin="0 10 0 10"
+                                           TriangleLedColor="Green" 
+                                           IsTryangleLedOn="{Binding Led2Status}" 
+                                           TryangleLedAngle="0"/>
+        </Grid>
+
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
@@ -127,7 +145,7 @@
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="Value   : "/>
                 <Slider Grid.Column="1" Width="130"
-                        Style="{StaticResource CustomSliderStyle}" Maximum="2" Minimum="-2" 
+                        Style="{StaticResource CustomSliderStyle}" Maximum="3" Minimum="-3" 
                         TickFrequency="0.1" IsSnapToTickEnabled="True" Value="{Binding Score}"/>
             </Grid>
             <Grid Grid.Row="1" Margin="3" >
@@ -149,6 +167,14 @@
                 <Slider Grid.Column="1" Width="130"
                         Style="{StaticResource CustomSliderStyle}" Maximum="360" Minimum="0" 
                         TickFrequency="0.1" IsSnapToTickEnabled="True" Value="{Binding AirPortHeadingAngle}"/>
+            </Grid>
+            <Grid Grid.Row="3" Margin="10" Height="100">
+                <StackPanel Height="100" VerticalAlignment="Center" HorizontalAlignment="Center">
+                  
+                
+                    <Button Command="{Binding LedChangedCommand}" Width="50" Height="20"/>
+                </StackPanel>
+
             </Grid>
         </Grid>
     </Grid>
