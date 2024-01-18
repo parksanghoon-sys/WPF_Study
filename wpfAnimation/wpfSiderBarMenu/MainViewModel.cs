@@ -2,11 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using Custom.Wpf.Global.Controls;
 using Custom.Wpf.Global.Mvvm;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using wpfSiderBarMenu.Local.ViewModels;
 
 namespace wpfSiderBarMenu

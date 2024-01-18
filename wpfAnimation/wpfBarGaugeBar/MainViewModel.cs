@@ -8,7 +8,30 @@ namespace wpfBarGaugeBar
     public class MainViewModel : INotifyPropertyChanged
     {
         private double _score;
-
+        private double _startSafeZoon;
+        private double _endtSafeZoon;
+        private double _startWarningZoon;
+        private double _endWarningZoon;
+        public double StartSafeZoon
+        {
+            get { return _startSafeZoon; }
+            set { _startSafeZoon = value; OnPropertyChanged(); }
+        }
+        public double EndSafeZoon
+        {
+            get { return _endtSafeZoon; }
+            set { _endtSafeZoon = value; OnPropertyChanged(); }
+        }
+        public double StartWarningZoon
+        {
+            get { return _startWarningZoon; }
+            set { _startWarningZoon = value; OnPropertyChanged(); }
+        }
+        public double EndWarningZoon
+        {
+            get { return _endWarningZoon; }
+            set { _endWarningZoon = value; OnPropertyChanged(); }
+        }
         public double Score
         {
             get { return _score; }
@@ -40,6 +63,8 @@ namespace wpfBarGaugeBar
         {
             Led2Status = !Led2Status;
             Led1Status = !Led1Status;
+            var random = new Random();
+            Score = random.Next(-2, 2) + random.NextDouble();
         }
 
         public MainViewModel()

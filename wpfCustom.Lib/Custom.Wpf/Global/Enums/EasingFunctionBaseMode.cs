@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Custom.Wpf.Global.Enums
+﻿namespace Custom.Wpf.Global.Enums
 {
     public enum EasingFunctionBaseMode
     {

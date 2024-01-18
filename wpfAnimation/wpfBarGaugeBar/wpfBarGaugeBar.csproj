@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\wpfCustom.Lib\Custom.Wpf\Custom.Wpf.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Page Update="Themes\Units\RiseAndFallLedControl.xaml">
       <SubType>Designer</SubType>
     </Page>

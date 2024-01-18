@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
 namespace wpfBarGaugeBar
 {
- 
+
     public class RelayCommand : ICommand
     {
         private readonly Action execute;

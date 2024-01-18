@@ -17,9 +17,10 @@ namespace CirclularGage.Main
         private double _startSafeZoon;
         private double _endtSafeZoon;
         private double _startWarningZoon;
+        private double _endWarningZoon;
         private double _score;
         private double _gaugeRadius;
-        private double _endWarningZoon;
+        
         private double _airPortSymbolBackgroundSize;
         private IntruderModel _intruderItem;
         private TcasDisplayRange _tcasDisplayRange;
@@ -70,7 +71,7 @@ namespace CirclularGage.Main
         {
             get { return _endWarningZoon; }
             set { _endWarningZoon = value; OnPropertyChagned(); }
-        }        
+        }
         public TcasDisplayRange TcasDisplayRange
         {
             get { return _tcasDisplayRange; }

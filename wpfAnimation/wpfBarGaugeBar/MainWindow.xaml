@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:wpfBarGaugeBar"
         xmlns:control="clr-namespace:wpfBarGaugeBar.UI.Units"
+        xmlns:unit="clr-namespace:Custom.Wpf.Global.Controls.NumericControl;assembly=Custom.Wpf"
         
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
@@ -121,8 +122,12 @@
                          MajorTickColor="#000000"
                          MinorTickColor="#000000"
                          ScaleLabelForeground="White"
-                         CurrentValue="{Binding Score}"
-                         HorizontalAlignment="Left" Margin="30 0 0 0">
+                         CurrentValue="{Binding Score}" 
+                             OptimalRangeStartValue="{Binding StartSafeZoon}"
+                             OptimalRangeEndValue="{Binding EndSafeZoon}" 
+                             WarningRangeStartValue="{Binding StartWarningZoon}"
+                             WarningRangeEndValue="{Binding EndWarningZoon}" 
+                             HorizontalAlignment="Left" Margin="30 0 0 0">
             </control:BarGage>
             <control:RiseAndFallLedControl Width="20" Height="20"  Grid.Row="2" Margin="0 10 0 10"
                                            TriangleLedColor="Green" 
@@ -152,21 +157,33 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="100"/>
                     <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Text="Heading   : "/>
-                <Slider Grid.Column="1" Width="130"
-                        Style="{StaticResource CustomSliderStyle}" Maximum="360" Minimum="0" 
-                        TickFrequency="0.1" IsSnapToTickEnabled="True" Value="{Binding AirPortHeadingAngle}"/>
+                <TextBlock Grid.Column="0" Text="Start Safe : "/>
+                <unit:NumericUpDownControl Grid.Column="1" MaxValue="6" MinValue="-6" Foreground="Wheat"
+                                              StepSize="0.1" FormatString="F2" IsReadOnly="True" 
+                                              NumberStyle="None" Value="{Binding StartSafeZoon, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock Grid.Column="2" Text="~" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <unit:NumericUpDownControl Grid.Column="3" MaxValue="6" MinValue="-6" Foreground="Wheat"
+                                              StepSize="0.1" FormatString="F2" IsReadOnly="True" 
+                                              NumberStyle="None" Value="{Binding EndSafeZoon, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </Grid>
             <Grid Grid.Row="2" Margin="3" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="100"/>
                     <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Text="Heading   : "/>
-                <Slider Grid.Column="1" Width="130"
-                        Style="{StaticResource CustomSliderStyle}" Maximum="360" Minimum="0" 
-                        TickFrequency="0.1" IsSnapToTickEnabled="True" Value="{Binding AirPortHeadingAngle}"/>
+                <TextBlock Grid.Column="0" Text="Start Warning : "/>
+                <unit:NumericUpDownControl Grid.Column="1" MaxValue="6" MinValue="-6" Foreground="Wheat"
+                                              StepSize="0.1" FormatString="F2" IsReadOnly="True" 
+                                              NumberStyle="None" Value="{Binding StartWarningZoon, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock Grid.Column="2" Text="~" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <unit:NumericUpDownControl Grid.Column="3" MaxValue="6" MinValue="-6" Foreground="Wheat"
+                                              StepSize="0.1" FormatString="F2" IsReadOnly="True" 
+                                              NumberStyle="None" Value="{Binding EndWarningZoon, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </Grid>
             <Grid Grid.Row="3" Margin="10" Height="100">
                 <StackPanel Height="100" VerticalAlignment="Center" HorizontalAlignment="Center">

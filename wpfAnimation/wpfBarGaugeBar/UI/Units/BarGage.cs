@@ -1,14 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.ConstrainedExecution;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Media3D;
 using System.Windows.Shapes;
 
 namespace wpfBarGaugeBar.UI.Units
@@ -274,7 +268,7 @@ namespace wpfBarGaugeBar.UI.Units
                 animation.From = oldValue* realworldunit;
                 animation.To = newValue* realworldunit;
 
-                double animationDuration = Math.Abs(oldValue - newValue) * 3;
+                double animationDuration = Math.Abs(oldValue - newValue) * 100;
                 animation.Duration = new Duration(TimeSpan.FromMilliseconds(animationDuration));
 
                 Storyboard sb = new Storyboard();
@@ -313,14 +307,14 @@ namespace wpfBarGaugeBar.UI.Units
 
         private void DrawRangIndigator()
         {
-            DrawRangeIndicator(-2, 1, IndicatorType.WarningIndicator);
-            DrawRangeIndicator(1, 2, IndicatorType.OptimalIndicator);
+            DrawRangeIndicator(OptimalRangeStartValue, OptimalRangeEndValue, IndicatorType.OptimalIndicator);
+            DrawRangeIndicator(WarningRangeStartValue, WarningRangeEndValue, IndicatorType.WarningIndicator);
         }
 
         private void DrawRangeIndicator(double startRange, double endRange, IndicatorType indicatorType)
         {
             //if (startRange == 0 && endRange == 0) return;
-
+            
             var actualWidth = this.ActualWidth;
             var actualHeight = this.ActualHeight;
 
@@ -338,8 +332,14 @@ namespace wpfBarGaugeBar.UI.Units
             //Point A1 = GetCircumferencePoint(0, startRange, true);
             //Point B1 = GetCircumferencePoint(actualWidth, startRange, false);
             //Point C1 = GetCircumferencePoint(0, endRange, true);
+            IsValueCheckRange(ref startRange);
+            IsValueCheckRange(ref endRange);
+
+            if (startRange == endRange)
+                return;
             var points = GetCircumferencePoint(startRange, endRange);
 
+          
             Point A1 = new Point(0, 0);
             Point B1 = new Point(actualWidth, actualHeight * 0.1);
             Point C1 = new Point(actualWidth, actualHeight * 0.9);
@@ -399,6 +399,7 @@ namespace wpfBarGaugeBar.UI.Units
             Point[] p = new Point[4];
             Point A1, B1, C1, D1;
 
+
             var actualWidth = this.ActualWidth;
             var actualHeight = this.ActualHeight;
             var startHeight = this.ActualHeight * 0.1;
@@ -433,7 +434,14 @@ namespace wpfBarGaugeBar.UI.Units
 
             return p;
         }
-
+        private void IsValueCheckRange(ref double value)
+        {
+            if (value < MinValue)            
+                value = MinValue;
+            
+            if (value > MaxValue)            
+                value = MaxValue;            
+        }
         private void DrawScale()
         {
             DrawMajorTicksRectangle();

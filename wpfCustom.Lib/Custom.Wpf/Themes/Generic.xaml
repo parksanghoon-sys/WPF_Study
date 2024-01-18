@@ -4,6 +4,8 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/Custom.Wpf;component/Themes/Controls/CustomToggleButton.xaml" />
         <ResourceDictionary Source="/Custom.Wpf;component/Themes/Controls/CustomIcon.xaml" />
+        <ResourceDictionary Source="/Custom.Wpf;component/Themes/Controls/InputBaseUpDown.xaml" />
+        <ResourceDictionary Source="/Custom.Wpf;component/Themes/Controls/NumericRepeatButtonControl.xaml" />
     </ResourceDictionary.MergedDictionaries>
     
 </ResourceDictionary>
