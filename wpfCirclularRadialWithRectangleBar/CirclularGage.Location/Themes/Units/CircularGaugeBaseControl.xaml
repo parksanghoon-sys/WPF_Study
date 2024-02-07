@@ -14,10 +14,9 @@
         <Setter Property="ScaleValuePrecision" Value="10" />
         <Setter Property="HorizontalAlignment" Value="Center"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="RangeIndicatorThickness" Value="5"/>
-        
-        <Setter Property="OptimalRangeColor" Value="Green" />
-        <Setter Property="AboveOptimalRangeColor" Value="Red" />
+
+        <Setter Property="OptimalRangeColor" Value="#FF00FF00" />
+        <Setter Property="AboveOptimalRangeColor" Value="#FFFF0000" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type view:CircularGaugeBaseControl}">
@@ -87,8 +86,15 @@
                                 </LinearGradientBrush>
                             </Path.Fill>
                         </Path>
-                       
-                        <ContentPresenter x:Name="IntruderItems"/>
+                        <!--<view:AirPortSympbolBackground Panel.ZIndex="1" Margin="0 62.64 0 0" 
+                                                              AirPortSymbolBackgroundSize="{Binding AirPortSymbolBackgroundSize}" />
+                        <view:AirPortSymbol AirPortSymbolSize="15" HeadAngeleValue="{Binding AirPortHeadingAngle}" Panel.ZIndex="2"
+                                                   Margin="0 141.9 0 0"/>-->
+                        <view:AirPortSympbolBackground Panel.ZIndex="1" 
+                                                              AirPortSymbolBackgroundSize="{Binding AirPortSymbolBackgroundSize}" />
+                        <view:AirPortSymbol AirPortSymbolSize="15" HeadAngeleValue="{Binding AirPortHeadingAngle}" Panel.ZIndex="2"
+                                                   Margin="0 110 0 0"/>
+                        <ContentPresenter x:Name="IntruderItems" Panel.ZIndex="100"/>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

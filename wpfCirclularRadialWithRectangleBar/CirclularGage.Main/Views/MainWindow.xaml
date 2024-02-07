@@ -80,7 +80,7 @@
                 </StackPanel>
                 <StackPanel  Margin="12 0 10 0">
                     <ComboBox ItemsSource="{Binding TcasDisplayRanges}" Template="{StaticResource ComboBoxTemplate1}"
-                              SelectedItem="{Binding TcasDisplayRange, Mode=TwoWay}"  Width="80" Height="20"/>
+                              SelectedItem="{Binding SelectedTcasDisplayRange, Mode=TwoWay}"  Width="80" Height="20"/>
                     <TextBlock Text="RANGE" FontSize="13" HorizontalAlignment="Center"/>
                 </StackPanel>
 
@@ -150,25 +150,21 @@
             </Grid>
             <Grid Grid.Row="4" Margin="3">
                 <StackPanel Orientation="Horizontal">
-                    <RadioButton Content="None" IsChecked="{Binding Path=TcasDisplayRange, 
+                    <RadioButton Content="None" IsChecked="{Binding Path=SelectedTcasDisplayRange, 
                         Converter={StaticResource RadioBoolToEnumConvert},  
-                        ConverterParameter={x:Static enum:TcasDisplayRange.RangeNone}, 
+                        ConverterParameter={x:Static enum:TcasDisplayRange.Rate5}, 
                         Mode=TwoWay}"/>
-                    <RadioButton Content="80nm" IsChecked="{Binding Path=TcasDisplayRange, 
+                    <RadioButton Content="80nm" IsChecked="{Binding Path=SelectedTcasDisplayRange, 
                         Converter={StaticResource RadioBoolToEnumConvert}, 
-                        ConverterParameter={x:Static enum:TcasDisplayRange.Range80nm},
+                        ConverterParameter={x:Static enum:TcasDisplayRange.Rate10},
                         Mode=TwoWay}"/>
-                    <RadioButton Content="40nm" IsChecked="{Binding Path=TcasDisplayRange, 
+                    <RadioButton Content="40nm" IsChecked="{Binding Path=SelectedTcasDisplayRange, 
                         Converter={StaticResource RadioBoolToEnumConvert}, 
-                        ConverterParameter={x:Static enum:TcasDisplayRange.Range40nm},
+                        ConverterParameter={x:Static enum:TcasDisplayRange.Rate20},
                         Mode=TwoWay}"/>
-                    <RadioButton Content="20nm" IsChecked="{Binding Path=TcasDisplayRange, 
+                    <RadioButton Content="20nm" IsChecked="{Binding Path=SelectedTcasDisplayRange, 
                         Converter={StaticResource RadioBoolToEnumConvert}, 
-                        ConverterParameter={x:Static enum:TcasDisplayRange.Range20nm},
-                        Mode=TwoWay}"/>
-                    <RadioButton Content="10nm" IsChecked="{Binding Path=TcasDisplayRange, 
-                        Converter={StaticResource RadioBoolToEnumConvert},  
-                        ConverterParameter={x:Static enum:TcasDisplayRange.Range10nm}, 
+                        ConverterParameter={x:Static enum:TcasDisplayRange.Rate40},
                         Mode=TwoWay}"/>
 
                 </StackPanel>

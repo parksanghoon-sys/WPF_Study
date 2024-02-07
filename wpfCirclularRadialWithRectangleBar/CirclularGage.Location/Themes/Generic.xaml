@@ -16,6 +16,8 @@
         
         <ResourceDictionary Source="/CirclularGage.Location;component/Themes/Units/InputBaseUpDown.xaml"/>
         <ResourceDictionary Source="/CirclularGage.Location;component/Themes/Units/NumericRepeatButtonControl.xaml"/>
+        <ResourceDictionary Source="/CirclularGage.Location;component/Themes/Units/RiseAndFallLedControl.xaml"/>
+        <ResourceDictionary Source="/CirclularGage.Location;component/Themes/Units/TcasIVSIGaugeBarControl.xaml"/>
 
         <ResourceDictionary Source="/CirclularGage.Location;component/Themes/Views/TcasControlView.xaml"/>
 

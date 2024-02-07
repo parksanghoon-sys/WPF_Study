@@ -8,31 +8,40 @@
         mc:Ignorable="d"
         Title="MainView" Height="450" Width="800">
     <Grid>
-        <TreeView ItemsSource="{Binding PathNodes}">
-            <TreeView.Resources>
-                <Style TargetType="{x:Type TreeViewItem}">
-                    <Setter Property="IsExpanded" 
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <Grid>
+            <TreeView x:Name="trvRoot" ItemsSource="{Binding PathNodes}">
+                <TreeView.Resources>
+                    <Style TargetType="{x:Type TreeViewItem}">
+                        <Setter Property="IsExpanded" 
                             Value="{Binding IsExpanded,Mode=TwoWay}"/>
-                </Style>
-            </TreeView.Resources>
-            <TreeView.ItemTemplate>
-                <HierarchicalDataTemplate DataType="{x:Type models:LazyTreeNode}" 
+                    </Style>
+                </TreeView.Resources>
+                <TreeView.ItemTemplate>
+                    <HierarchicalDataTemplate DataType="{x:Type models:LazyTreeNode}" 
                                           ItemsSource="{Binding Children}">
-                    <StackPanel Orientation="Horizontal">
-                        <Image x:Name="treeImage" Width="24" 
+                        <StackPanel Orientation="Horizontal">
+                            <Image x:Name="treeImage" Width="24" 
                                Height="24" 
                                Source="{Binding ClosedImage}"/>
-                        <TextBlock Text="{Binding Text}"/>
-                    </StackPanel>
-                    <HierarchicalDataTemplate.Triggers>
-                        <DataTrigger Binding="{Binding IsExpanded}" Value="True">
-                            <Setter TargetName="treeImage"
+                            <TextBlock Text="{Binding Text}"/>
+                        </StackPanel>
+                        <HierarchicalDataTemplate.Triggers>
+                            <DataTrigger Binding="{Binding IsExpanded}" Value="True">
+                                <Setter TargetName="treeImage"
                                     Property="Source"
                                     Value="{Binding OpenedImage}"/>
-                        </DataTrigger>
-                    </HierarchicalDataTemplate.Triggers>                    
-                </HierarchicalDataTemplate>
-            </TreeView.ItemTemplate>
-        </TreeView>
+                            </DataTrigger>
+                        </HierarchicalDataTemplate.Triggers>
+                    </HierarchicalDataTemplate>
+                </TreeView.ItemTemplate>
+            </TreeView>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Button x:Name="btnTest" Content="Test" Width="50" Click="btnTest_Click"/>
+        </Grid>
     </Grid>
 </Window>

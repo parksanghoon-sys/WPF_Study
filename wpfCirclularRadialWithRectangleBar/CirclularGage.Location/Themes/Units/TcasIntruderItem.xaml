@@ -19,7 +19,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ContentControl}">
-                    <ed:RegularPolygon Width="14" Height="14" InnerRadius="1" PointCount="4" 
+                    <ed:RegularPolygon Width="10" Height="10" InnerRadius="1" PointCount="4" 
                                        Fill="Transparent" 
                                        Stroke="{Binding IntruderType, Converter={StaticResource IntruderBackgroundConverter}}"                                       
                                        StrokeThickness="1"/>
@@ -58,7 +58,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ContentControl}">
-                    <Rectangle Width="10" Height="10" Fill="{Binding IntruderType, Converter={StaticResource IntruderBackgroundConverter}}"
+                    <Rectangle Width="8" Height="8" Fill="{Binding IntruderType, Converter={StaticResource IntruderBackgroundConverter}}"
                                Stroke="{Binding IntruderType, Converter={StaticResource IntruderBackgroundConverter}}" StrokeThickness="1"/>
                 </ControlTemplate>
 
@@ -71,7 +71,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type control:TcasIntruderItem}">
-                    <Grid x:Name="backgorund" Width="26" Height="34">
+                    <Grid x:Name="backgorund" Width="20" Height="22">
                         <Grid.RenderTransform>
                             <TransformGroup>
                                 <!--<RotateTransform Angle="{Binding Bearing}"/>-->
@@ -93,7 +93,7 @@
                         <Grid Grid.Row="1" x:Name="IntruderSymbolLayout" HorizontalAlignment="Center" VerticalAlignment="Center">
                             <StackPanel Orientation="Horizontal">
                                 <ContentControl x:Name="symbol"  Style="{StaticResource OtherTrafficSymbol}" />
-                                <ed:BlockArrow x:Name="flyarrow" Height="10" Width="8" Orientation="Down" 
+                                <ed:BlockArrow x:Name="flyarrow" Height="10" Width="6" Margin="1 0 0 0" Orientation="Down" ArrowBodySize="0.2" ArrowheadAngle="55"
                                                Fill="{Binding IntruderType, Converter={StaticResource IntruderBackgroundConverter}}"/>
                             </StackPanel>
                         </Grid>

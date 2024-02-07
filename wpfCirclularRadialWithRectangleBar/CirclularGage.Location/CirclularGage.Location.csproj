@@ -68,6 +68,8 @@
     <Compile Include="Local\Enums\TcasDisplayRange.cs" />
     <Compile Include="UI\Units\AirPortSymbol.cs" />
     <Compile Include="UI\Units\AirPortSympbolBackground.cs" />
+    <Compile Include="UI\Units\RiseAndFallLedControl.cs" />
+    <Compile Include="UI\Units\TcasIVSIGaugeBarControl.cs" />
     <Compile Include="UI\Views\TcasControlView.cs" />
     <Compile Include="UI\Units\InputBaseUpDown.cs" />
     <Compile Include="UI\Units\NumericUpDownControl.cs" />
@@ -115,6 +117,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Themes\Units\RiseAndFallLedControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Themes\Units\TcasIntruderItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -128,6 +134,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Themes\Units\TcasIntruderSettingListItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Units\TcasIVSIGaugeBarControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

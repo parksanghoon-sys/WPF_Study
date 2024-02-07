@@ -25,23 +25,75 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type view:TcasControlView}">
-                    <Grid Width="{Binding GaugeRadius, Converter={convert:RadiusToDiameterConverter}, ConverterParameter=2}" 
-                          Height="{Binding GaugeRadius, Converter={convert:RadiusToDiameterConverter}, ConverterParameter=2.1}">
+                    <Grid>
 
-                        <control:AirPortSympbolBackground Panel.ZIndex="2" Margin="0 100 0 0" 
-                                              AirPortSymbolBackgroundSize="{Binding AirPortSymbolBackgroundSize}" />
-                        <control:AirPortSymbol AirPortSymbolSize="11" HeadAngeleValue="{Binding AirPortHeadingAngle}" Panel.ZIndex="3"
-                                  Margin="0 110 0 0"/>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Row="0" Grid.Column="0" Margin="25 0 0 0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <control:RiseAndFallLedControl Grid.Row="0" Width="15" Height="15"  Margin="9 0 0 5"
+                                           TriangleLedColor="#FF00FF00" 
+                                           IsTryangleLedOn="{Binding RiseLedOn}"
+                                           TryangleLedAngle="180" />
+                            <control:TcasIVSIGaugeBarControl Height="180" Width="20" Grid.Row="1"
+                                                             MaxValue="2" MinValue="-2" 
+                                                             MajorTickSize="10,2" MajorDivisionsCount="4" 
+                                                             MinorTickSize="5,1" MinorDivisionsCount="4"
+                                                             MajorTickColor="#000000" MinorTickColor="#000000"
+                                                             ScaleLabelForeground="White"
+                                                             CurrentValue="{Binding Score}"
+                                                             OptimalRangeStartValue="{Binding StartSafeZoon}"
+                                                             OptimalRangeEndValue="{Binding EndSafeZoon}"
+                                                             WarningRangeStartValue="{Binding StartWarningZoon}"
+                                                             WarningRangeEndValue="{Binding EndWarningZoon}"/>
+                            <control:RiseAndFallLedControl Grid.Row="2" Width="15" Height="15" Margin="9 5 0 3"
+                                           TriangleLedColor="#FF00FF00"
+                                           IsTryangleLedOn="{Binding FallLedOn}" 
+                                           TryangleLedAngle="0"/>
+                        </Grid>
+                        <Grid Grid.Row="0" Grid.Column="1" Margin="5 5 0 0"
+                              Width="{Binding GaugeRadius, Converter={convert:RadiusToDiameterConverter}, ConverterParameter=2}" 
+                              Height="{Binding GaugeRadius, Converter={convert:RadiusToDiameterConverter}, ConverterParameter=2.1}">
+                            <!--<control:AirPortSympbolBackground Panel.ZIndex="2" Margin="0 61.5 0 0" 
+                                                              AirPortSymbolBackgroundSize="{Binding AirPortSymbolBackgroundSize}" />
+                            <control:AirPortSymbol AirPortSymbolSize="15" HeadAngeleValue="{Binding AirPortHeadingAngle}" Panel.ZIndex="3"
+                                                   Margin="0 144.657 0 0"/>-->
+                            <control:TcasGaugeControl HorizontalAlignment="Center" VerticalAlignment="Top"
+                                                      Panel.ZIndex="1" Radius="{Binding GaugeRadius}"
+                                                      GaugePointColor="Transparent">
+                                <!--CurrentValue="{Binding Score}"
+                                                  
+                                                  ScaleRadius="85" 
+                                                  ScaleSweepAngle="340"
+                                                  
+                                                  MajorDivisionsCount="10"                                                  
+                                                                                                    
+                                                  RangeIndicatorThickness="7"
+                                                  RangeIndicatorRadius="80"
+                                                  ScaleLabelRadius="98"
+                                                  
+                                                  OptimalRangeStartValue="{Binding StartSafeZoon}"
+                                                  OptimalRangeEndValue="{Binding EndSafeZoon}"
+                                                  WarningRangeStartValue="{Binding StartWarningZoon}"
+                                                  WarningRangeEndValue="{Binding EndWarningZoon}"-->
 
-                        <control:TcasGaugeControl Radius="{Binding GaugeRadius}"                                          
-                                          Panel.ZIndex="1">
 
-                            <control:TcasIntruderItemsControl x:Name="TcasIntruderItems" Panel.ZIndex="4"  
-                                                  TcasDisplayRange="{Binding TcasDisplayRange}"
-                                                  Radius ="{Binding GaugeRadius, Converter={convert:RadiusToDiameterConverter}, ConverterParameter=1.5}"/>
-                            
-                        </control:TcasGaugeControl>
-                        
+                                <control:TcasIntruderItemsControl x:Name="TcasIntruderItems" Panel.ZIndex="4" 
+                                                                  TcasDisplayRange="{Binding SelectedTcasDisplayRange}"
+                                                                  Radius ="{Binding GaugeRadius}"/>
+                            </control:TcasGaugeControl>
+
+                        </Grid>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

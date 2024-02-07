@@ -20,10 +20,11 @@ namespace CirclularGage.Main
         private double _endWarningZoon;
         private double _score;
         private double _gaugeRadius;
-        
+        private bool _riseLedOn;        
+        private bool _fallLedOn;        
         private double _airPortSymbolBackgroundSize;
         private IntruderModel _intruderItem;
-        private TcasDisplayRange _tcasDisplayRange;
+        private TcasDisplayRange _tcasDisplayRange = TcasDisplayRange.Rate5;
         private TcasAltitudeType _tcasAltitudeType;
         private TcasDisplayAboveBelow _tcasDisplayAboveBelow;     
         private ICommand _startTcasItemsRandom;
@@ -72,7 +73,17 @@ namespace CirclularGage.Main
             get { return _endWarningZoon; }
             set { _endWarningZoon = value; OnPropertyChagned(); }
         }
-        public TcasDisplayRange TcasDisplayRange
+        public bool RiseLedOn
+        {
+            get { return _riseLedOn; }
+            set { _riseLedOn = value; OnPropertyChagned(); }
+        }
+        public bool FallLedOn
+        {
+            get { return _fallLedOn; }
+            set { _fallLedOn = value; OnPropertyChagned(); }
+        }
+        public TcasDisplayRange SelectedTcasDisplayRange
         {
             get { return _tcasDisplayRange; }
             set
@@ -80,24 +91,7 @@ namespace CirclularGage.Main
                 if (_tcasDisplayRange != value)
                 {
                     _tcasDisplayRange = value;
-                    switch(_tcasDisplayRange)
-                    {
-                        case TcasDisplayRange.RangeNone:
-                            AirPortSymbolBackgroundSize = 0;
-                            break;
-                        case TcasDisplayRange.Range10nm:
-                            AirPortSymbolBackgroundSize = 56;
-                            break;
-                        case TcasDisplayRange.Range20nm:
-                            AirPortSymbolBackgroundSize = 28;
-                            break;
-                        case TcasDisplayRange.Range40nm:
-                            AirPortSymbolBackgroundSize = 0;
-                            break;
-                        case TcasDisplayRange.Range80nm:
-                            AirPortSymbolBackgroundSize = 0;
-                            break;
-                    }
+                    SetAirPortBackgroundSetting(_tcasDisplayRange);
                     OnPropertyChagned();
                 }
 
@@ -171,7 +165,7 @@ namespace CirclularGage.Main
         {
             InitVariables();
             InitCommands();
-            CreateMaxIntruderItems();
+            //CreateMaxIntruderItems();
 
             Messenger.Register<IntruderModel>(nameof(MainViewModel), OnIntruderModelMessageReceived);
             Messenger.Register<TcasDisplayRange>(nameof(MainViewModel), OnTcasDisplayRangeMessageReceived);
@@ -218,11 +212,34 @@ namespace CirclularGage.Main
             GaugeRadius = 110;
             AirPortHeadingAngle = 0;
             AirPortSymbolBackgroundSize = 0;
-            TcasDisplayRange = TcasDisplayRange.RangeNone;
+            SelectedTcasDisplayRange = TcasDisplayRange.Rate5;
+            SetAirPortBackgroundSetting(SelectedTcasDisplayRange);
             Score = double.MinValue;
-
+            RiseLedOn = false;
+            FallLedOn = false;
             IntruderItems = new ObservableCollection<IntruderModel>();
         }
+
+        private void SetAirPortBackgroundSetting(TcasDisplayRange tcasDisplayRange)
+        {
+            switch (tcasDisplayRange)
+            {
+                case TcasDisplayRange.Rate5:
+                    AirPortSymbolBackgroundSize = 123;
+                    break;
+                case TcasDisplayRange.Rate10:
+                    AirPortSymbolBackgroundSize = 61;
+                    break;
+                case TcasDisplayRange.Rate20:
+                    AirPortSymbolBackgroundSize = 31;
+                    break;
+                case TcasDisplayRange.Rate40:
+                    AirPortSymbolBackgroundSize = 0;
+                    break;
+
+            }
+        }
+
         private void InitCommands()
         {
             StartTcasItemsRandom = new ParameterRelayCommand(btn => StartTcasItemsRandomCommand(btn));
@@ -239,8 +256,8 @@ namespace CirclularGage.Main
                 Array values3 = Enum.GetValues(typeof(DisplayMatrix));
                 var randomDisplayMatrix = (DisplayMatrix)values3.GetValue(random.Next(values3.Length));
 
-                OnIntruderModelMessageReceived(IntruderModel.IntruderModelFactory(i + 1, 120,
-                    random.Next(-1200, 1200), randomIntruderVerticalSenseState, TcasSymbol.ProximateTraffic, randomDisplayMatrix, 360 / 30 * (i + 1)));
+                OnIntruderModelMessageReceived(IntruderModel.IntruderModelFactory(i + 1, 2,
+                    random.Next(-1200, 1200), randomIntruderVerticalSenseState, TcasIntruderSymbol.ProximateTraffic, randomDisplayMatrix,SelectedTcasDisplayRange, 360 / 30 * (i + 1)));
                 Thread.Sleep(10);
             }
         }
@@ -270,7 +287,7 @@ namespace CirclularGage.Main
         }
         private void OnTcasDisplayRangeMessageReceived(TcasDisplayRange range)
         {
-            TcasDisplayRange = range;
+            SelectedTcasDisplayRange = range;
         }
         private bool CancelOldIntruderChecked(IntruderModel model)
         {

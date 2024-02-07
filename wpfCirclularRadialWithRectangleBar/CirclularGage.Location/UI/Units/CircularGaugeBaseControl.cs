@@ -397,12 +397,12 @@ namespace CirclularGage.Location.UI.Units
             pointer = GetTemplateChild("Pointer") as Path;
 
             //DrawScale();
-            DrawRangeIndicator(OptimalRangeStartValue, OptimalRangeEndValue, IndicatorType.OptimalIndicator);
-            DrawRangeIndicator(WarningRangeStartValue, WarningRangeEndValue, IndicatorType.WarningIndicator);
+            //DrawRangeIndicator(OptimalRangeStartValue, OptimalRangeEndValue, IndicatorType.OptimalIndicator);
+            //DrawRangeIndicator(WarningRangeStartValue, WarningRangeEndValue, IndicatorType.WarningIndicator);
 
-            Canvas.SetZIndex(pointer, 100000);
-            if (ResetPointerOnStartUp)
-                MovePointer(ScaleStartAngle);
+            //Canvas.SetZIndex(pointer, 1);
+            //if (ResetPointerOnStartUp)
+            //    MovePointer(ScaleStartAngle);
         }
         /// <summary>
         /// Indicator 생성 (게이지 바)

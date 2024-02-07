@@ -9,13 +9,21 @@ namespace CirclularGage.Main.Model
 {
     public class IntruderModel : ViewModelBase
     {
-        private readonly int _centerAdjustmentYAxis = 50;
+        //private readonly double _centerAdjustmentYAxis = 29.92957746;
+        private readonly double _centerAdjustmentYAxis = 0;
+        private readonly double _airportSymbolSize = 30;
+        private readonly double _bearingNotValidXAdjustmentXAxis = -19;
+
+        private double _intruderSymbolCenterAdjustX;
+        private double _intruderSymbolCenterAdjustY;
+
         private double _bearing;
         private double _range;
         private double _altritude;
         private IntruderVerticalSenseState _intruderVerticalMoveMentState;
         //private TcasSymbol _intruderType;
         private DisplayMatrix _intruderDisplay;
+        private TcasDisplayRange _tcasDisplayRange;
         /// <summary>
         /// ItemModel의 X축 위치
         /// </summary>
@@ -27,7 +35,7 @@ namespace CirclularGage.Main.Model
         /// <summary>
         /// Intruder 종류
         /// </summary>
-        public TcasSymbol IntruderType => CalculateIntruderType();
+        public TcasIntruderSymbol IntruderType => CalculateIntruderType();
         //{
         //    get { return _intruderType; }
         //    set { _intruderType = value; OnPropertyChagned(); }
@@ -50,8 +58,7 @@ namespace CirclularGage.Main.Model
                 {
                     _range = value;                    
                     OnPropertyChagned();
-                    MovePointIntruder();
-                    ChangeIntruderType();
+                    MovePointIntruder();              
                 }
             }
         }
@@ -61,7 +68,20 @@ namespace CirclularGage.Main.Model
         public double Altitude
         {
             get { return _altritude; }
-            set { _altritude = value; OnPropertyChagned(); ChangeIntruderType(); }
+            set 
+            { 
+                _altritude = value;
+                if(_altritude < 0)
+                {
+                    _intruderSymbolCenterAdjustY = 6;
+                }
+                else
+                {
+                    _intruderSymbolCenterAdjustY = -6;
+                }
+                OnPropertyChagned();
+                MovePointIntruder();
+            }
         }
         /// <summary>
         /// Intruder 수직 상태 이동
@@ -69,7 +89,21 @@ namespace CirclularGage.Main.Model
         public IntruderVerticalSenseState IntruderVerticalMoveMentState
         {
             get { return _intruderVerticalMoveMentState; }
-            set { _intruderVerticalMoveMentState = value; OnPropertyChagned(); }
+            set
+            {
+                _intruderVerticalMoveMentState = value;
+                if (_intruderVerticalMoveMentState == IntruderVerticalSenseState.Climbing 
+                    || _intruderVerticalMoveMentState == IntruderVerticalSenseState.Descending)
+                {
+                    _intruderSymbolCenterAdjustX = 5;
+                }
+                else
+                {
+                    _intruderSymbolCenterAdjustX = 0;
+                }
+                OnPropertyChagned();
+                MovePointIntruder();
+            }
         }
         /// <summary>
         /// 항고기 Heading 기준 Intruder 위치 각도??
@@ -104,23 +138,15 @@ namespace CirclularGage.Main.Model
                 }
             }
         }
-        private double _displayRangeRatio = 1;
-
-        public double DisplayRangeRatio
-        {   
-            get { return _displayRangeRatio; }
-            set 
-            { 
-                if(_displayRangeRatio != value)
-                {
-                    _displayRangeRatio = value;
-
-                    OnPropertyChagned();
-                    MovePointIntruder();
-                }
-                    
+        public TcasDisplayRange TcasDisplayRange
+        {
+            get => _tcasDisplayRange;
+            set
+            {
+                _tcasDisplayRange = value;
+                MovePointIntruder();
             }
-        }
+        }      
         private bool _isSelected;
 
         public bool IsSelected
@@ -134,7 +160,7 @@ namespace CirclularGage.Main.Model
         #region constructor
 
         public static IntruderModel IntruderModelFactory(int index, double rnagne, double altitude, IntruderVerticalSenseState verticalState,
-         TcasSymbol symbol, DisplayMatrix matrix, double bearing = 0)
+         TcasIntruderSymbol symbol, DisplayMatrix matrix, TcasDisplayRange tcasDisplayRange, double bearing = 0)
          => new IntruderModel()
          {
              Bearing = bearing,
@@ -142,8 +168,8 @@ namespace CirclularGage.Main.Model
              Range = rnagne,
              Altitude = altitude,
              IntruderVerticalMoveMentState = verticalState,             
-             IntruderDisplay = matrix
-
+             IntruderDisplay = matrix,
+             TcasDisplayRange = tcasDisplayRange
          };
         #endregion
         #region Methods
@@ -151,29 +177,56 @@ namespace CirclularGage.Main.Model
         {
             var angle = Bearing - 90;
             var radianAngle = (angle * Math.PI) / 180;
-            return (Range * Math.Cos(radianAngle) * DisplayRangeRatio);            
+            var xPoint = (Range * Math.Cos(radianAngle) * TcasRangeDisplayRatito(TcasDisplayRange)) + _intruderSymbolCenterAdjustX;
+            return xPoint;
         }
         private double CalculateIntruderYPoint()
         {
             var angle = Bearing - 90;
             var radianAngle = (angle * Math.PI) / 180;
-            return (_centerAdjustmentYAxis + Range  * Math.Sin(radianAngle) * DisplayRangeRatio);
+            var yPoint = (_centerAdjustmentYAxis + Range  * Math.Sin(radianAngle) * TcasRangeDisplayRatito(TcasDisplayRange)) + _intruderSymbolCenterAdjustY;
+            return yPoint;
         }
-        private TcasSymbol CalculateIntruderType()
+
+        private double TcasRangeDisplayRatito(TcasDisplayRange tcasDisplayRange)
+        {
+            double ratito;
+            switch (tcasDisplayRange)
+            {
+                case TcasDisplayRange.Rate5:
+                    ratito = 1;
+                    break;
+                case TcasDisplayRange.Rate10:
+                    ratito = 15;
+                    break;
+                case TcasDisplayRange.Rate20:
+                    ratito = 7.5;
+                    break;
+                case TcasDisplayRange.Rate40:
+                    ratito = 3.75;
+                    break;
+                default:
+                    ratito = 1;
+                    break;
+            }
+            return ratito;
+        }
+
+        private TcasIntruderSymbol CalculateIntruderType()
         {
             if (IntruderDisplay == DisplayMatrix.RA)
-                return TcasSymbol.ResolutionAdvisorty;
+                return TcasIntruderSymbol.ResolutionAdvisorty;
 
             if (IntruderDisplay == DisplayMatrix.TA)
-                return TcasSymbol.TrafficAdvisory;
+                return TcasIntruderSymbol.TrafficAdvisory;
 
-            if ((Range >= 60) && (50 >= Math.Abs(Altitude)))
-                return TcasSymbol.OtherTraffic;
+            if (IntruderDisplay == DisplayMatrix.NoThreat)
+                return TcasIntruderSymbol.OtherTraffic;
 
-            if ((Range < 60) && (50 < Math.Abs(Altitude)))
-                return TcasSymbol.ProximateTraffic;
+            if (IntruderDisplay == DisplayMatrix.ProximateTime)
+                return TcasIntruderSymbol.ProximateTraffic;
 
-            return TcasSymbol.OtherTraffic;
+            return TcasIntruderSymbol.OtherTraffic;
         }
         private void MovePointIntruder()
         {

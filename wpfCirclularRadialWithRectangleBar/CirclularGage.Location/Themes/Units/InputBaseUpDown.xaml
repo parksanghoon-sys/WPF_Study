@@ -59,14 +59,7 @@
 									SpellCheck.IsEnabled="False" />
                                 <!--  Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Value}"  -->
 
-                                <TextBlock
-									Margin="3,0"
-									HorizontalAlignment="Stretch"
-									VerticalAlignment="Top"
-									Background="#00ffffff"
-									Foreground="{TemplateBinding EditingColorBrush}"
-									Text="*"
-									Visibility="{TemplateBinding EditingVisibility}" />
+                               
                             </Grid>
 
                             <!--  ArrowUp Increase value button  -->

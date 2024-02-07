@@ -15,9 +15,9 @@ namespace CirclularGage.Main
     public class TcasSettingViewModel : ViewModelBase
     {        
         private IntruderModel _currentIntruder;
-        private TcasSymbol _intruderType;
+        private TcasIntruderSymbol _intruderType;
         #region Properties
-        public TcasSymbol IntruderType
+        public TcasIntruderSymbol IntruderType
         {
             get { return _intruderType; }
             set { _intruderType = value; OnPropertyChagned(); }
@@ -59,7 +59,7 @@ namespace CirclularGage.Main
         }
         public Array IntruderTypes
         {
-            get { return Enum.GetValues(typeof(TcasSymbol)); }
+            get { return Enum.GetValues(typeof(TcasIntruderSymbol)); }
         }
         public Array IntruderVerticalSenseStates
         {
@@ -88,7 +88,7 @@ namespace CirclularGage.Main
             IntruderItemSendCommand = new ParameterRelayCommand(obj => OnIntruderItemSend(obj), obj => NotIntruderItemSend(obj));
             IntruderItemUpdateCommand = new ParameterRelayCommand(obj => OnIntruderItemUpdate(obj));
 
-            Messenger.Register<IntruderModel>( nameof(TcasSettingViewModel), OnViewModelMessageReceived);            
+            Messenger.Register<IntruderModel>( nameof(TcasSettingViewModel), OnViewModelMessageReceived);
             _currentIntruder = new IntruderModel();
         }
         #region Commands Excute Method
@@ -113,12 +113,15 @@ namespace CirclularGage.Main
         #region Methods
         private void OnViewModelMessageReceived(IntruderModel model)
         {
-            _currentIntruder.Number = model.Number;
-            Bearing = model.Bearing;
-            IntruderType = model.IntruderType;
-            Altitude = model.Altitude;
-            Range = model.Range;
-            IntruderVerticalMoveMentState = model.IntruderVerticalMoveMentState;
+            if(model != null)
+            {
+                _currentIntruder.Number = model.Number;
+                Bearing = model.Bearing;
+                IntruderType = model.IntruderType;
+                Altitude = model.Altitude;
+                Range = model.Range;
+                IntruderVerticalMoveMentState = model.IntruderVerticalMoveMentState;
+            }            
         }
         #endregion
 

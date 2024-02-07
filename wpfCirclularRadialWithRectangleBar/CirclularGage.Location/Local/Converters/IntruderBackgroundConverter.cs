@@ -11,20 +11,20 @@ namespace CirclularGage.Location.Local.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var intruderType = (TcasSymbol)value;
+            var intruderType = (TcasIntruderSymbol)value;
             var bgColor = new SolidColorBrush();
             switch (intruderType)
             {
-                case TcasSymbol.OtherTraffic:
+                case TcasIntruderSymbol.OtherTraffic:
                     bgColor.Color = Color.FromRgb(64,224,208);
                     break;
-                case TcasSymbol.ProximateTraffic:
+                case TcasIntruderSymbol.ProximateTraffic:
                     bgColor.Color = Color.FromRgb(64, 224, 208);
                     break;
-                case TcasSymbol.TrafficAdvisory:
+                case TcasIntruderSymbol.TrafficAdvisory:
                     bgColor.Color = Colors.Yellow;
                     break;
-                case TcasSymbol.ResolutionAdvisorty:
+                case TcasIntruderSymbol.ResolutionAdvisorty:
                     bgColor.Color = Colors.Red;
                     break;
                 default:
