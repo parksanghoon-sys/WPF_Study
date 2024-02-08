@@ -22,7 +22,8 @@ namespace CirclularGage.Main
         private double _gaugeRadius;
         private bool _riseLedOn;        
         private bool _fallLedOn;        
-        private double _airPortSymbolBackgroundSize;
+        private double _airPortSymbolBackgroundWidth;
+        private double _airPortSymbolBackgroundHeight;
         private IntruderModel _intruderItem;
         private TcasDisplayRange _tcasDisplayRange = TcasDisplayRange.Rate5;
         private TcasAltitudeType _tcasAltitudeType;
@@ -38,11 +39,17 @@ namespace CirclularGage.Main
             get { return _airPortHeadingAngle; }
             set { _airPortHeadingAngle = value % 360; OnPropertyChagned(); }
         }
-        public double AirPortSymbolBackgroundSize
+        public double AirPortSymbolBackgroundWidth
         {
-            get { return _airPortSymbolBackgroundSize; }
-            set { _airPortSymbolBackgroundSize = value; OnPropertyChagned(); }
+            get { return _airPortSymbolBackgroundWidth; }
+            set { _airPortSymbolBackgroundWidth = value; OnPropertyChagned(); }
         }
+        public double AirPortSymbolBackgroundHeight
+        {
+            get { return _airPortSymbolBackgroundHeight; }
+            set { _airPortSymbolBackgroundHeight = value; OnPropertyChagned(); }
+        }
+
         public double StartSafeZoon
         {
             get { return _startSafeZoon; }
@@ -209,9 +216,9 @@ namespace CirclularGage.Main
         #region Methods
         private void InitVariables()
         {
-            GaugeRadius = 110;
+            GaugeRadius = 100;
             AirPortHeadingAngle = 0;
-            AirPortSymbolBackgroundSize = 0;
+            AirPortSymbolBackgroundWidth = 0;
             SelectedTcasDisplayRange = TcasDisplayRange.Rate5;
             SetAirPortBackgroundSetting(SelectedTcasDisplayRange);
             Score = double.MinValue;
@@ -225,16 +232,20 @@ namespace CirclularGage.Main
             switch (tcasDisplayRange)
             {
                 case TcasDisplayRange.Rate5:
-                    AirPortSymbolBackgroundSize = 123;
+                    AirPortSymbolBackgroundHeight = 108.1690141;
+                    AirPortSymbolBackgroundWidth = 100.1450474;
                     break;
                 case TcasDisplayRange.Rate10:
-                    AirPortSymbolBackgroundSize = 61;
+                    AirPortSymbolBackgroundHeight = 54.08450704;
+                    AirPortSymbolBackgroundWidth = 50.07252371;
                     break;
                 case TcasDisplayRange.Rate20:
-                    AirPortSymbolBackgroundSize = 31;
+                    AirPortSymbolBackgroundHeight = 27.04225352;
+                    AirPortSymbolBackgroundWidth = 25.03626185;
                     break;
                 case TcasDisplayRange.Rate40:
-                    AirPortSymbolBackgroundSize = 0;
+                    AirPortSymbolBackgroundHeight = 0;
+                    AirPortSymbolBackgroundWidth = 0;
                     break;
 
             }

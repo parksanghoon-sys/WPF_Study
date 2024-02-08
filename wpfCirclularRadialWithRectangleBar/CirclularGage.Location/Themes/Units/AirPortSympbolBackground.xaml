@@ -10,8 +10,8 @@
                 <ControlTemplate TargetType="{x:Type control:AirPortSympbolBackground}">
                     <Grid Background="Transparent">
                         <Ellipse x:Name="uavEclipse"
-                                 Width="{TemplateBinding AirPortSymbolBackgroundSize}"
-                                 Height="{TemplateBinding AirPortSymbolBackgroundSize}"
+                                 Width="{TemplateBinding AirPortSymbolBackgroundWidth}"
+                                 Height="{TemplateBinding AirPortSymbolBackgroundHeight}"
                                  Fill="Transparent" Stroke="White" StrokeDashArray="1 0 0 10"  
                                  StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeDashCap="Round"/>
                     </Grid>

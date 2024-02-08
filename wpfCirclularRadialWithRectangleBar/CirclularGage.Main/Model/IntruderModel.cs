@@ -9,8 +9,8 @@ namespace CirclularGage.Main.Model
 {
     public class IntruderModel : ViewModelBase
     {
-        //private readonly double _centerAdjustmentYAxis = 29.92957746;
-        private readonly double _centerAdjustmentYAxis = 0;
+        private readonly double _centerAdjustmentYAxis = 40.84507042;
+        //private readonly double _centerAdjustmentYAxis = 0;
         private readonly double _airportSymbolSize = 30;
         private readonly double _bearingNotValidXAdjustmentXAxis = -19;
 
@@ -177,33 +177,56 @@ namespace CirclularGage.Main.Model
         {
             var angle = Bearing - 90;
             var radianAngle = (angle * Math.PI) / 180;
-            var xPoint = (Range * Math.Cos(radianAngle) * TcasRangeDisplayRatito(TcasDisplayRange)) + _intruderSymbolCenterAdjustX;
+            var xPoint = (Range * Math.Cos(radianAngle) * TcasRangeDisplayRatitoX(TcasDisplayRange)) + _intruderSymbolCenterAdjustX;
             return xPoint;
         }
         private double CalculateIntruderYPoint()
         {
             var angle = Bearing - 90;
             var radianAngle = (angle * Math.PI) / 180;
-            var yPoint = (_centerAdjustmentYAxis + Range  * Math.Sin(radianAngle) * TcasRangeDisplayRatito(TcasDisplayRange)) + _intruderSymbolCenterAdjustY;
+            var yPoint = (_centerAdjustmentYAxis + (Range  * Math.Sin(radianAngle)) * TcasRangeDisplayRatitoY(TcasDisplayRange)) + _intruderSymbolCenterAdjustY;
             return yPoint;
         }
 
-        private double TcasRangeDisplayRatito(TcasDisplayRange tcasDisplayRange)
+        private double TcasRangeDisplayRatitoY(TcasDisplayRange tcasDisplayRange)
         {
             double ratito;
             switch (tcasDisplayRange)
             {
                 case TcasDisplayRange.Rate5:
-                    ratito = 1;
+                    ratito = 27.04225352;
                     break;
                 case TcasDisplayRange.Rate10:
-                    ratito = 15;
+                    ratito = 13.52112676;
                     break;
                 case TcasDisplayRange.Rate20:
-                    ratito = 7.5;
+                    ratito = 6.76056338;
                     break;
                 case TcasDisplayRange.Rate40:
-                    ratito = 3.75;
+                    ratito = 3.38028169;
+                    break;
+                default:
+                    ratito = 1;
+                    break;
+            }
+            return ratito;
+        }
+        private double TcasRangeDisplayRatitoX(TcasDisplayRange tcasDisplayRange)
+        {
+            double ratito;
+            switch (tcasDisplayRange)
+            {
+                case TcasDisplayRange.Rate5:
+                    ratito = 25.03626185;
+                    break;
+                case TcasDisplayRange.Rate10:
+                    ratito = 13.71428571;
+                    break;
+                case TcasDisplayRange.Rate20:
+                    ratito = 6.857142857;
+                    break;
+                case TcasDisplayRange.Rate40:
+                    ratito = 3.428571429;
                     break;
                 default:
                     ratito = 1;

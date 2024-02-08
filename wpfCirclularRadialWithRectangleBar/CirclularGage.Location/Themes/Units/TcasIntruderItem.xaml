@@ -10,7 +10,7 @@
     <convert:TcasIntruderItemYAxsisConverter x:Key="TcasIntruderItemYAxsisConverter"/>
     <convert:NegativePositiveConverter x:Key="NegativePositiveConverter"/>
 
-    <SolidColorBrush x:Key="WarningColor" Color="Lime"/>
+    <SolidColorBrush x:Key="WarningColor" Color="Transparent"/>
     <SolidColorBrush x:Key="OtherTrafficColor" Color="#FF3AB8E6"/>
     <SolidColorBrush x:Key="TrafficAdvisoryColor" Color="#FFFF00"/>
     <SolidColorBrush x:Key="ResolutionAdvisoryColor" Color="#FF0000"/>

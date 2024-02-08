@@ -12,15 +12,26 @@ namespace CirclularGage.Location.UI.Units
     {
 
         /// <summary>
-        /// 비행체 심볼 Background 크기
+        /// 비행체 심볼 Background Width 크기
         /// </summary>
-        public static readonly DependencyProperty AirPortSymbolBackgroundSizeProperty =
-            DependencyProperty.Register("AirPortSymbolBackgroundSize", typeof(double), typeof(AirPortSympbolBackground), new PropertyMetadata(null));
+        public static readonly DependencyProperty AirPortSymbolBackgroundWidthProperty =
+            DependencyProperty.Register("AirPortSymbolBackgroundWidth", typeof(double), typeof(AirPortSympbolBackground), new PropertyMetadata(null));
 
-        public double AirPortSymbolBackgroundSize
+        public double AirPortSymbolBackgroundWidth
         {
-            get { return (double)GetValue(AirPortSymbolBackgroundSizeProperty); }
-            set { SetValue(AirPortSymbolBackgroundSizeProperty, value); }
+            get { return (double)GetValue(AirPortSymbolBackgroundWidthProperty); }
+            set { SetValue(AirPortSymbolBackgroundWidthProperty, value); }
+        }
+        /// <summary>
+        /// 비행체 심볼 Background Width 크기
+        /// </summary>
+        public static readonly DependencyProperty AirPortSymbolBackgroundHeightProperty =
+            DependencyProperty.Register("AirPortSymbolBackgroundHeight", typeof(double), typeof(AirPortSympbolBackground), new PropertyMetadata(null));
+
+        public double AirPortSymbolBackgroundHeight
+        {
+            get { return (double)GetValue(AirPortSymbolBackgroundHeightProperty); }
+            set { SetValue(AirPortSymbolBackgroundHeightProperty, value); }
         }
 
         static AirPortSympbolBackground()
