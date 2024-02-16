@@ -266,9 +266,12 @@ namespace CirclularGage.Main
                 var randomIntruderVerticalSenseState = (IntruderVerticalSenseState)values2.GetValue(random.Next(values2.Length));
                 Array values3 = Enum.GetValues(typeof(DisplayMatrix));
                 var randomDisplayMatrix = (DisplayMatrix)values3.GetValue(random.Next(values3.Length));
+                var altitue = random.Next(-1200, 1200);
+                var bearing = 360;
+                var range = 2;
 
-                OnIntruderModelMessageReceived(IntruderModel.IntruderModelFactory(i + 1, 2,
-                    random.Next(-1200, 1200), randomIntruderVerticalSenseState, TcasIntruderSymbol.ProximateTraffic, randomDisplayMatrix,SelectedTcasDisplayRange, 360 / 30 * (i + 1)));
+                OnIntruderModelMessageReceived(IntruderModel.IntruderModelFactory(i + 1, range,
+                    altitue, randomIntruderVerticalSenseState, TcasIntruderSymbol.ProximateTraffic, randomDisplayMatrix,SelectedTcasDisplayRange, bearing/(i+10)));
                 Thread.Sleep(10);
             }
         }
@@ -284,7 +287,7 @@ namespace CirclularGage.Main
             if (IntruderItems.Contains(model))
             {
                 var item = IntruderItems.Where(k => k.Equals(model)).FirstOrDefault();
-                item.IntruderVerticalMoveMentState = model.IntruderVerticalMoveMentState;
+                item.IntruderVerticalMoveMentState = model.IntruderVerticalMoveMentState;               
                 item.IntruderDisplay = model.IntruderDisplay;
                 item.Bearing = model.Bearing;
                 item.Altitude = model.Altitude;

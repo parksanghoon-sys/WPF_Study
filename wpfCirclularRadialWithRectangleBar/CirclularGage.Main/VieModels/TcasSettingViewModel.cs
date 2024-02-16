@@ -15,12 +15,12 @@ namespace CirclularGage.Main
     public class TcasSettingViewModel : ViewModelBase
     {        
         private IntruderModel _currentIntruder;
-        private TcasIntruderSymbol _intruderType;
+        private DisplayMatrix _intruderType;
         #region Properties
-        public TcasIntruderSymbol IntruderType
+        public DisplayMatrix IntruderType
         {
-            get { return _intruderType; }
-            set { _intruderType = value; OnPropertyChagned(); }
+            get { return _currentIntruder.IntruderDisplay; }
+            set { _currentIntruder.IntruderDisplay = value; OnPropertyChagned(); }
         }
         public IntruderVerticalSenseState IntruderVerticalMoveMentState
         {
@@ -59,7 +59,7 @@ namespace CirclularGage.Main
         }
         public Array IntruderTypes
         {
-            get { return Enum.GetValues(typeof(TcasIntruderSymbol)); }
+            get { return Enum.GetValues(typeof(DisplayMatrix)); }
         }
         public Array IntruderVerticalSenseStates
         {
@@ -117,7 +117,7 @@ namespace CirclularGage.Main
             {
                 _currentIntruder.Number = model.Number;
                 Bearing = model.Bearing;
-                IntruderType = model.IntruderType;
+                IntruderType = model.IntruderDisplay;
                 Altitude = model.Altitude;
                 Range = model.Range;
                 IntruderVerticalMoveMentState = model.IntruderVerticalMoveMentState;
