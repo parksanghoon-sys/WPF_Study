@@ -71,14 +71,14 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type control:TcasIntruderItem}">
-                    <Grid x:Name="backgorund" Width="20" Height="22">
+                    <Grid x:Name="backgorund" Width="22" Height="22">
                         <Grid.RenderTransform>
                             <TransformGroup>
                                 <!--<RotateTransform Angle="{Binding Bearing}"/>-->
                                 <!--, ConverterParameter={Binding Width, ElementName=backgorund}-->
 
-                                <TranslateTransform X="{Binding MoniterPoint.X ,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource TcasIntruderItemXAxsisConverter}}"
-                                                    Y="{Binding MoniterPoint.Y,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource TcasIntruderItemYAxsisConverter}}"/>
+                                <TranslateTransform X="{Binding IntruderModelMonitoring.MoniterPoint.X ,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource TcasIntruderItemXAxsisConverter}}"
+                                                    Y="{Binding IntruderModelMonitoring.MoniterPoint.Y,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource TcasIntruderItemYAxsisConverter}}"/>
                             </TransformGroup>
                         </Grid.RenderTransform>
                         <Grid.RowDefinitions>

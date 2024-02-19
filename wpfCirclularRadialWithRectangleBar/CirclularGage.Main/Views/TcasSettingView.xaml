@@ -103,7 +103,7 @@
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0" Text="고도 : "/>
                     <unit:NumericUpDownControl Grid.Column="1" MaxValue="12700" MinValue="-12700" Foreground="Wheat"
-                                              StepSize="100"  IsReadOnly="True" 
+                                              StepSize="100"  IsReadOnly="False" 
                                               NumberStyle="None" Value="{Binding Altitude, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     <TextBlock Grid.Column="2" Text="상대거리 : " Margin="50 0 0 0"/>
                     <unit:NumericUpDownControl Grid.Column="3" MaxValue="127.9375" MinValue="0" Foreground="Wheat"

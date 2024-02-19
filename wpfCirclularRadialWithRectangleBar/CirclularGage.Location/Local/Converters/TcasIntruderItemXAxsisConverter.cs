@@ -14,7 +14,7 @@ namespace CirclularGage.Location.Local.Converters
         {
             if ( value is double X)
             {
-                return X - 10;
+                return X - 11;
             }
             return null;
         }

@@ -11,9 +11,9 @@ namespace CirclularGage.Location.Local.Converters
             if(value is double altitude)
             {
                 if(altitude > 0)
-                    return "+" + altitude.ToString("#.#");
+                    return "+" + altitude.ToString();
                 else 
-                    return altitude.ToString("#.#");
+                    return altitude.ToString();
             }
             return value;
         }

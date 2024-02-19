@@ -67,6 +67,7 @@
     </ApplicationDefinition>
     <Compile Include="Common\IServiceTest.cs" />
     <Compile Include="Common\Messenger.cs" />
+    <Compile Include="Helpers\IntruderModelMonitoring.cs" />
     <Compile Include="Interface\IView.cs" />
     <Compile Include="Model\IntruderModel.cs" />
     <Compile Include="Views\TcasSettingView.xaml.cs">
