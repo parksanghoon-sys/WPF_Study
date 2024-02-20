@@ -83,7 +83,7 @@ namespace CirclularGage.Main.Model
                 if (_intruderVerticalMoveMentState == IntruderVerticalSenseState.Climbing 
                     || _intruderVerticalMoveMentState == IntruderVerticalSenseState.Descending)
                 {
-                    IntruderModelMonitoring._intruderSymbolCenterAdjustX = 5;
+                    IntruderModelMonitoring._intruderSymbolCenterAdjustX = 6;
                 }
                 else
                 {
@@ -175,7 +175,7 @@ namespace CirclularGage.Main.Model
                 result = bearing;
             }
             return result;
-        }    
+        }
       
        
         private TcasIntruderSymbol CalculateIntruderType()

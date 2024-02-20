@@ -12,7 +12,7 @@
                         <Ellipse x:Name="uavEclipse"
                                  Width="{TemplateBinding AirPortSymbolBackgroundWidth}"
                                  Height="{TemplateBinding AirPortSymbolBackgroundHeight}"
-                                 Fill="Transparent" Stroke="White" StrokeDashArray="1 0 0 10"  
+                                 Fill="Transparent" Stroke="White" StrokeDashArray="1 0 0 8"  
                                  StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeDashCap="Round"/>
                     </Grid>
                 </ControlTemplate>

@@ -29,7 +29,7 @@ namespace CirclularGage.Location.Local.Converters
         {
             if (value is double altitude)
             {
-                if (altitude > 0)
+                if (altitude >= 0)
                     return true;
                 else
                     return false;

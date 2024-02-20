@@ -113,24 +113,7 @@ namespace CirclularGage.Main.Helpers
             var pointY = point2.Y;
             var centerX = 0;
             var centerY = _centerAdjustmentYAxis;
-            //var angle = _intruderModel.Bearing - 90;
-            //var radianAngle = (angle * Math.PI) / 180;            
-            //var m = Math.Tan(radianAngle);
-            //var c = y - m * x;
-            //var a = 1 + (m * m);
-            //var b = 2 * (m * c - m * center_y - center_x);
-            //c = Math.Pow(center_x, 2) + Math.Pow((c - center_y), 2) - Math.Pow(_IVSIGauageSize, 2);
-            //var x_intersect1 = (-b + Math.Sqrt(Math.Pow(b, 2) - 4 * a * c)) / (2 * a);
-            //var x_intersect2 = (-b - Math.Sqrt(Math.Pow(b, 2) - 4 * a * c)) / (2 * a);
-
-            //var y_intersect1 = m * x_intersect1 + c;
-            //var y_intersect2 = m * x_intersect2 + c;
-
-            //double deltaX = x - center_x;
-            //double deltaY = y - center_y;
-            //double scale = _IVSIGauageSize / Math.Sqrt(deltaX * deltaX + deltaY * deltaY);
-            //double intersectX = _IVSIGauageSize + deltaX * scale;
-            //double intersectY = _IVSIGauageSize + deltaY * scale;
+       
 
             // 주어진 점과 원의 교차점을 계산
             double dx = pointX - centerX;

@@ -78,7 +78,7 @@
                                 <!--, ConverterParameter={Binding Width, ElementName=backgorund}-->
 
                                 <TranslateTransform X="{Binding IntruderModelMonitoring.MoniterPoint.X ,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource TcasIntruderItemXAxsisConverter}}"
-                                                    Y="{Binding IntruderModelMonitoring.MoniterPoint.Y,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource TcasIntruderItemYAxsisConverter}}"/>
+                                                    Y="{Binding IntruderModelMonitoring.MoniterPoint.Y, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource TcasIntruderItemYAxsisConverter}}"/>
                             </TransformGroup>
                         </Grid.RenderTransform>
                         <Grid.RowDefinitions>

@@ -222,7 +222,7 @@ namespace CirclularGage.Main
             SelectedTcasDisplayRange = TcasDisplayRange.Rate5;
             SetAirPortBackgroundSetting(SelectedTcasDisplayRange);
             Score = double.MinValue;
-            RiseLedOn = false;
+            RiseLedOn = true;
             FallLedOn = false;
             IntruderItems = new ObservableCollection<IntruderModel>();
         }

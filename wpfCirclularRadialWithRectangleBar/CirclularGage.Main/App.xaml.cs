@@ -15,6 +15,7 @@ namespace CirclularGage.Main
         public static IServiceProvider Service;
         public App()
         {
+       
             LogBase.AddFileListener();
             ExTrace.Print("App Start");
             Service = ConfigureServices();
