@@ -316,7 +316,7 @@ namespace CirclularGage.Main
         }
         private void CreateMaxIntruderItems()
         {
-            for (int i = 0; i <10; i++)
+            for (int i = 0; i <3; i++)
             {
                 var random = new Random();
                 Array values2 = Enum.GetValues(typeof(IntruderVerticalSenseState));

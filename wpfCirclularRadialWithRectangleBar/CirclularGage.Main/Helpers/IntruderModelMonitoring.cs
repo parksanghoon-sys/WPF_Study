@@ -44,7 +44,7 @@ namespace CirclularGage.Main.Helpers
             point.Y = yPoint;
             point.X = xPoint;
             if (IsOverCheckIVSI(point) == true)
-                point = OverPointIVSI(point);
+                point = OverIntruderIVSIPoint(point);
 
             point.Y += _intruderSymbolCenterAdjustY;
             point.X += _intruderSymbolCenterAdjustX;
@@ -142,47 +142,26 @@ namespace CirclularGage.Main.Helpers
             //point.Y -= _intruderSymbolCenterAdjustY;
             return point;
         }
+        private Point OverIntruderIVSIPoint(Point point)
+        {
+            Point resultPoint = new Point();
+            var pointX = point.X;
+            var pointY = point.Y;
+            var centerX = 0;
+            var centerY = _centerAdjustmentYAxis;
+            
+            //double edgeX = centerX + vx * _IVSIGauageSize;
+            //double edgeY = centerY + vy * _IVSIGauageSize;
+            // 주어진 포인트와 중심 사이의 각도 계산
+            double angleRadians = Math.Atan2(pointY - centerY, pointX - centerX);
+            // 좌표 계산
+            double edgeX = centerX + _IVSIGauageSize * Math.Cos(angleRadians);
+            double edgeY = centerY + _IVSIGauageSize * Math.Sin(angleRadians) - _centerAdjustmentYAxis;
+
+            resultPoint.X = edgeX ;
+            resultPoint.Y = edgeY ;
+            return resultPoint;
+        }
     }
-//    import math
-
-//# 주어진 값
-//radius = 100  # 원의 반지름
-//center_x = 0  # 원의 중심 x 좌표
-//center_y = -35  # 원의 중심 y 좌표
-//angle_degrees = 45  # 각도 (도)
-
-//# 각도를 라디안으로 변환
-//angle_radians = math.radians(angle_degrees)
-
-//# 주어진 각도와 거리로부터 점의 좌표 계산
-//x = center_x + radius * math.cos(angle_radians)
-//y = center_y + radius* math.sin(angle_radians)
-
-//print("계산된 점의 좌표:", x, y)
-
-//# 원의 방정식: (x - center_x)^2 + (y - center_y)^2 = radius^2
-//# 직선의 방정식: y = mx + c
-//# 두 직선을 연립하여 x, y를 구하는 과정이 필요함
-//# 우선 직선의 기울기 m을 계산
-//m = math.tan(angle_radians)
-
-//# 직선의 y절편 c 계산
-//c = y - m * x
-
-//# 연립방정식을 풀어 교차점 계산
-//a = 1 + m**2
-//b = 2 * (m* c - m* center_y - center_x)
-//c = center_x**2 + (c - center_y)**2 - radius**2
-
-//# 교차점의 x 좌표를 구함
-//x_intersect1 = (-b + math.sqrt(b**2 - 4 * a * c)) / (2 * a)
-//x_intersect2 = (-b - math.sqrt(b**2 - 4 * a * c)) / (2 * a)
-
-//# 교차점의 y 좌표를 구함
-//y_intersect1 = m* x_intersect1 + c
-//y_intersect2 = m * x_intersect2 + c
-
-//print("원의 가장자리와의 교차점 1:", x_intersect1, y_intersect1)
-//print("원의 가장자리와의 교차점 2:", x_intersect2, y_intersect2)
 
 }
