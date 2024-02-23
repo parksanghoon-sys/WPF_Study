@@ -452,8 +452,8 @@ namespace CirclularGage.Location.UI.Units
             SetValuekRangeChecked(ref startRange);
             SetValuekRangeChecked(ref endRange);
 
-            if (startRange == endRange)
-                return;
+            //if (startRange == endRange)
+            //    return;
 
             var actualWidth = this.ActualWidth;
             var actualHeight = this.ActualHeight;

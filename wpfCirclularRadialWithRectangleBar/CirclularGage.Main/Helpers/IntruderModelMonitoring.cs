@@ -13,7 +13,7 @@ namespace CirclularGage.Main.Helpers
     public class IntruderModelMonitoring
     {
         private readonly IntruderModel _intruderModel;
-        private readonly double _centerAdjustmentYAxis = 40.71126761;
+        private readonly double _centerAdjustmentYAxis = 39.21126761;
         //private readonly double _centerAdjustmentYAxis = 0;
         private readonly double _airportSymbolSize = 30;
         private readonly double _bearingNotValidXAdjustmentXAxis = -19;
@@ -37,17 +37,19 @@ namespace CirclularGage.Main.Helpers
             var angle = _intruderModel.Bearing - 90;
             var radianAngle = (angle * Math.PI) / 180;     
             var yPoint = _centerAdjustmentYAxis + _intruderModel.Range * Math.Sin(radianAngle) * TcasRangeDisplayRatitoY(_intruderModel.TcasDisplayRange);
-            yPoint += _intruderSymbolCenterAdjustY;
-            point.Y = yPoint;
 
             var xPoint = Math.Cos(radianAngle);
             xPoint *= _intruderModel.Range;
             xPoint *= TcasRangeDisplayRatitoX(_intruderModel.TcasDisplayRange);
-            xPoint += _intruderSymbolCenterAdjustX;
-
+            point.Y = yPoint;
             point.X = xPoint;
             if (IsOverCheckIVSI(point) == true)
                 point = OverPointIVSI(point);
+
+            point.Y += _intruderSymbolCenterAdjustY;
+            point.X += _intruderSymbolCenterAdjustX;
+       
+
             return point;
         }
         private double TcasRangeDisplayRatitoY(TcasDisplayRange tcasDisplayRange)
@@ -59,7 +61,7 @@ namespace CirclularGage.Main.Helpers
                     ratito = 27.04225352;
                     break;
                 case TcasDisplayRange.Rate10:
-                    ratito = 13.632;
+                    ratito = 13.52112676;
                     break;
                 case TcasDisplayRange.Rate20:
                     ratito = 6.76056338;

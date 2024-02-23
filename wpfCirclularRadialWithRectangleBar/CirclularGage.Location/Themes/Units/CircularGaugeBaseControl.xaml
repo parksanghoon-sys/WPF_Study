@@ -86,11 +86,11 @@
                                 </LinearGradientBrush>
                             </Path.Fill>
                         </Path>
-                        <view:AirPortSympbolBackground Panel.ZIndex="1" Margin="0 81.42253521  0 0" 
+                        <view:AirPortSympbolBackground Panel.ZIndex="1" Margin="0 78.42253521 0 0" 
                                                        AirPortSymbolBackgroundWidth="{Binding AirPortSymbolBackgroundWidth}"
                                                        AirPortSymbolBackgroundHeight="{Binding AirPortSymbolBackgroundHeight}"/>
                         <view:AirPortSymbol AirPortSymbolSize="15" HeadAngeleValue="{Binding AirPortHeadingAngle}" Panel.ZIndex="2"
-                                                   Margin="0 139.2112676  0 0"/>
+                                                   Margin="0 131.7112676 0 0"/>
                         <!--<view:AirPortSympbolBackground Panel.ZIndex="1" 
                                                               AirPortSymbolBackgroundSize="{Binding AirPortSymbolBackgroundSize}" />
                         <view:AirPortSymbol AirPortSymbolSize="15" HeadAngeleValue="{Binding AirPortHeadingAngle}" Panel.ZIndex="2"

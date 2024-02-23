@@ -53,12 +53,50 @@ namespace CirclularGage.Main
         public double StartSafeZoon
         {
             get { return _startSafeZoon; }
-            set { _startSafeZoon = value; OnPropertyChagned(); }
+            set 
+            { 
+                _startSafeZoon = value;
+                if (Score < StartSafeZoon)
+                {
+                    RiseLedOn = true;
+                    FallLedOn = false;
+                }
+                else if (Score > EndSafeZoon)
+                {
+                    FallLedOn = true;
+                    RiseLedOn = false;
+                }
+                else
+                {
+                    RiseLedOn = false;
+                    FallLedOn = false;
+                }
+                OnPropertyChagned(); 
+            }
         }
         public double EndSafeZoon
         {
             get { return _endtSafeZoon; }
-            set { _endtSafeZoon = value; OnPropertyChagned(); }
+            set 
+            { 
+                _endtSafeZoon = value;
+                if (Score < StartSafeZoon)
+                {
+                    RiseLedOn = true;
+                    FallLedOn = false;
+                }
+                else if (Score > EndSafeZoon)
+                {
+                    FallLedOn = true;
+                    RiseLedOn = false;
+                }
+                else
+                {
+                    RiseLedOn = false;
+                    FallLedOn = false;
+                }
+                OnPropertyChagned(); 
+            }
         }
         public double Score
         {
@@ -73,12 +111,20 @@ namespace CirclularGage.Main
         public double StartWarningZoon
         {
             get { return _startWarningZoon; }
-            set { _startWarningZoon = value; OnPropertyChagned(); }
+            set 
+            { 
+                _startWarningZoon = value;            
+                OnPropertyChagned(); 
+            }
         }
         public double EndWarningZoon
         {
             get { return _endWarningZoon; }
-            set { _endWarningZoon = value; OnPropertyChagned(); }
+            set 
+            { 
+                _endWarningZoon = value;               
+                OnPropertyChagned(); 
+            }
         }
         public bool RiseLedOn
         {
@@ -107,7 +153,18 @@ namespace CirclularGage.Main
         public TcasAltitudeType TcasAltitudeType
         {
             get { return _tcasAltitudeType; }
-            set { _tcasAltitudeType = value; OnPropertyChagned(); }
+            set 
+            {
+                _tcasAltitudeType = value; 
+                if(_tcasAltitudeType == TcasAltitudeType.Absolute)
+                {
+                    foreach(var item in IntruderItems)
+                    {
+                        item.Altitude += 200;
+                    }
+                }
+                OnPropertyChagned();                
+            }
         }
         public TcasDisplayAboveBelow TcasDisplayAboveBelow
         {
@@ -221,7 +278,7 @@ namespace CirclularGage.Main
             AirPortSymbolBackgroundWidth = 0;
             SelectedTcasDisplayRange = TcasDisplayRange.Rate5;
             SetAirPortBackgroundSetting(SelectedTcasDisplayRange);
-            Score = double.MinValue;
+            Score = 0;
             RiseLedOn = true;
             FallLedOn = false;
             IntruderItems = new ObservableCollection<IntruderModel>();
@@ -259,7 +316,7 @@ namespace CirclularGage.Main
         }
         private void CreateMaxIntruderItems()
         {
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i <10; i++)
             {
                 var random = new Random();
                 Array values2 = Enum.GetValues(typeof(IntruderVerticalSenseState));
@@ -271,7 +328,7 @@ namespace CirclularGage.Main
                 var range = 2;
 
                 OnIntruderModelMessageReceived(IntruderModel.IntruderModelFactory(i + 1, range,
-                    altitue, randomIntruderVerticalSenseState, TcasIntruderSymbol.ProximateTraffic, randomDisplayMatrix,SelectedTcasDisplayRange, bearing/(i+10)));
+                    altitue, randomIntruderVerticalSenseState, TcasIntruderSymbol.ProximateTraffic, randomDisplayMatrix,SelectedTcasDisplayRange,(bearing/((i + 1)))));
                 Thread.Sleep(10);
             }
         }
