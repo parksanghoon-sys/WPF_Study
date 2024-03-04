@@ -43,7 +43,8 @@ namespace CirclularGage.Main.Helpers
             xPoint *= TcasRangeDisplayRatitoX(_intruderModel.TcasDisplayRange);
             point.Y = yPoint;
             point.X = xPoint;
-            if (IsOverCheckIVSI(point) == true)
+            if (IsOverCheckIVSI(point) == true && (_intruderModel.IntruderType == TcasIntruderSymbol.ResolutionAdvisorty 
+                                                    || _intruderModel.IntruderType == TcasIntruderSymbol.TrafficAdvisory))
                 point = OverIntruderIVSIPoint(point);
 
             point.Y += _intruderSymbolCenterAdjustY;

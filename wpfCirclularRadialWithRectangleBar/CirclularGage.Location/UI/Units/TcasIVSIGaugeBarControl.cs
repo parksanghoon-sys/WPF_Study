@@ -268,7 +268,7 @@ namespace CirclularGage.Location.UI.Units
                 majorscalevaluett.Y = i;
                 TranslateTransform majorscalevaluettext = new TranslateTransform();
                 majorscalevaluettext.X = -30;
-                majorscalevaluettext.Y = i;
+                majorscalevaluettext.Y = i - 6 ;
                 tb.RenderTransform = majorscalevaluettext;
                 majortickrect.RenderTransform = majorscalevaluett;
 
@@ -448,9 +448,11 @@ namespace CirclularGage.Location.UI.Units
 
         private void DrawRangeIndicator(double startRange, double endRange, IndicatorType indicatorType)
         {
-            //if (startRange == 0 && endRange == 0) return;
-            SetValuekRangeChecked(ref startRange);
-            SetValuekRangeChecked(ref endRange);
+            if (startRange == 0 && endRange == 0) return;
+            startRange = Math.Round(startRange, 1);
+            endRange = Math.Round(endRange, 1);
+            //SetValuekRangeChecked(ref startRange);
+            //SetValuekRangeChecked(ref endRange);
 
             //if (startRange == endRange)
             //    return;
@@ -554,32 +556,66 @@ namespace CirclularGage.Location.UI.Units
             var startData = (realworldunit * startValue) + middleHeight;
             var endData = (realworldunit * endValue) + middleHeight;
 
-            if (startValue <= MinValue)
+            if (startValue < MinValue )
             {
-                C1 = new Point(actualWidth, endHeight);
-                D1 = new Point(0, actualHeight);
+              
+                if (endData > endHeight)
+                {
+                    C1 = new Point(0, 0);
+                    D1 = new Point(0, 0);
+                }
+                else
+                {
+                    C1 = new Point(actualWidth, endHeight);
+                    D1 = new Point(0, actualHeight);
+                }
             }
             else
             {
-                C1 = new Point(actualWidth, startData);
-                D1 = new Point(0, startData);
+                if(startData < startHeight)
+                {
+                    C1 = new Point(0, 0);
+                    D1 = new Point(0, 0);
+                }
+                else
+                {
+                    C1 = new Point(actualWidth, startData);
+                    D1 = new Point(0, startData);
+                }
+
             }
-            if (endValue >= MaxValue)
+            if (endValue > MaxValue )
             {
-                A1 = new Point(0, 0);
-                B1 = new Point(actualWidth, startHeight);
+                if (startData < startHeight)
+                {
+                    A1 = new Point(0, 0);
+                    B1 = new Point(0, 0);
+                }
+                else
+                {
+                    A1 = new Point(0, 0);
+                    B1 = new Point(actualWidth, startHeight);
+                }
             }
             else
             {
-                A1 = new Point(0, endData);
-                B1 = new Point(actualWidth, endData);
+                if (endData > endHeight)
+                {
+                    A1 = new Point(0, 0);
+                    B1 = new Point(0, 0);
+                }
+                else
+                {
+                    A1 = new Point(0, endData);
+                    B1 = new Point(actualWidth, endData);
+                }             
             }
             p[0] = A1; p[1] = B1; p[2] = C1; p[3] = D1;
 
-
             return p;
         }
-        private void SetValuekRangeChecked(ref double value)
+
+        private void SetValueRangeChecked(ref double value)
         {
             if (value < MinValue)
                 value = MinValue;
