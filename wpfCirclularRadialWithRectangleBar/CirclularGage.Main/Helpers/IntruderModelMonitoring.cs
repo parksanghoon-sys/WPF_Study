@@ -171,6 +171,7 @@ namespace CirclularGage.Main.Helpers
             var pointX = point.X;
             var pointY = point.Y;
             var centerX = 0;
+            // 90 도 일때 기울기 0 방지코드
             var centerY = _centerAdjustmentYAxis * 0.99;
 
             var m = (pointY - centerY) / (pointX - centerX);
