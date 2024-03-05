@@ -13,11 +13,11 @@ namespace CirclularGage.Main.Helpers
     public class IntruderModelMonitoring
     {
         private readonly IntruderModel _intruderModel;
-        private readonly double _centerAdjustmentYAxis = 39.21126761;
+        private readonly double _centerAdjustmentYAxis = 40.02816901;
         //private readonly double _centerAdjustmentYAxis = 0;
         private readonly double _airportSymbolSize = 30;
         private readonly double _bearingNotValidXAdjustmentXAxis = -19;
-        private readonly double _IVSIGauageSize = 96;
+        private readonly double _IVSIGauageSize = 98;
 
         public double _intruderSymbolCenterAdjustX;
         public double _intruderSymbolCenterAdjustY;
@@ -43,13 +43,14 @@ namespace CirclularGage.Main.Helpers
             xPoint *= TcasRangeDisplayRatitoX(_intruderModel.TcasDisplayRange);
             point.Y = yPoint;
             point.X = xPoint;
+
             if (IsOverCheckIVSI(point) == true && (_intruderModel.IntruderType == TcasIntruderSymbol.ResolutionAdvisorty 
                                                     || _intruderModel.IntruderType == TcasIntruderSymbol.TrafficAdvisory))
-                point = OverIntruderIVSIPoint(point);
+
+                point = OverIntruderIVSIPoint2(point);
 
             point.Y += _intruderSymbolCenterAdjustY;
             point.X += _intruderSymbolCenterAdjustX;
-       
 
             return point;
         }
@@ -59,16 +60,16 @@ namespace CirclularGage.Main.Helpers
             switch (tcasDisplayRange)
             {
                 case TcasDisplayRange.Rate5:
-                    ratito = 27.04225352;
+                    ratito = 27.6056338;
                     break;
                 case TcasDisplayRange.Rate10:
-                    ratito = 13.52112676;
+                    ratito = 13.8028169;
                     break;
                 case TcasDisplayRange.Rate20:
-                    ratito = 6.76056338;
+                    ratito = 6.901408451;
                     break;
                 case TcasDisplayRange.Rate40:
-                    ratito = 3.38028169;
+                    ratito = 3.450704225;
                     break;
                 default:
                     ratito = 1;
@@ -82,16 +83,16 @@ namespace CirclularGage.Main.Helpers
             switch (tcasDisplayRange)
             {
                 case TcasDisplayRange.Rate5:
-                    ratito = 25.03626185;
+                    ratito = 25.55785064;
                     break;
                 case TcasDisplayRange.Rate10:
-                    ratito = 13.71428571;
+                    ratito = 14;
                     break;
                 case TcasDisplayRange.Rate20:
-                    ratito = 6.857142857;
+                    ratito = 7;
                     break;
                 case TcasDisplayRange.Rate40:
-                    ratito = 3.428571429;
+                    ratito = 3.5;
                     break;
                 default:
                     ratito = 1;
@@ -137,10 +138,9 @@ namespace CirclularGage.Main.Helpers
             var m = pointX / pointY;
             var a1 =Math.Sqrt(Math.Pow(_IVSIGauageSize, 2) - Math.Pow(pointX * m + _centerAdjustmentYAxis, 2));
 
-            point.X = point2.X < 0 ? x1 < 0 ? x1 : x2 : x1 > 0 ? x1 : x2;
-            point.Y = point2.Y < 0 ? y1 < 0 ? y1 : y2 : y1 > 0 ? y1 : y2;
-            //point.X -= _intruderSymbolCenterAdjustX;
-            //point.Y -= _intruderSymbolCenterAdjustY;
+            point.X = FindColsesetNumber(pointX, x1, x2);
+            point.Y = FindColsesetNumber(pointY, y1, y2);
+
             return point;
         }
         private Point OverIntruderIVSIPoint(Point point)
@@ -150,18 +150,63 @@ namespace CirclularGage.Main.Helpers
             var pointY = point.Y;
             var centerX = 0;
             var centerY = _centerAdjustmentYAxis;
-            
+
+            var angle = _intruderModel.Bearing - 90;
+            var radianAngle = (angle * Math.PI) / 180;
             //double edgeX = centerX + vx * _IVSIGauageSize;
             //double edgeY = centerY + vy * _IVSIGauageSize;
             // 주어진 포인트와 중심 사이의 각도 계산
             double angleRadians = Math.Atan2(pointY - centerY, pointX - centerX);
             // 좌표 계산
             double edgeX = centerX + _IVSIGauageSize * Math.Cos(angleRadians);
-            double edgeY = centerY + _IVSIGauageSize * Math.Sin(angleRadians) - _centerAdjustmentYAxis;
+            double edgeY = _IVSIGauageSize * Math.Sin(angleRadians);
 
             resultPoint.X = edgeX ;
             resultPoint.Y = edgeY ;
             return resultPoint;
+        }
+        private Point OverIntruderIVSIPoint2(Point point)
+        {
+            Point resultPoint = new Point();
+            var pointX = point.X;
+            var pointY = point.Y;
+            var centerX = 0;
+            var centerY = _centerAdjustmentYAxis * 0.99;
+
+            var m = (pointY - centerY) / (pointX - centerX);
+            var B = centerY;
+
+            var a = 1 + Math.Pow(m, 2);
+            var b = 2 * B * m;
+            var c = Math.Pow(B,2) - Math.Pow(_IVSIGauageSize,2);
+
+            var x1 = (-b + Math.Sqrt(Math.Pow(b, 2) - (4 * a * c)))/ (2 * a);
+            var x2 = (-b - Math.Sqrt(Math.Pow(b, 2) - (4 * a * c)))/ (2 * a);
+
+            m =  (pointX - centerX) / (pointY - centerY);
+            B = -1 * centerY * m;
+            a = 1 + Math.Pow(m, 2);
+            b = 2 * B * m;
+            c = Math.Pow(B, 2) - Math.Pow(_IVSIGauageSize, 2);
+
+            var y1 = (-b + Math.Sqrt(Math.Pow(b, 2) - (4 * a * c)))/(2 * a);
+            var y2 = (-b - Math.Sqrt(Math.Pow(b, 2) - (4 * a * c)))/ (2 * a);
+
+            resultPoint.X = FindColsesetNumber(pointX, x1, x2);
+            resultPoint.Y = FindColsesetNumber(pointY, y1, y2);
+
+            return resultPoint;
+        }
+        private double FindColsesetNumber(double baseNumber, double data1, double data2)
+        {
+            double diff1 = Math.Abs(baseNumber - data1);
+            double diff2 = Math.Abs(baseNumber - data2);
+
+            if (diff1 > diff2)
+                return data2;
+            else if(diff1 < diff2)
+                return data1;
+            return data1;
         }
     }
 

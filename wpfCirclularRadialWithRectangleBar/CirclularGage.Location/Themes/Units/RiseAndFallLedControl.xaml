@@ -3,8 +3,9 @@
                     xmlns:control="clr-namespace:CirclularGage.Location.UI.Units">
 
     <LinearGradientBrush x:Key="BackgroundColor" EndPoint="0.5,1" StartPoint="0.5,0">
-        <GradientStop Color="#FF000000" Offset="0.675"/>
-        <GradientStop Color="#FFC1B5B5" Offset="0.031"/>
+        <!--<GradientStop Color="#FF000000" Offset="0.675"/>-->
+        <!--<GradientStop Color="#FFC1B5B5" Offset="0.031"/>-->
+        <GradientStop Color="#FFA1A5A5" Offset="1"/>
     </LinearGradientBrush>
     <Geometry x:Key="triangleLed">M 0,0 L 10,0 L 5,10 z</Geometry>
 

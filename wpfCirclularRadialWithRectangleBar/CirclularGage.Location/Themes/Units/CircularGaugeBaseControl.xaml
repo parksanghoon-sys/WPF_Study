@@ -8,6 +8,11 @@
     <convert:GlassEffectWidthConverter x:Key="glassEffectWidthConverter"/>
 
     <SolidColorBrush x:Key="TcasPointerBackground" Color="Transparent"/>
+    <LinearGradientBrush x:Key="BackgroundColor" EndPoint="0.5,1" StartPoint="0.5,0">
+        <!--<GradientStop Color="#FF000000" Offset="0.675"/>-->
+        <!--<GradientStop Color="#FFC1B5B5" Offset="0.031"/>-->
+        <GradientStop Color="#FFA1A5A5" Offset="1"/>
+    </LinearGradientBrush>
     
     <Style x:Key="CircularGaugeBaseControl" TargetType="{x:Type view:CircularGaugeBaseControl}">
         <Setter Property="ResetPointerOnStartUp" Value="False" />
@@ -28,13 +33,7 @@
                         <Ellipse x:Name="PointerCap" 
                                  Height="{TemplateBinding Radius,Converter={convert:RadiusToDiameterConverter}, ConverterParameter=2}" 
                                  Width="{TemplateBinding Radius,Converter={convert:RadiusToDiameterConverter}, ConverterParameter=2}"                                  
-                                 StrokeThickness="4" Opacity="1" >
-                            <Ellipse.Stroke>
-                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                    <GradientStop Color="#FF000000" Offset="0.675"/>
-                                    <GradientStop Color="#FFC1B5B5" Offset="0.031"/>
-                                </LinearGradientBrush>
-                            </Ellipse.Stroke>
+                                 StrokeThickness="2" Opacity="1" Stroke="{StaticResource BackgroundColor}">
                             <Ellipse.Fill>
                                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                     <GradientStop Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=GaugeBackgroundColor}" Offset="0.86"/>
@@ -73,7 +72,7 @@
                             </Path.Fill>
                         </Path>
                         <!--Gauge Effect-->
-                        <Path x:Name="GlassEffect" StrokeThickness="1" Stretch="Fill" VerticalAlignment="Bottom"
+                        <!--<Path x:Name="GlassEffect" StrokeThickness="1" Stretch="Fill" VerticalAlignment="Bottom"
                               Height="{TemplateBinding Radius}"
                               Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Radius, 
                                         Converter={convert:RadiusToDiameterConverter}, ConverterParameter=1.88}"
@@ -85,12 +84,12 @@
                                     <GradientStop Color="#FFF8FCF8" Offset="1"/>
                                 </LinearGradientBrush>
                             </Path.Fill>
-                        </Path>
-                        <view:AirPortSympbolBackground Panel.ZIndex="1" Margin="0 78.42253521 0 0" 
+                        </Path>-->
+                        <view:AirPortSympbolBackground Panel.ZIndex="1" Margin="0 80.05633803 0 0" 
                                                        AirPortSymbolBackgroundWidth="{Binding AirPortSymbolBackgroundWidth}"
                                                        AirPortSymbolBackgroundHeight="{Binding AirPortSymbolBackgroundHeight}"/>
                         <view:AirPortSymbol AirPortSymbolSize="15" HeadAngeleValue="{Binding AirPortHeadingAngle}" Panel.ZIndex="2"
-                                                   Margin="0 131.7112676 0 0"/>
+                                                   Margin="0 132.528169 0 0"/>
                         <!--<view:AirPortSympbolBackground Panel.ZIndex="1" 
                                                               AirPortSymbolBackgroundSize="{Binding AirPortSymbolBackgroundSize}" />
                         <view:AirPortSymbol AirPortSymbolSize="15" HeadAngeleValue="{Binding AirPortHeadingAngle}" Panel.ZIndex="2"
