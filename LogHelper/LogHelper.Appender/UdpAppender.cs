@@ -4,7 +4,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 
-namespace LogHelper.LogHelper.Appender
+namespace LogHelper.Appender
 {
     internal class UdpAppender : AppenderBase
     {
@@ -12,6 +12,7 @@ namespace LogHelper.LogHelper.Appender
         private UdpClient _client;
         private IPEndPoint _remoteEndPoint;
         ~UdpAppender() => this.DoDispose(false);
+     
         public string Header { get; set; }
         public string HostAddress { get; set; }
         public int LocalPort { get; set; }
@@ -27,7 +28,8 @@ namespace LogHelper.LogHelper.Appender
                 if (this.LocalPort == 0)
                     this._client = new UdpClient(IPAddress.Parse(this.HostAddress).AddressFamily);
                 else
-                    this._client = new UdpClient(this.LocalPort, IPAddress.Parse(this.HostAddress).AddressFamily);
+                    //this._client = new UdpClient(this.LocalPort, IPAddress.Parse(this.HostAddress).AddressFamily);
+                    this._client = new UdpClient();
             }catch(Exception ex)
             {
                 this._client = (UdpClient)null;

@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\LogHelperXMLConfigure.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\LogHelper\LogHelper.csproj" />
   </ItemGroup>
 
@@ -27,7 +31,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Resources\" />
+    <Resource Include="Resources\LogHelperXMLConfigure.txt" />
   </ItemGroup>
 
 </Project>
