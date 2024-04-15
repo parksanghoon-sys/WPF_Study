@@ -42,8 +42,8 @@
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="0">
                                 <StackPanel Orientation="Vertical">
-                                    <TextBlock Text="x1000&#x0a;(ft/min)" FontSize="8" Foreground="White"/>
-                                    <control:RiseAndFallLedControl  Width="13" Height="13"  Margin="2 3 0 5"
+                                    <TextBlock Text="x1000&#x0a;(ft/min)" FontSize="10" Foreground="White"/>
+                                    <control:RiseAndFallLedControl  Width="17" Height="15"  Margin="0 3 0 5"
                                                TriangleLedColor="#FF00FF00" 
                                                IsTryangleLedOn="{Binding RiseLedOn}"
                                                 TryangleLedAngle="180" />
@@ -51,8 +51,8 @@
                     
                             </Grid>
                             
-                            <control:TcasIVSIGaugeBarControl Height="170" Width="20" Grid.Row="1"
-                                                             MaxValue="2" MinValue="-2" 
+                            <control:TcasIVSIGaugeBarControl Height="150" Width="20" Grid.Row="1"
+                                                             MaxValue="3" MinValue="-3" 
                                                              MajorTickSize="10,2" MajorDivisionsCount="4" 
                                                              MinorTickSize="5,1" MinorDivisionsCount="4"
                                                              MajorTickColor="#000000" MinorTickColor="#000000"
@@ -62,7 +62,7 @@
                                                              OptimalRangeEndValue="{Binding EndSafeZoon}"
                                                              WarningRangeStartValue="{Binding StartWarningZoon}"
                                                              WarningRangeEndValue="{Binding EndWarningZoon}"/>
-                            <control:RiseAndFallLedControl Grid.Row="2" Width="13" Height="13" Margin="2 5 0 3"
+                            <control:RiseAndFallLedControl Grid.Row="2" Width="17" Height="15" Margin="0 5 0 3"
                                            TriangleLedColor="#FF00FF00"
                                            IsTryangleLedOn="{Binding FallLedOn}" 
                                            TryangleLedAngle="0"/>

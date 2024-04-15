@@ -290,7 +290,7 @@ namespace CirclularGage.Location.UI.Units
             TextBlock tb = new TextBlock();
 
             tb.Height = 13;
-            tb.Width = 15;
+            tb.Width = 18;
             tb.FontSize = 10;
             tb.Foreground = new SolidColorBrush(ScaleLabelForeground);
             tb.TextAlignment = TextAlignment.Right;

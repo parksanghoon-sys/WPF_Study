@@ -80,6 +80,17 @@ namespace CirclularGage.Main
             set 
             { 
                 _endtSafeZoon = value;
+
+                OnPropertyChagned(); 
+            }
+        }
+        public double Score
+        {
+            get { return _score; }
+            set 
+            { 
+                _score = Convert.ToDouble(value); 
+                OnPropertyChagned();
                 if (Score < StartSafeZoon)
                 {
                     RiseLedOn = true;
@@ -90,18 +101,17 @@ namespace CirclularGage.Main
                     FallLedOn = true;
                     RiseLedOn = false;
                 }
+                else if (EndSafeZoon == StartSafeZoon)
+                {
+                    RiseLedOn = false;
+                    FallLedOn = false;
+                }
                 else
                 {
                     RiseLedOn = false;
                     FallLedOn = false;
                 }
-                OnPropertyChagned(); 
             }
-        }
-        public double Score
-        {
-            get { return _score; }
-            set { _score = Convert.ToDouble(value); OnPropertyChagned(); }
         }
         public double GaugeRadius
         {

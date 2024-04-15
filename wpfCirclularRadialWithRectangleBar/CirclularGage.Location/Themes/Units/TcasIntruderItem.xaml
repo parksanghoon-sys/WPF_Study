@@ -93,7 +93,7 @@
                         <Grid Grid.Row="1" x:Name="IntruderSymbolLayout" HorizontalAlignment="Center" VerticalAlignment="Center">
                             <StackPanel Orientation="Horizontal">
                                 <ContentControl x:Name="symbol"  Style="{StaticResource OtherTrafficSymbol}" />
-                                <ed:BlockArrow x:Name="flyarrow" Height="10" Width="6" Margin="1 0 0 0" Orientation="Down" ArrowBodySize="0.2" ArrowheadAngle="55"
+                                <ed:BlockArrow x:Name="flyarrow" Height="12" Width="8" Margin="1 0 0 0" Orientation="Down" ArrowBodySize="0.2" ArrowheadAngle="55"
                                                Fill="{Binding IntruderType, Converter={StaticResource IntruderBackgroundConverter}}"/>
                             </StackPanel>
                         </Grid>
