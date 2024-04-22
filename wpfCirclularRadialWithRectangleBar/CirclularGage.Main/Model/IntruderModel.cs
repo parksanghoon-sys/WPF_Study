@@ -61,7 +61,7 @@ namespace CirclularGage.Main.Model
                 _altritude = value;
                 if(_altritude < 0)
                 {
-                    IntruderModelMonitoring._intruderSymbolCenterAdjustY = 4;
+                    IntruderModelMonitoring._intruderSymbolCenterAdjustY = 6;
                 }
                 else
                 {
@@ -83,7 +83,7 @@ namespace CirclularGage.Main.Model
                 if (_intruderVerticalMoveMentState == IntruderVerticalSenseState.Climbing 
                     || _intruderVerticalMoveMentState == IntruderVerticalSenseState.Descending)
                 {
-                    IntruderModelMonitoring._intruderSymbolCenterAdjustX = 4;
+                    IntruderModelMonitoring._intruderSymbolCenterAdjustX = 7;
                 }
                 else
                 {

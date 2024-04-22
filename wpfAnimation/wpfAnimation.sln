@@ -33,6 +33,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "wpfBarGaugeBar", "wpfBarGau
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wpfBearingVaildTextblockTest", "wpfBearingVaildTextblockTest\wpfBearingVaildTextblockTest.csproj", "{C2988DAA-4689-49D9-A608-386534319EC1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wpfCircleProgressbar", "wpfCircleProgressbar\wpfCircleProgressbar.csproj", "{DC55B1E8-B644-42B3-9C43-75987970B096}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -99,6 +101,10 @@ Global
 		{C2988DAA-4689-49D9-A608-386534319EC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C2988DAA-4689-49D9-A608-386534319EC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C2988DAA-4689-49D9-A608-386534319EC1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC55B1E8-B644-42B3-9C43-75987970B096}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC55B1E8-B644-42B3-9C43-75987970B096}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC55B1E8-B644-42B3-9C43-75987970B096}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC55B1E8-B644-42B3-9C43-75987970B096}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
