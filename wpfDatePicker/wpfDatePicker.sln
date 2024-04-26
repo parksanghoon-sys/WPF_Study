@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34322.80
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "wpfDatePicker", "wpfDatePicker.csproj", "{39395090-A7F4-4BCB-BEB5-72EB91BE6041}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoApp", "DemoApp\DemoApp.csproj", "{8418A928-DE14-4063-A3BB-8F109219D588}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomDateControl", "CustomDateControl\CustomDateControl.csproj", "{1248FB5F-1A57-459B-B962-55DD3DCEA8DD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{39395090-A7F4-4BCB-BEB5-72EB91BE6041}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{39395090-A7F4-4BCB-BEB5-72EB91BE6041}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{39395090-A7F4-4BCB-BEB5-72EB91BE6041}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{39395090-A7F4-4BCB-BEB5-72EB91BE6041}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8418A928-DE14-4063-A3BB-8F109219D588}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8418A928-DE14-4063-A3BB-8F109219D588}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8418A928-DE14-4063-A3BB-8F109219D588}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8418A928-DE14-4063-A3BB-8F109219D588}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1248FB5F-1A57-459B-B962-55DD3DCEA8DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1248FB5F-1A57-459B-B962-55DD3DCEA8DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1248FB5F-1A57-459B-B962-55DD3DCEA8DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1248FB5F-1A57-459B-B962-55DD3DCEA8DD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -4,9 +4,16 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:wpfDragableCanvas"
+        xmlns:units="clr-namespace:wpfDragableCanvas.UI.Units"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-
+        <units:DragableCanvasTreeView>
+            <TextBlock Text="test1"/>
+            <TextBlock Text="test2"/>
+            <TextBlock Text="test3"/>
+            <TextBlock Text="test4"/>
+            <TextBlock Text="test5"/>
+        </units:DragableCanvasTreeView>
     </Grid>
 </Window>

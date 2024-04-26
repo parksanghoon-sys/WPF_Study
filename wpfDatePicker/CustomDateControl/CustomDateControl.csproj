@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="CoreMvvmLib.Component">
+      <HintPath>..\..\..\Test\MvvmLib\CoreMvvm\CoreMvvmLib\CoreMvvmLib.Component\bin\Release\net6.0-windows\CoreMvvmLib.Component.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

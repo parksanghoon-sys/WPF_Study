@@ -1,4 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:units="clr-namespace:wpfDragableCanvas.UI.Units">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/wpfDragableCanvas;component/Themes/Units/DragableCanvasTreeView.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
 </ResourceDictionary>
