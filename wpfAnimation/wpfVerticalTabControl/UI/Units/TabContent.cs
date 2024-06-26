@@ -16,6 +16,12 @@ namespace wpfVerticalTabControl.UI.Units
         {
             base.OnApplyTemplate();
             contentScroll = GetTemplateChild("PART_ContentScroll") as AnimationScrollViewerExtention;
+            PreviewMouseWheel += TabContent_PreviewMouseWheel;
+        }
+
+        private void TabContent_PreviewMouseWheel(object sender, System.Windows.Input.MouseWheelEventArgs e)
+        {
+            e.Handled = true;
         }
 
         public void ModeScroll(double targetVerticalOffset)

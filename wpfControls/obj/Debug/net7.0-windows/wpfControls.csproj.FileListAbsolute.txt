@@ -21,7 +21,6 @@ E:\Project\03.WPF_Study\wpfControls\obj\Debug\net7.0-windows\GeneratedInternalTy
 D:\WPF_Study\wpfControls\bin\Debug\net7.0-windows\wpfControls.deps.json
 D:\WPF_Study\wpfControls\bin\Debug\net7.0-windows\wpfControls.dll
 D:\WPF_Study\wpfControls\bin\Debug\net7.0-windows\wpfControls.pdb
-D:\WPF_Study\wpfControls\obj\Debug\net7.0-windows\wpfControls.csproj.AssemblyReference.cache
 D:\WPF_Study\wpfControls\obj\Debug\net7.0-windows\Controls\Modal_\Modal.g.cs
 D:\WPF_Study\wpfControls\obj\Debug\net7.0-windows\Controls\SliderPanel_\SlidePanel.g.cs
 D:\WPF_Study\wpfControls\obj\Debug\net7.0-windows\GeneratedInternalTypeHelper.g.cs
@@ -38,3 +37,4 @@ D:\WPF_Study\wpfControls\obj\Debug\net7.0-windows\wpfControls.dll
 D:\WPF_Study\wpfControls\obj\Debug\net7.0-windows\refint\wpfControls.dll
 D:\WPF_Study\wpfControls\obj\Debug\net7.0-windows\wpfControls.pdb
 D:\WPF_Study\wpfControls\obj\Debug\net7.0-windows\ref\wpfControls.dll
+D:\WPF_Study\wpfControls\obj\Debug\net7.0-windows\wpfControls.sourcelink.json

@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button Name="MyButton" Content="Press Me!" Width="100" Height="100">
+        <Button Name="MyButton" Content="Press Me!" >
             <Button.Triggers>
                 <EventTrigger RoutedEvent="Button.Loaded">
                     <BeginStoryboard>

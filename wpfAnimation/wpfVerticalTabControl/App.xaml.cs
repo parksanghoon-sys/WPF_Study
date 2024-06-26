@@ -13,8 +13,7 @@ namespace wpfVerticalTabControl
     {
         protected override void OnStartup(StartupEventArgs e)
         {
-            base.OnStartup(e);
-            var dialogService = Ioc.Default.GetService<IDialogService>();
+            base.OnStartup(e);            
         }
     }
     public class Bootstrapper
