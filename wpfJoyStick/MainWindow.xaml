@@ -1,0 +1,45 @@
+﻿<Window
+    x:Class="wpfJoyStick.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:wpfJoyStick"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:units="clr-namespace:wpfJoyStick.UI.Units"
+    Title="MainWindow"
+    Width="800"
+    Height="450"
+    mc:Ignorable="d">
+    <Grid>
+        <StackPanel>
+            <units:JoystickControl
+                Width="200"
+                Height="200"
+                Margin="20"
+                JoystickMovedCommand="{Binding JoystickMovedCommand}" />
+
+            <!--  비동기 커맨드 사용 예제  -->
+            <Button
+                Margin="5"
+                Command="{Binding SavePositionCommand}"
+                CommandParameter="{Binding CurrentPosition}"
+                Content="Save Position"/>
+
+            <Button
+                Margin="5"
+                Command="{Binding LoadDataCommand}"
+                Content="Load Data" />
+
+            <!--  로딩 인디케이터  -->
+            <ProgressBar
+                Height="2"
+                Margin="5"
+                IsIndeterminate="True"/>
+
+            <Button
+                Margin="5"
+                Command="{Binding CancelCommand}"
+                Content="Cancel Operations" />
+        </StackPanel>
+    </Grid>
+</Window>
