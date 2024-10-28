@@ -3,5 +3,6 @@
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/wpfJoyStick;component/Themes/Units/JoystickControl.xaml"/>
+        <ResourceDictionary Source="/wpfJoyStick;component/Themes/Units/DialControl.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

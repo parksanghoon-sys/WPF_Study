@@ -17,13 +17,16 @@
                 Height="200"
                 Margin="20"
                 JoystickMovedCommand="{Binding JoystickMovedCommand}" />
-
+            <units:DialControl
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                 />
             <!--  비동기 커맨드 사용 예제  -->
             <Button
                 Margin="5"
                 Command="{Binding SavePositionCommand}"
                 CommandParameter="{Binding CurrentPosition}"
-                Content="Save Position"/>
+                Content="Save Position" />
 
             <Button
                 Margin="5"
@@ -34,7 +37,7 @@
             <ProgressBar
                 Height="2"
                 Margin="5"
-                IsIndeterminate="True"/>
+                IsIndeterminate="True" />
 
             <Button
                 Margin="5"
