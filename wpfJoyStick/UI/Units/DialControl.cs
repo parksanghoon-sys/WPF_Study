@@ -45,7 +45,7 @@ namespace wpfJoyStick.UI.Units
             if (ActualWidth > 0 && ActualHeight > 0)
             {
                 _center = new Point(ActualWidth / 2, ActualHeight / 2);
-                _radius = (ActualWidth / 2) - 15; // 큰 원 반지름 - 작은 원 반지름
+                _radius = (ActualWidth / 2) - 5; // 큰 원 반지름 - 작은 원 반지름
 
                 // ControlTemplate 내의 TranslateTransform 참조
                 var template = Template;
@@ -70,11 +70,11 @@ namespace wpfJoyStick.UI.Units
             if (!_isDragging || _smallCircleTransform == null) return;
 
             var currentPoint = e.GetPosition(this);
-            var angle = Math.Atan2(currentPoint.Y - _center.Y, currentPoint.X - _center.X) * (180 / Math.PI);
+            var angle = (Math.Atan2(currentPoint.Y - _center.Y, currentPoint.X - _center.X) * (180 / Math.PI)) * -1;
 
             // 각도 범위 [0, 360]으로 보정 및 반전
             if (angle < 0) angle += 360;
-            Angle = (angle - 180) % 360; // 각도를 반전하여 업데이트
+            Angle = (angle) % 360; // 각도를 반전하여 업데이트
 
             UpdateSmallCirclePosition(); // 위치 업데이트
         }

@@ -4,27 +4,42 @@
     xmlns:units="clr-namespace:wpfJoyStick.UI.Units">
 
     <Style TargetType="{x:Type units:DialControl}">
-        <Setter Property="Width" Value="200"/>
-        <Setter Property="Height" Value="200"/>
-        <Setter Property="Background" Value="#FF666666"/>
+        <Setter Property="MinHeight" Value="50" />
+        <Setter Property="MinWidth" Value="50" />
+        <Setter Property="Background" Value="#FF666666" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type units:DialControl}">
                     <Grid>
-                        <!-- 큰 원 (배경) -->
-                        <Ellipse Width="200" Height="200"
-                                     Fill="#FFDDDDDD" Stroke="Gray" StrokeThickness="4"
-                                     HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <!--  큰 원 (배경)  -->
+                        <Ellipse
+                            Width="50"
+                            Height="50"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Fill="#FFDDDDDD"
+                            Stroke="Gray"
+                            StrokeThickness="4" />
 
-                        <!-- 작은 원 (드래그 가능한 볼륨 조절기) -->
-                        <Ellipse Width="30" Height="30"
-                                     Fill="{TemplateBinding Background}"
-                                     Stroke="DarkBlue" StrokeThickness="2"
-                                     HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <!--  작은 원 (드래그 가능한 볼륨 조절기)  -->
+                        <Ellipse
+                            Width="10"
+                            Height="10"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Fill="{TemplateBinding Background}"
+                            Stroke="DarkBlue"
+                            StrokeThickness="2">
                             <Ellipse.RenderTransform>
                                 <TranslateTransform x:Name="SmallCircleTransform" />
                             </Ellipse.RenderTransform>
                         </Ellipse>
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            TextAlignment="Center"
+                            VerticalAlignment="Center"
+                            Text="{Binding Angle,RelativeSource={RelativeSource TemplatedParent}, StringFormat='X: {0:F1}'}"
+                            FontSize="5"/>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
