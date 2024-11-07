@@ -52,8 +52,8 @@ namespace wpfJoyStick.UI.Units
                 if (template != null && template.FindName("SmallCircleTransform", this) is TranslateTransform transform)
                 {
                     _smallCircleTransform = transform;
-                    _smallCircleTransform.X = 0;
-                    _smallCircleTransform.Y = -_radius;
+                    _smallCircleTransform.X = _radius;
+                    _smallCircleTransform.Y = 0;
                 }
             }
 
