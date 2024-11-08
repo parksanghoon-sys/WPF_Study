@@ -94,5 +94,36 @@ namespace Indigator.Lib.GeometryUtil
                 y = y * transform.m12 + y * transform.m22 + transform.m32;
             }
         }
+        /// <summary>
+        /// 지정한 개체와 현재 포인트가 같은지 여부를 확인합니다.
+        /// </summary>
+        /// <param name="obj">현재 포인트와 비교할 개체입니다.</param>
+        /// <returns>지정한 개체가 현재 포인트와 같으면 true이고, 다르면 false입니다.</returns>
+        public override bool Equals(object obj) => obj is Point point && x == point.x && y == point.y;
+        /// <summary>
+        /// 현재 개체의 해시 코드를 가져옵니다.
+        /// </summary>
+        /// <returns>현재 개체의 해시 코드</returns>
+        public override int GetHashCode()
+        {
+            int hashCode = -671570706;
+            hashCode = hashCode * -1521134295 + x.GetHashCode();
+            hashCode = hashCode * -1521134295 + y.GetHashCode();
+            return hashCode;
+        }
+        /// <summary>
+        /// 지정한 포인트가 같은지 여부를 확인합니다.
+        /// </summary>
+        /// <param name="point1">비교할 첫 번째 포인트입니다.</param>
+        /// <param name="point2">비교할 두 번째 포인트입니다.</param>
+        /// <returns>포인트가 같으면 true이고, 다르면 false입니다.</returns>
+        public static bool operator ==(in Point point1, in Point point2) => point1.x == point2.x && point1.y == point2.y;
+        /// <summary>
+        /// 지정한 포인트가 다른지 여부를 확인합니다.
+        /// </summary>
+        /// <param name="point1">비교할 첫 번째 포인트입니다.</param>
+        /// <param name="point2">비교할 두 번째 포인트입니다.</param>
+        /// <returns>포인트가 다르면 true이고, 같으면 false입니다.</returns>
+        public static bool operator !=(in Point point1, in Point point2) => !(point1 == point2);
     }
 }

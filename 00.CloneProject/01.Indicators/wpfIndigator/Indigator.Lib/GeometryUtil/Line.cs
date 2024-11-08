@@ -55,12 +55,73 @@
         /// 선분의 길이를 가져옵니다.
         /// </summary>
         public double Length => Math.Sqrt(Math.Pow(DeltaX, 2) + Math.Pow(DeltaY, 2));
+        /// <summary>
+        /// 시작점과 끝점의 위치에 변환을 젹용한다
+        /// </summary>
+        /// <param name="transform">변환</param>
         public void Transform(in Transform transform)
         {
             if (transform.IsIdentity)
                 return;
-            start.Tr
+            start.Transform(transform);
+            end.Transform(transform);
         }
 
+        /// <summary>
+        /// 지정한 선분이 현재 선분과 교차하는지 확인합니다.
+        /// </summary>
+        /// <param name="line">교차 여부를 확인할 선분</param>
+        /// <returns>교차 여부</returns>
+        private bool Intersection(in Line line)
+        {
+            int Ccw(in Point point1, in Point point2, in Point point3)
+            {
+                var crossProduct = (point2.x - point1.x) * (point3.y - point1.y) - (point3.x - point1.x) * (point2.y - point1.y);
+                return crossProduct > 0 ? 1 : crossProduct < 0 ? -1 : 0;
+            }
+
+            bool Comparator(in Point point1, in Point point2) => point1.x == point2.x ? point1.y <= point2.y : point1.x <= point2.x;
+
+            int l1_l2 = Ccw(start, end, line.start) * Ccw(start, end, line.end);
+            int l2_l1 = Ccw(line.start, line.end, start) * Ccw(line.start, line.end, end);
+            if (l1_l2 == 0 && l2_l1 == 0)
+            {
+                if (Comparator(end, start))
+                    return Comparator(line.start, start) && Comparator(end, line.end);
+                else if (Comparator(line.end, line.start))
+                    return Comparator(line.end, end) && Comparator(start, line.start);
+                else
+                    return Comparator(line.start, end) && Comparator(start, line.end);
+            }
+            else
+                return l1_l2 <= 0 && l2_l1 <= 0;
+        }
+        /// <summary>
+        /// 지정한 선분의 교점을 가져옵니다.
+        /// </summary>
+        /// <param name="line">교점을 계산할 선분</param>
+        /// <param name="crossPoint">교점</param>
+        /// <param name="checkIntersection">교차 확인 여부. false면 선분에 의한 직선의 교점을 계산.</param>
+        /// <returns>교점 계산 성공 여부. false이면서 checkIntersection이 true이면 교차하지 않거나 평행이고, false이면서 checkIntersection이 false이면 평행.</returns>
+        public bool TryGetCrossPoint(in Line line, out Point crossPoint, bool checkIntersection = true)
+        {
+            if (!checkIntersection || Intersection(line))
+            {
+                var dx1 = DeltaX;
+                var dy1 = DeltaY;
+                var dx2 = line.DeltaX;
+                var dy2 = line.DeltaY;
+                var d = dx1 * dy2 - dy1 * dx2;
+                if (d != 0)
+                {
+                    var a = start.y * end.x - start.x * end.y;
+                    var b = line.start.y * line.end.x - line.start.x * line.end.y;
+                    crossPoint = new Point((a * dx2 - dx1 * b) / d, (a * dy2 - dy1 * b) / d);
+                    return true;
+                }
+            }
+            crossPoint = default;
+            return false;
+        }
     }
 }
