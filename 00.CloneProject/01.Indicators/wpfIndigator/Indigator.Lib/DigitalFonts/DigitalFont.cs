@@ -58,7 +58,13 @@ namespace Indigator.Lib.DigitalFonts
         /// <returns>세그먼트 상태 이진 코드</returns>
         public long GetBinaryCode(char character)
             => CustomBinaryCodes?.TryGetValue(character, out var code) == true ? code : GetDefaultBinanryCode(character);
-        public IEnumerable<Part> GetCharactoerSegments(char character, DigitalSegmentFilter segmentFilter)
+        /// <summary>
+        /// 대상 문자의 현재 디지털 문자 양식을 적용한 세그먼트 파트 목록을 가져옵니다.
+        /// </summary>
+        /// <param name="character">문자</param>
+        /// <param name="segmentFilter">표시할 세그먼트에 대한 필터</param>
+        /// <returns>세그먼트 파트 목록</returns>
+        public IEnumerable<Part> GetCharacterSegments(char character, DigitalSegmentFilter segmentFilter)
         {
             if (characterSet is null)
                 characterSet = cache.GetValue(Hash, () => new DigitalCharacterSet(Segments));

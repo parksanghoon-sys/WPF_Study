@@ -10,13 +10,13 @@ namespace Indigator.Lib
         /// <summary>
         /// 시작점을 지정하여 Path를 그리기 시작한다
         /// </summary>
-        /// <param name="point">시작점</param>
-        void BeginPath(Point point);
+        /// <param name="startPoint">시작점</param>
+        void BeginPath(Point startPoint);
         /// <summary>
         /// 특정 지점을 향해 선분을 그린다
         /// </summary>
-        /// <param name="point">선분의 끝점</param>
-        void DrawLine(Point point);
+        /// <param name="endPoint">선분의 끝점</param>
+        void DrawLine(Point endPoint);
         /// <summary>
         /// 3차 베지어 곡선을 그린다
         /// </summary>
@@ -34,7 +34,7 @@ namespace Indigator.Lib
         /// 파트를 그니다
         /// </summary>
         /// <param name="point">파트</param>
-        void DrawPart(in Point point);
+        void DrawPart(in Part point);
         /// <summary>
         /// Path를 닫는다
         /// </summary>

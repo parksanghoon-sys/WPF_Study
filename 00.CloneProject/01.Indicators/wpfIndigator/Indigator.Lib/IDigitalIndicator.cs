@@ -1,7 +1,6 @@
 ﻿using Indigator.Lib.DigitalFonts;
-using System.Xaml;
 
-namespace Indigator.Windows
+namespace Indigator.Lib
 {
     /// <summary>
     /// 값을 여러 세그먼트로 구성된 디지털 무자들로 표시하는 인디게이터이다

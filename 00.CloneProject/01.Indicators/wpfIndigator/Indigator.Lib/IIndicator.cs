@@ -1,4 +1,4 @@
-﻿namespace Indigator.Windows
+﻿namespace Indigator.Lib
 {
     /// <summary>
     /// 값을 화면에 표시하는 인디케이터를 정의한다.

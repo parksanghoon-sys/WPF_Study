@@ -1,4 +1,5 @@
-﻿using Indigator.Lib.DigitalFonts;
+﻿using Indigator.Lib;
+using Indigator.Lib.DigitalFonts;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,7 +13,7 @@ using System.Windows.Shapes;
 
 namespace Indigator.Windows
 { 
-    public class DigitalIndicatorPresenter : FrameworkElement , IDigitalIndigatorPresenter
+    public abstract class DigitalIndicatorPresenter : FrameworkElement , IDigitalIndigatorPresenter
     {
         /// <summary>
         /// Fill 종속성 속성의 식별자입니다.
@@ -146,11 +147,20 @@ namespace Indigator.Windows
             return DependencyProperty.Register(name, type, typeof(DigitalIndicatorPresenter), new FrameworkPropertyMetadata(defaultValue, flags, propertyChangedCallback));
         }
         private readonly DashStyle dashStyle = new();
-        private readonly PartDrawContext
+        private readonly PartDrawingContext partDrawingContext = new PartDrawingContext();
+        private readonly Pen strokePen = new Pen();
         protected DigitalIndicatorPresenter()
         {
             WeakEventManager<DigitalFont, EventArgs>.AddHandler(DigitalFont,nameof(DigitalFont.ParameterChanged), OnCharParameterChanged);
-            BindingOperations.SetBinding(strokeP)
+            BindingOperations.SetBinding(strokePen, Pen.BrushProperty, new Binding(nameof(Stroke)) { Source = this });
+            BindingOperations.SetBinding(strokePen, Pen.ThicknessProperty, new Binding(nameof(StrokeThickness)) { Source = this });
+            BindingOperations.SetBinding(strokePen, Pen.StartLineCapProperty, new Binding(nameof(StrokeStartLineCap)) { Source = this });
+            BindingOperations.SetBinding(strokePen, Pen.EndLineCapProperty, new Binding(nameof(StrokeEndLineCap)) { Source = this });
+            BindingOperations.SetBinding(strokePen, Pen.DashCapProperty, new Binding(nameof(StrokeDashCap)) { Source = this });
+            BindingOperations.SetBinding(strokePen, Pen.LineJoinProperty, new Binding(nameof(StrokeLineJoin)) { Source = this });
+            BindingOperations.SetBinding(strokePen, Pen.MiterLimitProperty, new Binding(nameof(StrokeMiterLimit)) { Source = this });
+            BindingOperations.SetBinding(dashStyle, DashStyle.OffsetProperty, new Binding(nameof(StrokeDashOffset)) { Source = this });
+            BindingOperations.SetBinding(dashStyle, DashStyle.DashesProperty, new Binding(nameof(StrokeDashArray)) { Source = this });
         }
         private static void OnDigitalFontChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -165,7 +175,26 @@ namespace Indigator.Windows
                 }
             }
         }
+        protected override void OnRender(DrawingContext drawingContext)
+        {
+            strokePen.DashStyle = StrokeDashArray == null && StrokeDashOffset == 0.0 ? null : dashStyle;
+            var strokeThickness = strokePen.Thickness;
+            var geometry = new StreamGeometry();
+            using(var geometryContext = geometry.Open())
+            {
+                partDrawingContext.Renderer = geometryContext;
+                foreach (var partt in OnCreateParts())               
+                    partDrawingContext.DrawPart(partt);                
+            }
+            geometry.Freeze();
+            drawingContext.DrawGeometry(Fill, strokeThickness > 0 && strokePen.Brush != null ? strokePen : null, geometry);
+        }
 
+        /// <summary>
+        /// DrawingContext에 사용할 인디케이터 파트 목록을 생성합니다.
+        /// </summary>
+        /// <returns>인디케이터 파트 목록</returns>
+        protected abstract IEnumerable<Part> OnCreateParts();
         private void OnCharParameterChanged(object? sender, EventArgs e)
         {
             InvalidateMeasure();

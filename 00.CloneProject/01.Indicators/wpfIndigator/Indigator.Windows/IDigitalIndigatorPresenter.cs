@@ -1,4 +1,5 @@
-﻿using Indigator.Lib.DigitalFonts;
+﻿using Indigator.Lib;
+using Indigator.Lib.DigitalFonts;
 
 namespace Indigator.Windows
 {
