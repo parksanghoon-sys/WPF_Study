@@ -34,7 +34,18 @@
             }
             return result;
         }
-
+        public void Release(TKey key)
+        {
+            lock (references)
+            {
+                if(references.TryGetValue(key, out var reference))
+                {
+                    reference.referenceCount--;
+                    if(reference.referenceCount == 0)
+                        references.Remove(key);
+                }
+            }
+        }
 
     }
 }

@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Folder Include="PartBuilders\" />
-    <Folder Include="DigitalFonts\" />
   </ItemGroup>
 
 </Project>
