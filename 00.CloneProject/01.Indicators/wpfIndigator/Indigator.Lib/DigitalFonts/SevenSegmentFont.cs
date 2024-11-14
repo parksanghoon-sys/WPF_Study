@@ -389,7 +389,7 @@ namespace Indigator.Lib.DigitalFonts
         /// </summary>
         /// <param name="character">문자</param>
         /// <returns>세그먼트 이진 코드</returns>
-        protected override long GetDefaultBinanryCode(char character)
+        protected override long GetDefaultBinaryCode(char character)
         {
             return binaryCodes.TryGetValue(character, out var code) ? code : 0;
         }

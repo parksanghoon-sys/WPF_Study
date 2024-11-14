@@ -57,7 +57,7 @@ namespace Indigator.Lib.DigitalFonts
         /// <param name="character">문자</param>
         /// <returns>세그먼트 상태 이진 코드</returns>
         public long GetBinaryCode(char character)
-            => CustomBinaryCodes?.TryGetValue(character, out var code) == true ? code : GetDefaultBinanryCode(character);
+            => CustomBinaryCodes?.TryGetValue(character, out var code) == true ? code : GetDefaultBinaryCode(character);
         /// <summary>
         /// 대상 문자의 현재 디지털 문자 양식을 적용한 세그먼트 파트 목록을 가져옵니다.
         /// </summary>
@@ -84,7 +84,7 @@ namespace Indigator.Lib.DigitalFonts
         /// 세그먼트 파트 목록을 가져온다.
         /// </summary>
         public IReadOnlyList<Part> Segments => GetObject();
-        protected abstract long GetDefaultBinanryCode(char character);
+        protected abstract long GetDefaultBinaryCode(char character);
         /// <summary>
         /// 디지털 문자 양식의 크기를 측정한다
         /// </summary>
