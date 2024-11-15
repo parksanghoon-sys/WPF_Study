@@ -180,7 +180,7 @@
                             </Viewbox>
                             <Grid DataContext="{Binding ElementName=digitalNumber}">
                                 <Button CommandParameter="{Binding}" Style="{StaticResource ExportButton}" />
-                                <CheckBox Style="{StaticResource GlowedTemplateCheckBox}" Foreground="#FFFFFF"/>
+                                <CheckBox Foreground="#FFFFFF" Style="{StaticResource GlowedTemplateCheckBox}" />
                             </Grid>
                             <Border Grid.Row="1" Background="#80000000">
                                 <StackPanel Margin="10">
@@ -265,6 +265,185 @@
                                                 Maximum="1"
                                                 Minimum="0"
                                                 Value="{Binding CornerGapWarping}" />
+                                        </HeaderedContentControl>
+                                        <HeaderedContentControl Header="{Binding Size}" HeaderStringFormat="Size: {0:#0.###}px">
+                                            <Slider
+                                                Maximum="200"
+                                                Minimum="0"
+                                                Value="{Binding Size}" />
+                                        </HeaderedContentControl>
+                                    </UniformGrid>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                    </DataTemplate>
+                </ComboBoxItem.Tag>
+            </ComboBoxItem>
+            <ComboBoxItem Content="Digital Text">
+                <ComboBoxItem.Tag>
+                    <DataTemplate>
+                        <FrameworkTemplate.Resources>
+                            <Style TargetType="{x:Type vki:DigitalText}">
+                                <Style.Triggers>
+                                    <Trigger Property="Tag">
+                                        <Trigger.Value>
+                                            <system:Boolean>true</system:Boolean>
+                                        </Trigger.Value>
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="{x:Type vki:DigitalText}">
+                                                    <Border
+                                                        Background="{TemplateBinding Background}"
+                                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                                        BorderThickness="{TemplateBinding BorderThickness}">
+                                                        <Grid Margin="{TemplateBinding Padding}">
+                                                            <vki:DigitalTextPresenter
+                                                                DigitalFont="{TemplateBinding DigitalFont}"
+                                                                Fill="{TemplateBinding Inactive}"
+                                                                Format="{TemplateBinding Format}"
+                                                                Length="{TemplateBinding Length}"
+                                                                SegmentFilter="InactiveOnly"
+                                                                Spacing="{TemplateBinding Spacing}"
+                                                                Stroke="{TemplateBinding InactiveStroke}"
+                                                                StrokeDashArray="{TemplateBinding StrokeDashArray}"
+                                                                StrokeDashCap="{TemplateBinding StrokeDashCap}"
+                                                                StrokeDashOffset="{TemplateBinding StrokeDashOffset}"
+                                                                StrokeEndLineCap="{TemplateBinding StrokeEndLineCap}"
+                                                                StrokeLineJoin="{TemplateBinding StrokeLineJoin}"
+                                                                StrokeMiterLimit="{TemplateBinding StrokeMiterLimit}"
+                                                                StrokeStartLineCap="{TemplateBinding StrokeStartLineCap}"
+                                                                StrokeThickness="{TemplateBinding StrokeThickness}"
+                                                                Value="{TemplateBinding Value}" />
+                                                            <vki:DigitalTextPresenter
+                                                                DigitalFont="{TemplateBinding DigitalFont}"
+                                                                Fill="{TemplateBinding Active}"
+                                                                Format="{TemplateBinding Format}"
+                                                                Length="{TemplateBinding Length}"
+                                                                Spacing="{TemplateBinding Spacing}"
+                                                                Stroke="{TemplateBinding Active}"
+                                                                StrokeDashArray="{TemplateBinding StrokeDashArray}"
+                                                                StrokeDashCap="{TemplateBinding StrokeDashCap}"
+                                                                StrokeDashOffset="{TemplateBinding StrokeDashOffset}"
+                                                                StrokeEndLineCap="{TemplateBinding StrokeEndLineCap}"
+                                                                StrokeLineJoin="{TemplateBinding StrokeLineJoin}"
+                                                                StrokeMiterLimit="{TemplateBinding StrokeMiterLimit}"
+                                                                StrokeStartLineCap="{TemplateBinding StrokeStartLineCap}"
+                                                                StrokeThickness="5"
+                                                                Value="{TemplateBinding Value}">
+                                                                <UIElement.Effect>
+                                                                    <BlurEffect Radius="10" />
+                                                                </UIElement.Effect>
+                                                            </vki:DigitalTextPresenter>
+                                                            <vki:DigitalTextPresenter
+                                                                DigitalFont="{TemplateBinding DigitalFont}"
+                                                                Fill="White"
+                                                                Format="{TemplateBinding Format}"
+                                                                Length="{TemplateBinding Length}"
+                                                                Spacing="{TemplateBinding Spacing}"
+                                                                Stroke="{TemplateBinding ActiveStroke}"
+                                                                StrokeDashArray="{TemplateBinding StrokeDashArray}"
+                                                                StrokeDashCap="{TemplateBinding StrokeDashCap}"
+                                                                StrokeDashOffset="{TemplateBinding StrokeDashOffset}"
+                                                                StrokeEndLineCap="{TemplateBinding StrokeEndLineCap}"
+                                                                StrokeLineJoin="{TemplateBinding StrokeLineJoin}"
+                                                                StrokeMiterLimit="{TemplateBinding StrokeMiterLimit}"
+                                                                StrokeStartLineCap="{TemplateBinding StrokeStartLineCap}"
+                                                                StrokeThickness="{TemplateBinding StrokeThickness}"
+                                                                Value="{TemplateBinding Value}" />
+                                                        </Grid>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </FrameworkTemplate.Resources>
+                        <Grid DataContext="{Binding ElementName=digitalText}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Viewbox Margin="10" StretchDirection="DownOnly">
+                                <Grid>
+                                    <Rectangle
+                                        Opacity="0.3"
+                                        Stroke="White"
+                                        StrokeDashArray="2 2"
+                                        StrokeThickness="1" />
+                                    <vki:DigitalText
+                                        x:Name="digitalText"
+                                        Margin="1"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Format="N2"
+                                        Length="13"
+                                        Value="Hello, World!">
+                                        <vki:DigitalText.DigitalFont>
+                                            <vkid:RoundedRectCell5x7Font Size="60" />
+                                        </vki:DigitalText.DigitalFont>
+                                    </vki:DigitalText>
+                                </Grid>
+                            </Viewbox>
+                            <Grid DataContext="{Binding ElementName=digitalText}">
+                                <Button CommandParameter="{Binding}" Style="{StaticResource ExportButton}" />
+                                <CheckBox Style="{StaticResource GlowedTemplateCheckBox}" />
+                            </Grid>
+                            <Border Grid.Row="1" Background="#80000000">
+                                <StackPanel Margin="10" DataContext="{Binding ElementName=digitalText}">
+                                    <UniformGrid Columns="2">
+                                        <HeaderedContentControl Header="{Binding Length}" HeaderStringFormat="Length: {0}">
+                                            <Slider
+                                                Maximum="20"
+                                                Minimum="0"
+                                                Value="{Binding Length}" />
+                                        </HeaderedContentControl>
+                                        <HeaderedContentControl Header="Text">
+                                            <TextBox Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                        </HeaderedContentControl>
+                                        <HeaderedContentControl Header="{Binding Value}" HeaderStringFormat="Value: {0}">
+                                            <Slider
+                                                Maximum="10000"
+                                                Minimum="-9999"
+                                                Value="{Binding Value, Mode=TwoWay}" />
+                                        </HeaderedContentControl>
+                                        <HeaderedContentControl Header="String Format">
+                                            <TextBox Text="{Binding Format, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                        </HeaderedContentControl>
+                                    </UniformGrid>
+                                    <UniformGrid Columns="2" DataContext="{Binding DigitalFont}">
+                                        <HeaderedContentControl
+                                            DataContext="{Binding ElementName=digitalText}"
+                                            Header="{Binding Spacing}"
+                                            HeaderStringFormat="Spacing: {0:P1}">
+                                            <Slider
+                                                Maximum="1"
+                                                Minimum="0"
+                                                Value="{Binding Spacing}" />
+                                        </HeaderedContentControl>
+                                        <HeaderedContentControl Header="{Binding Gap}" HeaderStringFormat="Gap: {0:P1}">
+                                            <Slider
+                                                Maximum="1"
+                                                Minimum="0"
+                                                Value="{Binding Gap}" />
+                                        </HeaderedContentControl>
+                                        <HeaderedContentControl Header="{Binding SlantAngle}" HeaderStringFormat="Slant Angle: {0:#0.###}°">
+                                            <Slider
+                                                Maximum="30"
+                                                Minimum="0"
+                                                Value="{Binding SlantAngle}" />
+                                        </HeaderedContentControl>
+                                        <HeaderedContentControl Header="{Binding WidthRatio}" HeaderStringFormat="Width Ratio: {0:P1}">
+                                            <Slider
+                                                Maximum="2"
+                                                Minimum="0"
+                                                Value="{Binding WidthRatio}" />
+                                        </HeaderedContentControl>
+                                        <HeaderedContentControl Header="{Binding CornerRadius}" HeaderStringFormat="Corner Radius: {0:P1}">
+                                            <Slider
+                                                Maximum="1"
+                                                Minimum="0"
+                                                Value="{Binding CornerRadius}" />
                                         </HeaderedContentControl>
                                         <HeaderedContentControl Header="{Binding Size}" HeaderStringFormat="Size: {0:#0.###}px">
                                             <Slider

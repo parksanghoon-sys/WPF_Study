@@ -4,6 +4,60 @@
     xmlns:vki="clr-namespace:Indigator.Windows"
     xmlns:vkid="clr-namespace:Indigator.Lib.DigitalFonts;assembly=Indigator.Lib">
 
+    <Style TargetType="{x:Type vki:DigitalText}">
+        <Setter Property="DigitalFont">
+            <Setter.Value>
+                <vkid:RoundedRectCell5x7Font />
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type vki:DigitalText}">
+                    <Border
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}">
+                        <Grid Margin="{TemplateBinding Padding}">
+                            <vki:DigitalTextPresenter
+                                DigitalFont="{TemplateBinding DigitalFont}"
+                                Fill="{TemplateBinding Inactive}"
+                                Format="{TemplateBinding Format}"
+                                Length="{TemplateBinding Length}"
+                                SegmentFilter="InactiveOnly"
+                                Spacing="{TemplateBinding Spacing}"
+                                Stroke="{TemplateBinding InactiveStroke}"
+                                StrokeDashArray="{TemplateBinding StrokeDashArray}"
+                                StrokeDashCap="{TemplateBinding StrokeDashCap}"
+                                StrokeDashOffset="{TemplateBinding StrokeDashOffset}"
+                                StrokeEndLineCap="{TemplateBinding StrokeEndLineCap}"
+                                StrokeLineJoin="{TemplateBinding StrokeLineJoin}"
+                                StrokeMiterLimit="{TemplateBinding StrokeMiterLimit}"
+                                StrokeStartLineCap="{TemplateBinding StrokeStartLineCap}"
+                                StrokeThickness="{TemplateBinding StrokeThickness}"
+                                Value="{TemplateBinding Value}" />
+                            <vki:DigitalTextPresenter
+                                DigitalFont="{TemplateBinding DigitalFont}"
+                                Fill="{TemplateBinding Active}"
+                                Format="{TemplateBinding Format}"
+                                Length="{TemplateBinding Length}"
+                                Spacing="{TemplateBinding Spacing}"
+                                Stroke="{TemplateBinding ActiveStroke}"
+                                StrokeDashArray="{TemplateBinding StrokeDashArray}"
+                                StrokeDashCap="{TemplateBinding StrokeDashCap}"
+                                StrokeDashOffset="{TemplateBinding StrokeDashOffset}"
+                                StrokeEndLineCap="{TemplateBinding StrokeEndLineCap}"
+                                StrokeLineJoin="{TemplateBinding StrokeLineJoin}"
+                                StrokeMiterLimit="{TemplateBinding StrokeMiterLimit}"
+                                StrokeStartLineCap="{TemplateBinding StrokeStartLineCap}"
+                                StrokeThickness="{TemplateBinding StrokeThickness}"
+                                Value="{TemplateBinding Value}" />
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
     <Style TargetType="{x:Type vki:DigitalNumber}">
         <Setter Property="DigitalFont">
             <Setter.Value>
