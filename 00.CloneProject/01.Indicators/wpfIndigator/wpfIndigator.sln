@@ -7,7 +7,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "wpfIndigator.Main", "wpfInd
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Indigator.Lib", "Indigator.Lib\Indigator.Lib.csproj", "{2225BF02-3657-4CE6-8EB2-701E58E11DF7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Indigator.Windows", "Indigator.Windows\Indigator.Windows.csproj", "{58B911C0-C971-4802-82B3-403C3F2319E8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Indigator.Windows", "Indigator.Windows\Indigator.Windows.csproj", "{58B911C0-C971-4802-82B3-403C3F2319E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sample", "Sample", "{604953AA-DED4-47EC-B1C3-79757E72AF43}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "indigator.Razor", "indigator.Razor\indigator.Razor.csproj", "{6E0D623C-85E1-4706-8932-50F2BDEB2765}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "blazor.Indigator", "blazor.Indigator\blazor.Indigator.csproj", "{6D17BCA1-B7F8-4659-A902-8283E57DA753}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,9 +33,21 @@ Global
 		{58B911C0-C971-4802-82B3-403C3F2319E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{58B911C0-C971-4802-82B3-403C3F2319E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{58B911C0-C971-4802-82B3-403C3F2319E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E0D623C-85E1-4706-8932-50F2BDEB2765}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E0D623C-85E1-4706-8932-50F2BDEB2765}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E0D623C-85E1-4706-8932-50F2BDEB2765}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E0D623C-85E1-4706-8932-50F2BDEB2765}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D17BCA1-B7F8-4659-A902-8283E57DA753}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D17BCA1-B7F8-4659-A902-8283E57DA753}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D17BCA1-B7F8-4659-A902-8283E57DA753}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D17BCA1-B7F8-4659-A902-8283E57DA753}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D2D25257-D2C6-40FF-A7C8-B977455ACCA0} = {604953AA-DED4-47EC-B1C3-79757E72AF43}
+		{6D17BCA1-B7F8-4659-A902-8283E57DA753} = {604953AA-DED4-47EC-B1C3-79757E72AF43}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AD1500DC-AC5B-427B-9700-335302D17CA6}
