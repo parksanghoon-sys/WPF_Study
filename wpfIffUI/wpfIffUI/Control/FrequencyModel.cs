@@ -83,7 +83,7 @@ namespace wpfIffUI.Control
                 this.FreqeuncyManagement = EFreqeuncyManagement.Manual;
                 this.Frequency = _oldFrequency;
             }
-            else if (inputValue.Contains("A"))
+            else if (inputValue.Contains("A") || inputValue.Contains('a'))
             {
                 FreqeuncyManagement = EFreqeuncyManagement.HQ_Active;
                 _oldFrequency = InputFreqencyToFrequency(inputValue);
@@ -93,7 +93,7 @@ namespace wpfIffUI.Control
                 }
                 Frequency = _oldFrequency;
             }
-            else if (inputValue.Contains("B"))
+            else if (inputValue.Contains("B") || inputValue.Contains('b'))
             {
                 this.FreqeuncyManagement = EFreqeuncyManagement.SATURN_Active;
                 _oldFrequency = InputFreqencyToFrequency(inputValue);

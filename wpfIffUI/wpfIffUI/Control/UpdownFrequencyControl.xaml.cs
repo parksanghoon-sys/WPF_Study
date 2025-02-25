@@ -153,8 +153,6 @@ namespace wpfIffUI.Control
             tbFrequency.LostKeyboardFocus += new KeyboardFocusChangedEventHandler(OnLostKeyboardFocus);
         }
 
-
-
         #region DP_CallbackMethods
         private static void TextForegroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -189,6 +187,7 @@ namespace wpfIffUI.Control
             }
         }
         #endregion
+
         #region ViewEventMethods
         private void UpdownFrequencyControl_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
@@ -226,11 +225,33 @@ namespace wpfIffUI.Control
         }
         private void tbFrequency_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            // 맨 앞에 'A'|'B' 가 올 수 있고, 그 뒤에 소수점 3자리까지의 숫자만 허용. 소수점 다음에 숫자가 없는 경우도 허용.
-            Regex regex = new Regex("^[ab]?[AB]?[0-9]*([.][0-9]{0,3})?$");
-            var isRegex = !regex.IsMatch((sender as TextBox).Text.Insert((sender as TextBox).SelectionStart, e.Text));
-            var isFull = (sender as TextBox).Text.Length == 7;
-            if (isRegex || isFull)
+            TextBox textBox = sender as TextBox;
+            if (textBox == null) return;
+
+            // 현재 입력된 텍스트
+            string currentText = textBox.Text;
+            int selectionStart = textBox.SelectionStart;
+            int selectionLength = textBox.SelectionLength;
+
+            // 새 입력이 들어왔을 때 전체 선택된 경우 처리
+            if (selectionLength > 0)
+            {
+                // 기존 텍스트를 지우고 새 입력을 적용
+                currentText = e.Text;
+            }
+            else
+            {
+                // 기존 텍스트에 새 입력을 삽입
+                currentText = currentText.Insert(selectionStart, e.Text);
+            }
+
+            // 정규식 패턴: 맨 앞에 'A'|'B' 혹은 'a'| 'b'가 올 수 있고, 그 뒤에 소수점 3자리까지의 숫자만 허용. 소수점 다음에 숫자가 없는 경우도 허용.
+            Regex regex = new Regex("^[abAB]?[0-9]*([.][0-9]{0,3})?$");
+
+            bool isValid = regex.IsMatch(currentText);
+            bool isFull = currentText.Length > 7; // 최대 7글자 제한
+
+            if (!isValid || isFull)
             {
                 e.Handled = true;
                 WarningText = "Invalid Frequency";
@@ -247,9 +268,10 @@ namespace wpfIffUI.Control
         {
             //if (tbFrequency.Text.Length == 7)
             //{
-            //    if ((e.Key >= Key.A && e.Key < Key.Z) || e.Key >= Key.D0 && e.Key < Key.D9)
+
+            //    if ((e.Key >= Key.A && e.Key < Key.C) || e.Key >= Key.D0 && e.Key < Key.D9)
             //        tbFrequency.Text = e.Key.ToString();
-            //}                
+            //}
             if (e.Key == Key.Tab)
             {
                 this.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
