@@ -69,7 +69,7 @@ namespace wpfIffUI.Control
                     freqencyString = ConverterInputFrequencySaturnTraninng(frequencyValue);
                     break;
                 default:
-                    freqencyString = string.Format("{0:F3}", frequencyValue);
+                    freqencyString = string.Format("{0:F3}", frequencyValue); 
                     break;
             }
 
