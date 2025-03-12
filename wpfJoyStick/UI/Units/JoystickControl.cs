@@ -10,7 +10,7 @@ namespace wpfJoyStick.UI.Units
     [TemplatePart(Name = "PART_InnerCircle", Type = typeof(Ellipse))]
     [TemplatePart(Name = "PART_JoystickContainer", Type = typeof(Canvas))]
     [TemplatePart(Name = "PART_JoystickGrid", Type = typeof(Grid))]
-    public class JoystickControl : ContentControl
+    public class JoystickControl : ContentControl  
     {
         private const double DEFAULT_MAX_VALUE = 100.0;
 
