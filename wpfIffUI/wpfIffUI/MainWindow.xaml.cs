@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using wpfIffUI.Control;
 
 namespace wpfIffUI
 {
@@ -23,6 +24,13 @@ namespace wpfIffUI
         public MainWindow()
         {
             InitializeComponent();
+            this.DataContext = this;
         }
+        public UpDwonFrequencyViewModel UpDwonFrequencyViewModel { get; set; } = new UpDwonFrequencyViewModel()
+        {
+            MinValue = 119.0,
+            MaxValue = 399.999,
+            SpinIncrement = 0.025
+        };
     }
 }

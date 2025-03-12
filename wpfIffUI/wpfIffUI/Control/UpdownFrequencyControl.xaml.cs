@@ -17,7 +17,7 @@ namespace wpfIffUI.Control
 {
     public partial class UpdownFrequencyControl : UserControl, INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         /// <summary>
         /// Frequency Textbox 글자색상
@@ -62,7 +62,7 @@ namespace wpfIffUI.Control
             {
                 DefaultValue = new FrequencyModel(),
                 BindsTwoWayByDefault = true,
-                PropertyChangedCallback = OnFrequencyValueChanged,
+                //PropertyChangedCallback = OnFrequencyValueChanged,
                 DefaultUpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
             });
         /// <summary>
@@ -129,18 +129,6 @@ namespace wpfIffUI.Control
             get { return (string)GetValue(WarningTextProperty); }
             set { SetValue(WarningTextProperty, value); }
         }
-
-        private string _txtFrequency;
-        public string TxtFrequency
-        {
-            get { return _txtFrequency; }
-            set
-            {
-                FrequencyValue.SetFreqencyModel(value);
-                _txtFrequency = FrequencyValue.InputFrequency;
-                OnPropertyChanged();
-            }
-        }
         public UpdownFrequencyControl()
         {
             InitializeComponent();
@@ -161,29 +149,6 @@ namespace wpfIffUI.Control
             if (myObject != null)
             {
                 myObject.tbFrequency.Foreground = (Brush)e.NewValue;
-            }
-        }
-        private static void OnFrequencyValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var control = d as UpdownFrequencyControl;
-            if (control != null)
-            {
-                var model = e.NewValue as FrequencyModel;
-                if (model != null)
-                {
-                    if (control.TxtFrequency != model.InputFrequency)
-                    {
-                        control.TxtFrequency = model.InputFrequency;
-                    }
-                    model.PropertyChanged += (sender, args) =>
-                    {
-                        var properties = sender as FrequencyModel;
-                        if (args.PropertyName == "Frequency")
-                        {
-                            control.TxtFrequency = control.FrequencyValue.InputFrequency;
-                        }
-                    };
-                }
             }
         }
         #endregion
@@ -209,7 +174,6 @@ namespace wpfIffUI.Control
                 PropertyBinding("WarningText", this, WarningTextProperty, BindingMode.TwoWay, datacontext);
 
                 FrequencyValue.SetFreqencyModel(MinValue.ToString());
-                TxtFrequency = FrequencyValue.InputFrequency;
             }
         }
         private void tbFrequency_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -262,16 +226,9 @@ namespace wpfIffUI.Control
                 WarningText = string.Empty;
             }
 
-            //e.Handled = !regex.IsMatch((sender as TextBox).Text.Insert((sender as TextBox).SelectionStart, e.Text));
         }
         private void tbFrequency_KeyDown(object sender, KeyEventArgs e)
-        {
-            //if (tbFrequency.Text.Length == 7)
-            //{
-
-            //    if ((e.Key >= Key.A && e.Key < Key.C) || e.Key >= Key.D0 && e.Key < Key.D9)
-            //        tbFrequency.Text = e.Key.ToString();
-            //}
+        {         
             if (e.Key == Key.Tab)
             {
                 this.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
@@ -284,24 +241,19 @@ namespace wpfIffUI.Control
         private void btnUp_Click(object sender, RoutedEventArgs e)
         {
             FrequencyValue.IncreaseFreqeuncy(SpinIncrement);
-            //FrequencyValue.Frequency = Math.Round(SetFrequencMinMaxConditon((double)(FrequencyValue.Frequency + SpinIncrement)), 4);
-            //TxtFrequency = FrequencyValue.FreqencyStringConverter(true);
         }
 
         private void btnDown_Click(object sender, RoutedEventArgs e)
         {
-            //FrequencyValue.Frequency = Math.Round(SetFrequencMinMaxConditon((double)(FrequencyValue.Frequency - SpinIncrement)), 4);
-            //TxtFrequency = FrequencyValue.FreqencyStringConverter(true);
             FrequencyValue.ReductionFreqeuncy(SpinIncrement);
         }
         private void OnLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
-            double frequency = 0;
             var frequencyControl = sender as TextBox;
-            //frequency = GetDoubleFrequency(tbFrequency.Text);
-            //FrequencyValue.Frequency = SetFrequencMinMaxConditon((double)(frequency));
-            //TxtFrequency = FrequencyValue.FreqencyStringConverter(true);
-            TxtFrequency = frequencyControl.Text;
+            if(frequencyControl != null)
+            {
+                FrequencyValue.InputFrequency = frequencyControl.Text;
+            }      
         }
         #endregion
 

@@ -6,52 +6,61 @@ namespace wpfIffUI.Control
     /// UVHF 주파수 모델
     /// </summary>
     public class FrequencyModel : PropertyModel
-    {
-        private double _oldFrequency = 0.0;
+    {        
         public EFreqeuncyManagement FreqeuncyManagement { get { return (EFreqeuncyManagement)this["FreqeuncyManagement"]; } set { this["FreqeuncyManagement"] = value; } }
-        public double Frequency { get { return (double)this["Frequency"]; } set { this["Frequency"] = value; } }
+        private double _frequency = 0.0d;
 
-        public string InputStringRegex
-        {
-            get
+        //public string InputStringRegex
+        //{
+        //    get
+        //    {
+        //        switch (FreqeuncyManagement)
+        //        {
+        //            case EFreqeuncyManagement.Manual:
+        //                return "^[0-9]{0,3}*([.][0-9]{0,3})?$";
+        //            case EFreqeuncyManagement.HQ_Active:
+        //                return "^[AB]?[0-9]*([.][0-9]{0,3})?$";
+        //            case EFreqeuncyManagement.SATURN_Active:
+        //                return "^[AB]?[0-9]*([.][0-9]{0,3})?$";
+        //            case EFreqeuncyManagement.SATURN_Trainning:
+        //                return "^[AB]?[0-9]*([.][0-9]{0,3})?$";
+        //        }
+        //        return "";
+        //    }
+        //}
+        public string InputFrequency 
+        { 
+            get 
             {
-                switch (FreqeuncyManagement)
-                {
-                    case EFreqeuncyManagement.Manual:
-                        return "^[0-9]{0,3}*([.][0-9]{0,3})?$";
-                    case EFreqeuncyManagement.HQ_Active:
-                        return "^[AB]?[0-9]*([.][0-9]{0,3})?$";
-                    case EFreqeuncyManagement.SATURN_Active:
-                        return "^[AB]?[0-9]*([.][0-9]{0,3})?$";
-                    case EFreqeuncyManagement.SATURN_Trainning:
-                        return "^[AB]?[0-9]*([.][0-9]{0,3})?$";
-                }
-                return "";
-            }
-        }
-        public string InputFrequency
-        {
-            get { return FreqencyStringConverter(true); }
-            set { SetFreqencyModel(value); }
-        }
+                return (string)FreqencyStringConverter(true); 
+            } 
+            set 
+            {
+                SetFreqencyModel(value);
+                Notify("InputFrequency");
+            } 
+        }  
         public void IncreaseFreqeuncy(double incrementValue)
         {
-            Frequency += incrementValue;
-            Frequency = Math.Round(Frequency, 4);
+            _frequency += incrementValue;
+            _frequency = Math.Round(_frequency, 4);
+            InputFrequency = FreqencyStringConverter(true);
         }
         public void ReductionFreqeuncy(double reductionValue)
         {
-            Frequency -= reductionValue;
-            Frequency = Math.Round(Frequency, 4);
+            _frequency -= reductionValue;
+            _frequency = Math.Round(_frequency, 4);
+            InputFrequency = FreqencyStringConverter(true);
         }
         public string FreqencyStringConverter(bool isResolution)
         {
             string freqencyString = string.Empty;
 
-            double frequencyValue = Frequency;
+            double frequencyValue = _frequency;
 
             if (isResolution == true)
             {
+                frequencyValue = FrequencyResolution(frequencyValue);
             }
 
             switch (FreqeuncyManagement)
@@ -75,71 +84,74 @@ namespace wpfIffUI.Control
 
             return freqencyString;
         }
+        private double FrequencyResolution(double frequency)
+        {
+            int valide = (int)(Math.Round((frequency / 0.025), 2));
+            frequency = valide * 0.025;
+            return frequency;
+        }
         public void SetFreqencyModel(string inputValue)
         {
-
-            if (double.TryParse(inputValue, out _oldFrequency))
+            inputValue = inputValue.ToUpper();
+            if (double.TryParse(inputValue, out _frequency))
             {
-                this.FreqeuncyManagement = EFreqeuncyManagement.Manual;
-                this.Frequency = _oldFrequency;
+                this.FreqeuncyManagement = EFreqeuncyManagement.Manual;                
             }
-            else if (inputValue.Contains("A") || inputValue.Contains('a'))
+            else if (inputValue.Contains("A"))
             {
                 FreqeuncyManagement = EFreqeuncyManagement.HQ_Active;
-                _oldFrequency = InputFreqencyToFrequency(inputValue);
-                if (_oldFrequency.ToString().EndsWith("75", StringComparison.OrdinalIgnoreCase))
+                _frequency = InputFreqencyToFrequency(inputValue);
+                if (inputValue.EndsWith("75", StringComparison.OrdinalIgnoreCase))
                 {
                     this.FreqeuncyManagement = EFreqeuncyManagement.SATURN_Trainning;
-                }
-                Frequency = _oldFrequency;
+                }                
             }
-            else if (inputValue.Contains("B") || inputValue.Contains('b'))
+            else if (inputValue.Contains("B"))
             {
                 this.FreqeuncyManagement = EFreqeuncyManagement.SATURN_Active;
-                _oldFrequency = InputFreqencyToFrequency(inputValue);
-                Frequency = _oldFrequency;
+                _frequency = InputFreqencyToFrequency(inputValue);                
             }
 
         }
         public FrequencyModel()
         {
-            Frequency = 0;
+            _frequency = 0;
             FreqeuncyManagement = EFreqeuncyManagement.Manual;
         }
         public byte[] GetFreqencyBytes()
         {
-            return BitConverter.GetBytes(Frequency);
+            return BitConverter.GetBytes(_frequency);
         }
         private string ConverterInputFrequencyManual(double freqency)
         {
             if (freqency < 118.0)
-                this._oldFrequency = 118;
+                this._frequency = 118;
             else if ((155.975 < freqency) && (freqency < 225.000))
-                this._oldFrequency = 155.975;
+                this._frequency = 155.975;
             else if (freqency > 399.975)
-                this._oldFrequency = 399.975;
+                this._frequency = 399.975;
             else
-                this._oldFrequency = freqency;
+                this._frequency = freqency;
 
-            return _oldFrequency == 0 ? "" : string.Format("{0:F3}", _oldFrequency);
+            return _frequency == 0 ? "" : string.Format("{0:F3}", _frequency);
 
         }
         private string ConverterInputFrequencySaturnTraninng(double freqeuncy)
         {
-            if (freqeuncy < 300.0) this._oldFrequency = 300;
-            else if (freqeuncy > 399.975) this._oldFrequency = 399.975;
-            else this._oldFrequency = freqeuncy;
+            if (freqeuncy < 300.0) this._frequency = 300;
+            else if (freqeuncy > 399.975) this._frequency = 399.975;
+            else this._frequency = freqeuncy;
 
-            return string.Format("A{0:00.000}", _oldFrequency - 300);
+            return string.Format("A{0:00.000}", _frequency - 300);
 
         }
         private string ConverterInputFrequencySaturnActive(double freqeuncy)
         {
-            if (freqeuncy < 300.0) this._oldFrequency = 300.0;
-            else if (freqeuncy > 300.975) this._oldFrequency = 300.975;
-            else this._oldFrequency = freqeuncy;
+            if (freqeuncy < 300.0) this._frequency = 300.0;
+            else if (freqeuncy > 300.975) this._frequency = 300.975;
+            else this._frequency = freqeuncy;
 
-            return string.Format("B{0:00.000}", _oldFrequency - 300);
+            return string.Format("B{0:00.000}", _frequency - 300);
         }
         private double InputFreqencyToFrequency(string inputFrequency)
         {

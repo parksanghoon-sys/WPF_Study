@@ -86,11 +86,11 @@
                 FontFamily="Malgun Gothic"
                 FontSize="15"
                 Foreground="{Binding ErrorFontColor}"
-                IsTabStop="False"
+                IsTabStop="False"   
                 IsUndoEnabled="False"
                 PreviewTextInput="tbFrequency_PreviewTextInput"
                 Style="{StaticResource TextBoxFrequencyStyle}"
-                Text="{Binding TxtFrequency, ElementName=UserControl, Mode=TwoWay}"
+                Text="{Binding FrequencyValue.InputFrequency}"
                 TextAlignment="Center"
                 TextWrapping="Wrap" />
             </Grid>
