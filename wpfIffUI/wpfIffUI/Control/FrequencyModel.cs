@@ -19,11 +19,11 @@ namespace wpfIffUI.Control
         //            case EFreqeuncyManagement.Manual:
         //                return "^[0-9]{0,3}*([.][0-9]{0,3})?$";
         //            case EFreqeuncyManagement.HQ_Active:
-        //                return "^[AB]?[0-9]*([.][0-9]{0,3})?$";
+        //                return "^[aA]?[0-9]*([.][0-9]{0,3})?$";
         //            case EFreqeuncyManagement.SATURN_Active:
-        //                return "^[AB]?[0-9]*([.][0-9]{0,3})?$";
+        //                return "^[aA]?[0-9]*([.][0-9]{0,3})?$";
         //            case EFreqeuncyManagement.SATURN_Trainning:
-        //                return "^[AB]?[0-9]*([.][0-9]{0,3})?$";
+        //                return "^[bB]?[0-9]*([.][0-9]{0,3})?$";
         //        }
         //        return "";
         //    }
@@ -148,7 +148,7 @@ namespace wpfIffUI.Control
         private string ConverterInputFrequencySaturnActive(double freqeuncy)
         {
             if (freqeuncy < 300.0) this._frequency = 300.0;
-            else if (freqeuncy > 300.975) this._frequency = 300.975;
+            else if (freqeuncy > 399.975) this._frequency = 399.975;
             else this._frequency = freqeuncy;
 
             return string.Format("B{0:00.000}", _frequency - 300);
