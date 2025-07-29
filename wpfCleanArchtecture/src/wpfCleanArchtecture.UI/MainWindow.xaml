@@ -1,0 +1,440 @@
+﻿<Window
+    x:Class="wpfCleanArchtecture.UI.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:wpfCleanArchtecture.UI"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Todo 리스트 - 클린 아키텍처"
+    Width="900"
+    Height="700"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
+    <Window.Resources>
+        <Style x:Key="TodoItemStyle" TargetType="Border">
+            <Setter Property="Background" Value="White" />
+            <Setter Property="BorderBrush" Value="#E0E0E0" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="8" />
+            <Setter Property="Margin" Value="0,0,0,8" />
+            <Setter Property="Padding" Value="16" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#F5F5F5" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style
+            x:Key="CompletedTodoStyle"
+            BasedOn="{StaticResource TodoItemStyle}"
+            TargetType="Border">
+            <Setter Property="Background" Value="#F0F8F0" />
+            <Setter Property="BorderBrush" Value="#C8E6C9" />
+        </Style>
+
+        <Style x:Key="PriorityHighStyle" TargetType="Border">
+            <Setter Property="Background" Value="#FFEBEE" />
+            <Setter Property="BorderBrush" Value="#F44336" />
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="CornerRadius" Value="4" />
+            <Setter Property="Padding" Value="8,4" />
+        </Style>
+
+        <Style x:Key="PriorityMediumStyle" TargetType="Border">
+            <Setter Property="Background" Value="#FFF3E0" />
+            <Setter Property="BorderBrush" Value="#FF9800" />
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="CornerRadius" Value="4" />
+            <Setter Property="Padding" Value="8,4" />
+        </Style>
+
+        <Style x:Key="PriorityLowStyle" TargetType="Border">
+            <Setter Property="Background" Value="#E8F5E8" />
+            <Setter Property="BorderBrush" Value="#4CAF50" />
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="CornerRadius" Value="4" />
+            <Setter Property="Padding" Value="8,4" />
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!--  제목  -->
+        <TextBlock
+            Grid.Row="0"
+            Margin="0,0,0,20"
+            HorizontalAlignment="Center"
+            FontSize="28"
+            FontWeight="Bold"
+            Foreground="#2C3E50"
+            Text="Todo 리스트" />
+
+        <!--  새 할일 추가 섹션  -->
+        <Border
+            Grid.Row="1"
+            Margin="0,0,0,20"
+            Padding="16"
+            Background="#F8F9FA"
+            BorderBrush="#DEE2E6"
+            BorderThickness="1"
+            CornerRadius="8">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.ColumnSpan="3"
+                    Margin="0,0,0,12"
+                    FontSize="16"
+                    FontWeight="SemiBold"
+                    Text="새 할일 추가" />
+
+                <TextBox
+                    x:Name="TitleTextBox"
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Height="35"
+                    Margin="0,0,8,8"
+                    Padding="8"
+                    BorderBrush="#CED4DA"
+                    BorderThickness="1"
+                    FontSize="14"
+                    Text="{Binding NewTodoTitle, UpdateSourceTrigger=PropertyChanged}" />
+
+                <ComboBox
+                    x:Name="PriorityComboBox"
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Width="100"
+                    Height="35"
+                    Margin="0,0,8,8"
+                    SelectedValue="{Binding NewTodoPriority}">
+                    <ComboBox.Items>
+                        <ComboBoxItem Content="낮음" Tag="Low" />
+                        <ComboBoxItem
+                            Content="보통"
+                            IsSelected="True"
+                            Tag="Medium" />
+                        <ComboBoxItem Content="높음" Tag="High" />
+                    </ComboBox.Items>
+                </ComboBox>
+
+                <Button
+                    Grid.Row="1"
+                    Grid.Column="2"
+                    Height="35"
+                    MinWidth="60"
+                    Padding="16,8"
+                    Background="#007BFF"
+                    BorderThickness="0"
+                    Command="{Binding AddTodoCommand}"
+                    Content="추가"
+                    Foreground="White"
+                    Style="{StaticResource {x:Type Button}}" />
+
+                <TextBox
+                    x:Name="DescriptionTextBox"
+                    Grid.Row="2"
+                    Grid.ColumnSpan="3"
+                    Height="60"
+                    Margin="0,0,0,0"
+                    Padding="8"
+                    VerticalContentAlignment="Top"
+                    AcceptsReturn="True"
+                    BorderBrush="#CED4DA"
+                    BorderThickness="1"
+                    FontSize="12"
+                    Text="{Binding NewTodoDescription, UpdateSourceTrigger=PropertyChanged}"
+                    TextWrapping="Wrap"
+                    VerticalScrollBarVisibility="Auto" />
+            </Grid>
+        </Border>
+
+        <!--  필터 및 컨트롤 섹션  -->
+        <Grid Grid.Row="2" Margin="0,0,0,16">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <TextBox
+                Grid.Column="0"
+                Height="32"
+                Margin="0,0,8,0"
+                Padding="8"
+                BorderBrush="#CED4DA"
+                BorderThickness="1"
+                FontSize="14"
+                Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}" />
+
+            <CheckBox
+                Grid.Column="1"
+                Margin="0,0,16,0"
+                VerticalAlignment="Center"
+                Content="완료됨"
+                IsChecked="{Binding ShowCompleted}" />
+
+            <CheckBox
+                Grid.Column="2"
+                Margin="0,0,16,0"
+                VerticalAlignment="Center"
+                Content="진행중"
+                IsChecked="{Binding ShowPending}" />
+
+            <Button
+                Grid.Column="3"
+                Height="32"
+                Margin="0,0,8,0"
+                Padding="12,6"
+                Background="#28A745"
+                BorderThickness="0"
+                Command="{Binding RefreshCommand}"
+                Content="새로고침"
+                Foreground="White" />
+
+            <Button
+                Grid.Column="4"
+                Height="32"
+                Padding="12,6"
+                Background="#DC3545"
+                BorderThickness="0"
+                Command="{Binding ClearCompletedCommand}"
+                Content="완료된 항목 삭제"
+                Foreground="White" />
+        </Grid>
+
+        <!--  할일 목록  -->
+        <ScrollViewer Grid.Row="3" VerticalScrollBarVisibility="Auto">
+            <ItemsControl ItemsSource="{Binding FilteredTodos}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border>
+                            <Border.Style>
+                                <Style BasedOn="{StaticResource TodoItemStyle}" TargetType="Border">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsCompleted}" Value="True">
+                                            <Setter Property="Background" Value="#F0F8F0" />
+                                            <Setter Property="BorderBrush" Value="#C8E6C9" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <!--  체크박스  -->
+                                <CheckBox
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    Margin="0,2,12,0"
+                                    VerticalAlignment="Top"
+                                    Command="{Binding ToggleCompletionCommand}"
+                                    IsChecked="{Binding IsCompleted}" />
+
+                                <!--  제목과 우선순위  -->
+                                <StackPanel
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    Orientation="Horizontal">
+                                    <TextBlock
+                                        VerticalAlignment="Center"
+                                        FontSize="16"
+                                        FontWeight="SemiBold"
+                                        Text="{Binding Title}">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsCompleted}" Value="True">
+                                                        <Setter Property="TextDecorations" Value="Strikethrough" />
+                                                        <Setter Property="Foreground" Value="#6C757D" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+
+                                    <Border Margin="8,0,0,0">
+                                        <Border.Style>
+                                            <Style TargetType="Border">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Priority}" Value="High">
+                                                        <Setter Property="Background" Value="#FFEBEE" />
+                                                        <Setter Property="BorderBrush" Value="#F44336" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding Priority}" Value="Medium">
+                                                        <Setter Property="Background" Value="#FFF3E0" />
+                                                        <Setter Property="BorderBrush" Value="#FF9800" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding Priority}" Value="Low">
+                                                        <Setter Property="Background" Value="#E8F5E8" />
+                                                        <Setter Property="BorderBrush" Value="#4CAF50" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                                <Setter Property="BorderThickness" Value="1" />
+                                                <Setter Property="CornerRadius" Value="4" />
+                                                <Setter Property="Padding" Value="6,2" />
+                                            </Style>
+                                        </Border.Style>
+                                        <TextBlock
+                                            FontSize="10"
+                                            FontWeight="Bold"
+                                            Text="{Binding PriorityText}" />
+                                    </Border>
+                                </StackPanel>
+
+                                <!--  버튼들  -->
+                                <StackPanel
+                                    Grid.Row="0"
+                                    Grid.Column="2"
+                                    Orientation="Horizontal">
+                                    <Button
+                                        Margin="0,0,4,0"
+                                        Padding="8,4"
+                                        Background="#17A2B8"
+                                        BorderThickness="0"
+                                        Command="{Binding EditCommand}"
+                                        Content="편집"
+                                        FontSize="12"
+                                        Foreground="White" />
+                                    <Button
+                                        Padding="8,4"
+                                        Background="#DC3545"
+                                        BorderThickness="0"
+                                        Command="{Binding DeleteCommand}"
+                                        Content="삭제"
+                                        FontSize="12"
+                                        Foreground="White" />
+                                </StackPanel>
+
+                                <!--  설명  -->
+                                <TextBlock
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    Grid.ColumnSpan="2"
+                                    Margin="0,4,0,0"
+                                    FontSize="12"
+                                    Foreground="#6C757D"
+                                    Text="{Binding Description}"
+                                    TextWrapping="Wrap">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Description}" Value="">
+                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+
+                                <!--  날짜 정보  -->
+                                <TextBlock
+                                    Grid.Row="2"
+                                    Grid.Column="1"
+                                    Grid.ColumnSpan="2"
+                                    Margin="0,8,0,0"
+                                    FontSize="10"
+                                    Foreground="#ADB5BD">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="생성: {0} | 상태: {1}">
+                                            <Binding Path="CreatedAtText" />
+                                            <Binding Path="StatusText" />
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+        <!--  상태바  -->
+        <StatusBar
+            Grid.Row="4"
+            Height="30"
+            Background="#F8F9FA">
+            <StatusBar.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </ItemsPanelTemplate>
+            </StatusBar.ItemsPanel>
+
+            <StatusBarItem Grid.Column="0">
+                <TextBlock>
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="전체: {0}개, 완료: {1}개, 진행중: {2}개">
+                            <Binding Path="Todos.Count" />
+                            <Binding Path="CompletedCount" />
+                            <Binding Path="PendingCount" />
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+            </StatusBarItem>
+
+            <StatusBarItem Grid.Column="1">
+                <TextBlock
+                    FontStyle="Italic"
+                    Foreground="#6C757D"
+                    Text="클린 아키텍처 + MVVM" />
+            </StatusBarItem>
+        </StatusBar>
+
+        <!--  로딩 오버레이  -->
+        <Grid
+            Grid.RowSpan="5"
+            Background="#80000000"
+            Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverter}}">
+            <Border
+                Padding="20"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Background="White"
+                CornerRadius="8">
+                <StackPanel Orientation="Horizontal">
+                    <ProgressBar
+                        Width="20"
+                        Height="20"
+                        Margin="0,0,8,0"
+                        IsIndeterminate="True" />
+                    <TextBlock VerticalAlignment="Center" Text="로딩 중..." />
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Grid>
+</Window>
