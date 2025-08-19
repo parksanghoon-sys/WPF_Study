@@ -53,6 +53,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoadingSpinnerControl", "Lo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wpf3DAnimation", "wpf3DAnimation\wpf3DAnimation.csproj", "{360990AB-211E-4C77-8718-91EDB119B142}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ButtonAnimation", "ButtonAnimation\ButtonAnimation.csproj", "{FE25C9D6-2AE0-4D92-AAB3-0FB0FCAAAC99}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -139,6 +141,10 @@ Global
 		{360990AB-211E-4C77-8718-91EDB119B142}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{360990AB-211E-4C77-8718-91EDB119B142}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{360990AB-211E-4C77-8718-91EDB119B142}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE25C9D6-2AE0-4D92-AAB3-0FB0FCAAAC99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE25C9D6-2AE0-4D92-AAB3-0FB0FCAAAC99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE25C9D6-2AE0-4D92-AAB3-0FB0FCAAAC99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE25C9D6-2AE0-4D92-AAB3-0FB0FCAAAC99}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -163,6 +169,7 @@ Global
 		{73C38B48-C00F-4AB8-BF5C-4E609F3B878F} = {1AEA2659-C598-4E02-BA5C-AFFE5557BCAB}
 		{C502EAE2-4915-4FBD-82C3-5AF29DEFA5B4} = {091AD5BE-6886-4D81-92FB-B701D3997995}
 		{EE953408-DCA9-450D-905B-2C40790B0732} = {1AEA2659-C598-4E02-BA5C-AFFE5557BCAB}
+		{FE25C9D6-2AE0-4D92-AAB3-0FB0FCAAAC99} = {DC76DAF9-D625-441B-90F2-327B83757B98}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4CC931B3-71B7-4DBF-9ABB-A9635CEAF0E1}

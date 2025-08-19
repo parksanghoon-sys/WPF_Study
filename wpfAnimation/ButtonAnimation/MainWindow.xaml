@@ -1,0 +1,269 @@
+﻿<Window
+    x:Class="ButtonAnimation.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:ButtonAnimation"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="MainWindow"
+    Width="800"
+    Height="450"
+    mc:Ignorable="d">
+    <Window.Resources>
+        <Storyboard x:Key="HoverAnimation">
+            <DoubleAnimation
+                Storyboard.TargetName="borderScale"
+                Storyboard.TargetProperty="ScaleX"
+                To="1.05"
+                Duration="0:0:0.2" />
+            <DoubleAnimation
+                Storyboard.TargetName="borderScale"
+                Storyboard.TargetProperty="ScaleY"
+                To="1.05"
+                Duration="0:0:0.2" />
+            <DoubleAnimation
+                Storyboard.TargetName="contentTransform"
+                Storyboard.TargetProperty="Y"
+                To="-2"
+                Duration="0:0:0.2" />
+        </Storyboard>
+        <Storyboard x:Key="HoverResetAnimation">
+            <DoubleAnimation
+                Storyboard.TargetName="borderScale"
+                Storyboard.TargetProperty="ScaleX"
+                To="1.0"
+                Duration="0:0:0.2" />
+            <DoubleAnimation
+                Storyboard.TargetName="borderScale"
+                Storyboard.TargetProperty="ScaleY"
+                To="1.0"
+                Duration="0:0:0.2" />
+            <DoubleAnimation
+                Storyboard.TargetName="contentTransform"
+                Storyboard.TargetProperty="Y"
+                To="0"
+                Duration="0:0:0.2" />
+        </Storyboard>
+
+        <!--<Style TargetType="{x:Type local:HoverAnimationButton}">
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type local:HoverAnimationButton}">
+                        <Border
+                            x:Name="PART_Border"
+                            Width="{TemplateBinding Width}"
+                            Height="{TemplateBinding Height}"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{Binding CornerRadius, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                            RenderTransformOrigin="0.5,0.5">
+
+        -->
+        <!--  Scale effect on hover  -->
+        <!--
+                            <Border.RenderTransform>
+                                <ScaleTransform x:Name="borderScale" ScaleX="1" ScaleY="1" />
+                            </Border.RenderTransform>
+
+        -->
+        <!--  Drop shadow effect  -->
+        <!--
+                            <Border.Effect>
+                                <DropShadowEffect
+                                    BlurRadius="7"
+                                    Direction="270"
+                                    Opacity="0.3"
+                                    ShadowDepth="4"
+                                    Color="Black" />
+                            </Border.Effect>
+
+        -->
+        <!--  Content presenter with vertical move on hover  -->
+        <!--
+                            <ContentPresenter
+                                x:Name="PART_Content"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                RenderTransformOrigin="0.5,0.5">
+                                <ContentPresenter.RenderTransform>
+                                    <TranslateTransform x:Name="contentTransform" Y="0" />
+                                </ContentPresenter.RenderTransform>
+                            </ContentPresenter>
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+        -->
+        <!--  Hover effect: scale up and move content slightly up  -->
+        <!--
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard Storyboard="{StaticResource HoverAnimation}" />
+                                </Trigger.EnterActions>
+
+        -->
+        <!--  On mouse leave: reset scale and position  -->
+        <!--
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard Storyboard="{StaticResource HoverResetAnimation}" />
+                                </Trigger.ExitActions>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>-->
+
+        <Style TargetType="{x:Type local:HoverAnimationButton}">
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type local:HoverAnimationButton}">
+                        <Border
+                            x:Name="PART_Border"
+                            Width="{TemplateBinding Width}"
+                            Height="{TemplateBinding Height}"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{Binding CornerRadius, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                            RenderTransformOrigin="0.5,0.5">
+                            <!--  Scale effect on hover  -->
+                            <Border.RenderTransform>
+                                <ScaleTransform x:Name="borderScale" ScaleX="1" ScaleY="1" />
+                            </Border.RenderTransform>
+
+                            <!--  Drop shadow  -->
+                            <Border.Effect>
+                                <DropShadowEffect
+                                    BlurRadius="7"
+                                    Direction="270"
+                                    Opacity="0.3"
+                                    ShadowDepth="4"
+                                    Color="Black" />
+                            </Border.Effect>
+
+                            <!--  Content  -->
+                            <ContentPresenter
+                                x:Name="PART_Content"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                RenderTransformOrigin="0.5,0.5">
+                                <ContentPresenter.RenderTransform>
+                                    <TranslateTransform x:Name="contentTransform" Y="0" />
+                                </ContentPresenter.RenderTransform>
+                            </ContentPresenter>
+
+                            <!--  ✅ VisualStateManager는 Border 같은 FrameworkElement에 선언  -->
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <!--  Normal  -->
+                                    <VisualState x:Name="Normal" />
+
+                                    <!--  Hover  -->
+                                    <VisualState x:Name="MouseOver">
+                                        <Storyboard>
+                                            <DoubleAnimation
+                                                Storyboard.TargetName="borderScale"
+                                                Storyboard.TargetProperty="ScaleX"
+                                                To="1.05"
+                                                Duration="0:0:0.2" />
+                                            <DoubleAnimation
+                                                Storyboard.TargetName="borderScale"
+                                                Storyboard.TargetProperty="ScaleY"
+                                                To="1.05"
+                                                Duration="0:0:0.2" />
+                                            <DoubleAnimation
+                                                Storyboard.TargetName="contentTransform"
+                                                Storyboard.TargetProperty="Y"
+                                                To="-2"
+                                                Duration="0:0:0.2" />
+                                        </Storyboard>
+                                    </VisualState>
+
+                                    <!--  Pressed  -->
+                                    <VisualState x:Name="Pressed">
+                                        <Storyboard>
+                                            <DoubleAnimation
+                                                Storyboard.TargetName="borderScale"
+                                                Storyboard.TargetProperty="ScaleX"
+                                                To="0.95"
+                                                Duration="0:0:0.1" />
+                                            <DoubleAnimation
+                                                Storyboard.TargetName="borderScale"
+                                                Storyboard.TargetProperty="ScaleY"
+                                                To="0.95"
+                                                Duration="0:0:0.1" />
+                                            <DoubleAnimation
+                                                Storyboard.TargetName="contentTransform"
+                                                Storyboard.TargetProperty="Y"
+                                                To="1"
+                                                Duration="0:0:0.1" />
+                                        </Storyboard>
+                                    </VisualState>
+
+                                    <!--  Disabled  -->
+                                    <VisualState x:Name="Disabled">
+                                        <Storyboard>
+                                            <DoubleAnimation
+                                                Storyboard.TargetName="PART_Border"
+                                                Storyboard.TargetProperty="Opacity"
+                                                To="0.5"
+                                                Duration="0:0:0.2" />
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                        </Border>
+                    </ControlTemplate>
+
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+            <StackPanel.Resources>
+                <Style TargetType="{x:Type local:HoverAnimationButton}">
+                    <Setter Property="Width" Value="300" />
+                    <Setter Property="Height" Value="60" />
+                    <Setter Property="CornerRadius" Value="8" />
+                    <Setter Property="Margin" Value="5" />
+                </Style>
+            </StackPanel.Resources>
+            <StackPanel Orientation="Horizontal">
+                <local:HoverAnimationButton
+                    Content="UPADTED PASSWOARD"
+                    FontSize="20"
+                    FontWeight="Bold"
+                    Foreground="White">
+                    <local:HoverAnimationButton.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1, 1">
+                            <GradientStop Offset="0" Color="#ea0606" />
+                            <GradientStop Offset="1" Color="#ff667c" />
+                        </LinearGradientBrush>
+                    </local:HoverAnimationButton.Background>
+                </local:HoverAnimationButton>
+                <local:HoverAnimationButton
+                    Content="UPADTED PASSWOARD"
+                    FontSize="20"
+                    FontWeight="Bold"
+                    Foreground="White">
+                    <local:HoverAnimationButton.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1, 1">
+                            <GradientStop Offset="0" Color="#353b65" />
+                            <GradientStop Offset="1" Color="#1f233c" />
+                        </LinearGradientBrush>
+                    </local:HoverAnimationButton.Background>
+                </local:HoverAnimationButton>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>
