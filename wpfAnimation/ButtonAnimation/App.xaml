@@ -5,6 +5,114 @@
     xmlns:local="clr-namespace:ButtonAnimation"
     StartupUri="MainWindow.xaml">
     <Application.Resources>
-       
+        <!--<Style TargetType="{x:Type local:HoverAnimationButton}">
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type local:HoverAnimationButton}">
+                        <Border
+                            x:Name="PART_Border"
+                            Width="{TemplateBinding Width}"
+                            Height="{TemplateBinding Height}"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{Binding CornerRadius, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                            RenderTransformOrigin="0.5,0.5">
+                            --><!--  Scale effect on hover  --><!--
+                            <Border.RenderTransform>
+                                <ScaleTransform x:Name="borderScale" ScaleX="1" ScaleY="1" />
+                            </Border.RenderTransform>
+
+                            --><!--  Drop shadow  --><!--
+                            <Border.Effect>
+                                <DropShadowEffect
+                                    BlurRadius="7"
+                                    Direction="270"
+                                    Opacity="0.3"
+                                    ShadowDepth="4"
+                                    Color="Black" />
+                            </Border.Effect>
+
+                            --><!--  Content  --><!--
+                            <ContentPresenter
+                                x:Name="PART_Content"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                RenderTransformOrigin="0.5,0.5">
+                                <ContentPresenter.RenderTransform>
+                                    <TranslateTransform x:Name="contentTransform" Y="0" />
+                                </ContentPresenter.RenderTransform>
+                            </ContentPresenter>
+
+                            --><!--  ✅ VisualStateManager는 Border 같은 FrameworkElement에 선언  --><!--
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    --><!--  Normal  --><!--
+                                    <VisualState x:Name="Normal" />
+
+                                    --><!--  Hover  --><!--
+                                    <VisualState x:Name="MouseOver">
+                                        <Storyboard>
+                                            <DoubleAnimation
+                                                Storyboard.TargetName="borderScale"
+                                                Storyboard.TargetProperty="ScaleX"
+                                                To="1.05"
+                                                Duration="0:0:0.2" />
+                                            <DoubleAnimation
+                                                Storyboard.TargetName="borderScale"
+                                                Storyboard.TargetProperty="ScaleY"
+                                                To="1.05"
+                                                Duration="0:0:0.2" />
+                                            <DoubleAnimation
+                                                Storyboard.TargetName="contentTransform"
+                                                Storyboard.TargetProperty="Y"
+                                                To="-2"
+                                                Duration="0:0:0.2" />
+                                        </Storyboard>
+                                    </VisualState>
+
+                                    --><!--  Pressed  --><!--
+                                    <VisualState x:Name="Pressed">
+                                        <Storyboard>
+                                            <DoubleAnimation
+                                                Storyboard.TargetName="borderScale"
+                                                Storyboard.TargetProperty="ScaleX"
+                                                To="0.95"
+                                                Duration="0:0:0.1" />
+                                            <DoubleAnimation
+                                                Storyboard.TargetName="borderScale"
+                                                Storyboard.TargetProperty="ScaleY"
+                                                To="0.95"
+                                                Duration="0:0:0.1" />
+                                            <DoubleAnimation
+                                                Storyboard.TargetName="contentTransform"
+                                                Storyboard.TargetProperty="Y"
+                                                To="1"
+                                                Duration="0:0:0.1" />
+                                        </Storyboard>
+                                    </VisualState>
+
+                                    --><!--  Disabled  --><!--
+                                    <VisualState x:Name="Disabled">
+                                        <Storyboard>
+                                            <DoubleAnimation
+                                                Storyboard.TargetName="PART_Border"
+                                                Storyboard.TargetProperty="Opacity"
+                                                To="0.5"
+                                                Duration="0:0:0.2" />
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                        </Border>
+                    </ControlTemplate>
+
+                </Setter.Value>
+            </Setter>
+        </Style>-->
     </Application.Resources>
 </Application>

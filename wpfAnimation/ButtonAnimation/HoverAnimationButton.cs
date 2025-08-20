@@ -16,10 +16,6 @@ namespace ButtonAnimation
         public static readonly DependencyProperty CornerRadiusProperty =
             DependencyProperty.Register("CornerRadius", typeof(CornerRadius), typeof(HoverAnimationButton), new PropertyMetadata(new CornerRadius(0)));
 
-
-        static HoverAnimationButton()
-        {
-            
-        }
+       
     }
 }

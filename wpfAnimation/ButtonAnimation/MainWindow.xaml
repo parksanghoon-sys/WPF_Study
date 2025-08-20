@@ -45,7 +45,7 @@
                 Duration="0:0:0.2" />
         </Storyboard>
 
-        <!--<Style TargetType="{x:Type local:HoverAnimationButton}">
+        <!--<Style x:Key="HoverAnimationButtonStyle" TargetType="{x:Type local:HoverAnimationButton}">
             <Setter Property="Cursor" Value="Hand" />
             <Setter Property="HorizontalContentAlignment" Value="Center" />
             <Setter Property="VerticalContentAlignment" Value="Center" />
@@ -62,17 +62,9 @@
                             BorderThickness="{TemplateBinding BorderThickness}"
                             CornerRadius="{Binding CornerRadius, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                             RenderTransformOrigin="0.5,0.5">
-
-        -->
-        <!--  Scale effect on hover  -->
-        <!--
                             <Border.RenderTransform>
                                 <ScaleTransform x:Name="borderScale" ScaleX="1" ScaleY="1" />
                             </Border.RenderTransform>
-
-        -->
-        <!--  Drop shadow effect  -->
-        <!--
                             <Border.Effect>
                                 <DropShadowEffect
                                     BlurRadius="7"
@@ -81,10 +73,6 @@
                                     ShadowDepth="4"
                                     Color="Black" />
                             </Border.Effect>
-
-        -->
-        <!--  Content presenter with vertical move on hover  -->
-        <!--
                             <ContentPresenter
                                 x:Name="PART_Content"
                                 HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -97,17 +85,13 @@
                         </Border>
 
                         <ControlTemplate.Triggers>
-        -->
-        <!--  Hover effect: scale up and move content slightly up  -->
-        <!--
+
+
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Trigger.EnterActions>
                                     <BeginStoryboard Storyboard="{StaticResource HoverAnimation}" />
                                 </Trigger.EnterActions>
 
-        -->
-        <!--  On mouse leave: reset scale and position  -->
-        <!--
                                 <Trigger.ExitActions>
                                     <BeginStoryboard Storyboard="{StaticResource HoverResetAnimation}" />
                                 </Trigger.ExitActions>
@@ -117,8 +101,7 @@
                 </Setter.Value>
             </Setter>
         </Style>-->
-
-        <Style TargetType="{x:Type local:HoverAnimationButton}">
+        <Style x:Key="HoverAnimationButtonStyle" TargetType="{x:Type local:HoverAnimationButton}">
             <Setter Property="Cursor" Value="Hand" />
             <Setter Property="HorizontalContentAlignment" Value="Center" />
             <Setter Property="VerticalContentAlignment" Value="Center" />
@@ -135,12 +118,9 @@
                             BorderThickness="{TemplateBinding BorderThickness}"
                             CornerRadius="{Binding CornerRadius, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                             RenderTransformOrigin="0.5,0.5">
-                            <!--  Scale effect on hover  -->
                             <Border.RenderTransform>
                                 <ScaleTransform x:Name="borderScale" ScaleX="1" ScaleY="1" />
                             </Border.RenderTransform>
-
-                            <!--  Drop shadow  -->
                             <Border.Effect>
                                 <DropShadowEffect
                                     BlurRadius="7"
@@ -150,7 +130,6 @@
                                     Color="Black" />
                             </Border.Effect>
 
-                            <!--  Content  -->
                             <ContentPresenter
                                 x:Name="PART_Content"
                                 HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -161,13 +140,9 @@
                                 </ContentPresenter.RenderTransform>
                             </ContentPresenter>
 
-                            <!--  ✅ VisualStateManager는 Border 같은 FrameworkElement에 선언  -->
                             <VisualStateManager.VisualStateGroups>
                                 <VisualStateGroup x:Name="CommonStates">
-                                    <!--  Normal  -->
                                     <VisualState x:Name="Normal" />
-
-                                    <!--  Hover  -->
                                     <VisualState x:Name="MouseOver">
                                         <Storyboard>
                                             <DoubleAnimation
@@ -187,8 +162,6 @@
                                                 Duration="0:0:0.2" />
                                         </Storyboard>
                                     </VisualState>
-
-                                    <!--  Pressed  -->
                                     <VisualState x:Name="Pressed">
                                         <Storyboard>
                                             <DoubleAnimation
@@ -209,7 +182,6 @@
                                         </Storyboard>
                                     </VisualState>
 
-                                    <!--  Disabled  -->
                                     <VisualState x:Name="Disabled">
                                         <Storyboard>
                                             <DoubleAnimation
@@ -217,6 +189,11 @@
                                                 Storyboard.TargetProperty="Opacity"
                                                 To="0.5"
                                                 Duration="0:0:0.2" />
+                                            <ColorAnimation
+                                                Storyboard.TargetName="PART_Border"
+                                                Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                To="#234E46"
+                                                Duration="0:0:0.9" />
                                         </Storyboard>
                                     </VisualState>
                                 </VisualStateGroup>
@@ -227,11 +204,12 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
     </Window.Resources>
     <Grid>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
             <StackPanel.Resources>
-                <Style TargetType="{x:Type local:HoverAnimationButton}">
+                <Style BasedOn="{StaticResource HoverAnimationButtonStyle}" TargetType="{x:Type local:HoverAnimationButton}">
                     <Setter Property="Width" Value="300" />
                     <Setter Property="Height" Value="60" />
                     <Setter Property="CornerRadius" Value="8" />
@@ -255,7 +233,8 @@
                     Content="UPADTED PASSWOARD"
                     FontSize="20"
                     FontWeight="Bold"
-                    Foreground="White">
+                    Foreground="White"
+                    IsEnabled="True">
                     <local:HoverAnimationButton.Background>
                         <LinearGradientBrush StartPoint="0,0" EndPoint="1, 1">
                             <GradientStop Offset="0" Color="#353b65" />
